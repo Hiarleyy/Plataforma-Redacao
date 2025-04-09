@@ -7,3 +7,106 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+enum Cargo {
+  ADMIN
+  STANDARD
+}
+
+model Usuario {
+  id              String     @db.Char(36) @id
+  nome            String     @db.VarChar(200)
+  email           String     @unique @db.VarChar(200)
+  tipoUsuario     Cargo      @default(STANDARD)
+  dataCriacao     DateTime?  @db.Date
+  dataAtualizacao DateTime?  @db.Date
+  turmaId         String?    @db.VarChar(36)
+  turma           Turma?     @relation(fields: [turmaId], references: [id])
+  frequencias     Frequencia[]
+  pagamentos      Pagamento[]
+  redacoes        Redacao[]
+}
+
+model Turma {
+  id          String       @db.Char(36) @id
+  nome        String       @db.VarChar(100)
+  dataCriacao DateTime?    @db.Date
+  usuarios    Usuario[]
+  frequencias Frequencia[]
+}
+
+model Frequencia {
+  id           String    @db.Char(36) @id
+  usuarioId    String    @db.VarChar(36)
+  turmaId      String    @db.VarChar(36)
+  status       String    @db.VarChar(20) 
+  justificativa String?  @db.Text
+  data         DateTime  @db.Date
+
+  usuario Usuario @relation(fields: [usuarioId], references: [id])
+  turma   Turma   @relation(fields: [turmaId], references: [id])
+}
+
+model Pagamento {
+  id             String    @db.Char(36) @id
+  usuarioId      String    @db.VarChar(36)
+  dataVencimento DateTime  @db.Date
+  dataPagamento  DateTime? @db.Date
+  valor          Float
+
+  usuario Usuario @relation(fields: [usuarioId], references: [id])
+}
+model Redacao {
+  id         String     @db.Char(36) @id
+  titulo     String     @db.VarChar(200)
+  caminho    String?    @db.VarChar(100)
+  data       DateTime   @db.Date
+  status     String?    @db.VarChar(20)
+  usuarioId  String     @db.VarChar(36)
+
+  usuario    Usuario    @relation(fields: [usuarioId], references: [id])
+  correcao   Correcao?  // Relação 1:1
+}
+
+model Correcao {
+  id             String       @db.Char(36) @id
+  nota           Float
+  caminho        String?      @db.VarChar(100)
+  data           DateTime     @db.Date
+  feedback       String?      @db.Text
+  competenciasId String?      @db.VarChar(36)
+  redacaoId      String       @unique @db.VarChar(36) // <- campo único para garantir 1:1
+
+  competencias   Competencia? @relation(fields: [competenciasId], references: [id])
+  redacao        Redacao      @relation(fields: [redacaoId], references: [id])
+}
+model Competencia {
+  id            String     @db.Char(36) @id
+  competencia01 Int?
+  competencia02 Int?
+  competencia03 Int?
+  competencia04 Int?
+  competencia05 Int?
+
+  correcao     Correcao[]
+}
+
+model Modulo {
+  id           String   @db.Char(36) @id
+  nome         String   @db.VarChar(100)
+  descricao    String?  @db.Text
+  playlistUrl  String   @db.VarChar(255)
+  dataCriacao  DateTime @db.Date
+
+  videos       Video[]
+}
+
+model Video {
+  id        String   @db.Char(36) @id
+  titulo    String   @db.VarChar(200)
+  url       String   @db.VarChar(255)
+  ordem     Int
+  moduloId  String   @db.VarChar(36)
+
+  modulo    Modulo   @relation(fields: [moduloId], references: [id])
+}
