@@ -1,0 +1,16 @@
+version: '3.8'  # Adiciona a versão do Compose
+services:
+  postgres:
+    image: bitnami/postgresql:latest
+    ports:
+      - '5000:5000'
+    environment:
+      - POSTGRESQL_USERNAME=postgres
+      - POSTGRESQL_PASSWORD=docker
+      - POSTGRESQL_DATABASE=BDPlataformaRedacao
+    volumes:
+      - postgres_data:/bitnami/postgresql
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
