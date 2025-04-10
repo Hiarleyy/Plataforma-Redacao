@@ -1,6 +1,5 @@
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
 }
 
 datasource db {
@@ -21,28 +20,43 @@ model Usuario {
   dataCriacao     DateTime?  @db.Date
   dataAtualizacao DateTime?  @db.Date
   turmaId         String?    @db.VarChar(36)
+
+  // Relação muitos para um: Muitos usuários podem pertencer a uma turma
   turma           Turma?     @relation(fields: [turmaId], references: [id])
-  frequencias     Frequencia[]
-  pagamentos      Pagamento[]
-  redacoes        Redacao[]
+
+  // Relações um para muitos
+  frequencias     Frequencia[]   // Um usuário pode ter muitas frequências
+  pagamentos      Pagamento[]    // Um usuário pode ter muitos pagamentos
+  redacoes        Redacao[]      // Um usuário pode ter muitas redações
 }
 
 model Turma {
   id          String       @db.Char(36) @id
   nome        String       @db.VarChar(100)
   dataCriacao DateTime?    @db.Date
-  usuarios    Usuario[]
+
+  // Relação um para muitos: Uma turma pode ter muitos usuários
+  usuarios    Usuario[]    
+
+  // Relação um para muitos: Uma turma pode ter muitas frequências
   frequencias Frequencia[]
+}
+
+enum StatusFrequencia {
+  PRESENTE
+  FALTOU
+  JUSTIFICADO
 }
 
 model Frequencia {
   id           String    @db.Char(36) @id
   usuarioId    String    @db.VarChar(36)
   turmaId      String    @db.VarChar(36)
-  status       String    @db.VarChar(20) 
+  status       StatusFrequencia 
   justificativa String?  @db.Text
   data         DateTime  @db.Date
 
+  // Relações muitos para um
   usuario Usuario @relation(fields: [usuarioId], references: [id])
   turma   Turma   @relation(fields: [turmaId], references: [id])
 }
@@ -54,8 +68,10 @@ model Pagamento {
   dataPagamento  DateTime? @db.Date
   valor          Float
 
+  // Relação muitos para um: Muitos pagamentos podem pertencer a um usuário
   usuario Usuario @relation(fields: [usuarioId], references: [id])
 }
+
 model Redacao {
   id         String     @db.Char(36) @id
   titulo     String     @db.VarChar(200)
@@ -64,31 +80,40 @@ model Redacao {
   status     String?    @db.VarChar(20)
   usuarioId  String     @db.VarChar(36)
 
+  // Relação muitos para um: Muitas redações pertencem a um usuário
   usuario    Usuario    @relation(fields: [usuarioId], references: [id])
-  correcao   Correcao?  // Relação 1:1
+
+  // Relação um para um: Uma redação possui uma única correção
+  correcao   Correcao?  
 }
 
 model Correcao {
-  id             String       @db.Char(36) @id
-  nota           Float
-  caminho        String?      @db.VarChar(100)
-  data           DateTime     @db.Date
-  feedback       String?      @db.Text
-  competenciasId String?      @db.VarChar(36)
-  redacaoId      String       @unique @db.VarChar(36) // <- campo único para garantir 1:1
+  id          String       @db.Char(36) @id
+  nota        Float
+  caminho     String?      @db.VarChar(100)
+  data        DateTime     @db.Date
+  feedback    String?      @db.Text
+  redacaoId   String       @unique @db.VarChar(36)
 
-  competencias   Competencia? @relation(fields: [competenciasId], references: [id])
-  redacao        Redacao      @relation(fields: [redacaoId], references: [id])
+  // Relação um para um: Uma correção pertence a uma única redação
+  redacao     Redacao      @relation(fields: [redacaoId], references: [id])
+
+  // Relação um para um (explícita): Uma correção possui uma competência
+  competencias Competencia? @relation("CorrecaoToCompetencia")
 }
+
 model Competencia {
-  id            String     @db.Char(36) @id
+  id            String    @db.Char(36) @id
   competencia01 Int?
   competencia02 Int?
   competencia03 Int?
   competencia04 Int?
   competencia05 Int?
 
-  correcao     Correcao[]
+  correcaoId    String    @unique @db.VarChar(36)
+
+  // Relação um para um (explícita): Uma competência pertence a uma correção
+  correcao      Correcao  @relation("CorrecaoToCompetencia", fields: [correcaoId], references: [id])
 }
 
 model Modulo {
@@ -98,6 +123,7 @@ model Modulo {
   playlistUrl  String   @db.VarChar(255)
   dataCriacao  DateTime @db.Date
 
+  // Relação um para muitos: Um módulo possui vários vídeos
   videos       Video[]
 }
 
@@ -108,5 +134,6 @@ model Video {
   ordem     Int
   moduloId  String   @db.VarChar(36)
 
+  // Relação muitos para um: Muitos vídeos pertencem a um módulo
   modulo    Modulo   @relation(fields: [moduloId], references: [id])
 }
