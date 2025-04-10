@@ -17,4 +17,8 @@ router.post("/usuarios", usuariosController.create)
 router.get("/turmas", turmaController.index)
 router.post("/turmas", turmaController.create)
 
+// rotas relacionadas do pagamento
+router.get("/dashbordPagamentos", pagamentosController.index ) // mostra todos os pagamentos do bd table pagamentos
+router.post('/dashbordPagamentos', pagamentosController.create)
+
 module.exports = router
