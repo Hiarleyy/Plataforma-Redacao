@@ -9,7 +9,7 @@ class Correcao {
     this.feedback = correcao.feedback
     this.competenciaId = correcao.competenciaId;
     this.redacaoId = correcao.redacaoId;
-}
+  }
 }
 
 module.exports = Correcao;

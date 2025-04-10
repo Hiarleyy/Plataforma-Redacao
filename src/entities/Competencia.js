@@ -8,7 +8,7 @@ class Competencia {
     this.competencia03 = competencia.competencia03;
     this.competencia04 = competencia.competencia04;
     this.competencia05 = competencia.competencia05;
-}
+  }
 }
 
 module.exports = Competencia;
