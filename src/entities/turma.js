@@ -8,4 +8,4 @@ class Turma {
   }
 }
 
-module.exports = turma;
+module.exports = Turma;
