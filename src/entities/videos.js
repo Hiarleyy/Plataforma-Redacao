@@ -1,12 +1,12 @@
 const { v4: uuid } = require("uuid");
 
 class Video {
-  constructor(videos) {
+  constructor(video) {
     this.id = uuid();
-    this.titulo = videos.titulo;
-    this.url = videos.url;
-    this.ordem = videos.ordem;
-    this.modulo_id = videos.modulo_id;
+    this.titulo = video.titulo;
+    this.url = video.url;
+    this.ordem = video.ordem;
+    this.modulo_id = video.modulo_id;
   }
 }
 
