@@ -1,5 +1,5 @@
 const prisma = require("../database/db");
-const Turma = require("../entities/Turma");
+const Turma = require("../entities/turma");
 
 const usuariosRepository = {
   // Retorna todos os usuários do bando de dados
@@ -45,10 +45,10 @@ const usuariosRepository = {
 
   // Rota de criar um novo usuário
   crieNovaTurma: async (data) => {
-    const Turma = new Turma(data)
+    const turma = new Turma(data)
 
-    const novaTurma = await prisma.Turma.create({
-      data: Turma,
+    const novaTurma = await prisma.turma.create({
+      data: turma,
       select: {
         id: true,
         nome: true,
