@@ -72,13 +72,18 @@ model Pagamento {
   usuario Usuario @relation(fields: [usuarioId], references: [id])
 }
 
+enum StatusRedacao {
+  PENDENTE
+  CORRIGIDA
+}
+
 model Redacao {
-  id         String     @db.Char(36) @id
-  titulo     String     @db.VarChar(200)
-  caminho    String?    @db.VarChar(100)
-  data       DateTime   @db.Date
-  status     String?    @db.VarChar(20)
-  usuarioId  String     @db.VarChar(36)
+  id         String         @db.Char(36) @id
+  titulo     String         @db.VarChar(200)
+  caminho    String?        @db.VarChar(100)
+  data       DateTime       @db.Date
+  status     StatusRedacao  @default(PENDENTE)
+  usuarioId  String         @db.VarChar(36)
 
   // Relação muitos para um: Muitas redações pertencem a um usuário
   usuario    Usuario    @relation(fields: [usuarioId], references: [id])

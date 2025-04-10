@@ -5,9 +5,9 @@ class Redacao {
     this.id = uuid();
     this.titulo = redacao.titulo;
     this.caminho = redacao.caminho;
-    this.data = redacao.data;
-    this.status = redacao.status;
-    this.usuarioId = redacao.usuario_id; 
+    this.data = new Date();
+    this.status = redacao.status?.toUpperCase() ?? "PENDENTE";
+    this.usuarioId = redacao.usuarioId; 
   }
 }
 

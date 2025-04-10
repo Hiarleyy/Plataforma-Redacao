@@ -5,9 +5,10 @@ class Correcao {
     this.id = uuid();
     this.nota = correcao.nota;
     this.caminho = correcao.caminho;
-    this.data = correcao.data;
-    this.competencias_id = correcao.competencias_id;
-    this.redacao_id = correcao.redacao_id;
+    this.data = new Date();
+    this.feedback = correcao.feedback
+    this.competenciaId = correcao.competenciaId;
+    this.redacaoId = correcao.redacaoId;
 }
 }
 

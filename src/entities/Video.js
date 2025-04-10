@@ -6,7 +6,7 @@ class Video {
     this.titulo = video.titulo;
     this.url = video.url;
     this.ordem = video.ordem;
-    this.modulo_id = video.modulo_id;
+    this.moduloId = video.moduloId;
   }
 }
 

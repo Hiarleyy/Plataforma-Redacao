@@ -5,8 +5,8 @@ class Usuario {
     this.id = uuid();
     this.nome = usuario.nome;
     this.email = usuario.email;
-    this.tipoUsuario = usuario.tipo_usuario?.toUpperCase() ?? "STANDARD";
-    this.turmaId = usuario.turma_id ?? null;
+    this.tipoUsuario = usuario.tipoUsuario?.toUpperCase() ?? "STANDARD";
+    this.turmaId = usuario.turmaId ?? null;
     this.dataCriacao = new Date();
     this.dataAtualizacao = new Date();
   }

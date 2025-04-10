@@ -3,7 +3,6 @@ const { v4: uuid } = require("uuid");
 class Competencia {
   constructor(competencia) {
     this.id = uuid();
-    this.nota = competencia.competencia;
     this.competencia01 = competencia.competencia01;
     this.competencia02 = competencia.competencia02;
     this.competencia03 = competencia.competencia03;
