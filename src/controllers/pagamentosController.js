@@ -1,34 +1,27 @@
-
-const SchemaPagamento = require("../entities/Pagamento");
-const pagamentoModel = require("../models/pagamentosModel");
-const HttpError = require("../error/HttpError");
-const pagamentosRepository = require("../repositories/pagamentosRepository");
+const pagamentosModel = require("../models/pagamentosModel");
 
 const pagamentosController = {
-  // GET /pagamentos - obter os dados da tabela pagamentos
+  // GET /pagamentos 
   index: async (req, res, next) => {
     try {
-      const resposta = await pagamentoModel.retornaPagamentos();
+      const resposta = await pagamentosModel.retornarPagamentos();
       res.status(200).json({ data: resposta });
     } catch (erro) {
       next(erro);
     }
-  }, // ajustando
+  }, 
+
+  // POST /pagamentos
   create: async (req, res, next) => {
     try {
-      const body = SchemaPagamento.safeParse(req.body);
-      if (!body.sucess) 
-        throw new HttpError(400,"Erro de validação: Todos os campos são obrigatório.");
-      
-      const { usuarioId, dataVencimento, dataPagamento, valor } = body.data
-      const novoPagamento = await pagamentosRepository.createPagamento( usuarioId, dataVencimento, dataPagamento, valor)
-      return res.status(201).json({ message: "Novo pagamento efetuado com sucesso", data: novoPagamento})
+      const corpoDaRequisicao = req.body
+      const novoPagamento = await pagamentosModel.criarPagamento(corpoDaRequisicao)
+      return res.status(201).json({ message: "novo pagamento efetuado com sucesso.", data: novoPagamento})
     } 
-    catch(erro){
-      next(erro)
-    }
-
+    catch(error){
+      next(error)
     }
   }
+}
 
-module.exports = pagamentosController;
+module.exports = pagamentosController

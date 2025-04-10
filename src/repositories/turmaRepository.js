@@ -1,4 +1,4 @@
-const prisma = require("../database/db");
+const prisma = require("../database/db")
 const Turma = require("../entities/Turma")
 
 const turmaRepository = {

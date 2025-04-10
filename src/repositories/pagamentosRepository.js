@@ -1,23 +1,16 @@
-
-const prisma = require("../database/db");
-const Pagamento = require("../entities/Pagamento");
+const prisma = require("../database/db")
+const Pagamento = require("../entities/Pagamento")
 
 const pagamentosRepository = {
-  // retorna todos os pagamentos
+  // Retorna todos os pagamentos do bando de dados
   retorneTodosOsPagamentos: async () => {
-    const pagamentos = await prisma.pagamento.findMany({
-      select: {
-        id: true,
-        usuarioId: true,
-        dataVencimento: true,
-        dataPagamento: true,
-        valor: true,
-      },
-    });
-    return pagamentos;
+    const pagamentos = await prisma.pagamento.findMany()
+    return pagamentos
   },
-  createPagamento: async (usuarioId, dataVencimento, dataPagamento, valor) => {
-    const pagamento = new Pagamento(usuarioId, dataVencimento, dataPagamento, valor);
+
+  // Rota de criar um novo pagamento
+  crieNovoPagamento: async (data) => {
+    const pagamento = new Pagamento(data)
     
     const novoPagamento = await prisma.pagamento.create({
       data: pagamento,
@@ -25,12 +18,12 @@ const pagamentosRepository = {
         id: true,
         usuarioId: true,
         dataVencimento: true,
-        dataVencimento: true,
         valor: true,
       },
     });
-    return novoPagamento;
+
+    return novoPagamento
   },
 };
 
-module.exports = pagamentosRepository;
+module.exports = pagamentosRepository

@@ -1,6 +1,7 @@
 const express = require("express")
 const usuariosController = require("./controllers/usuariosController")
 const turmaController = require("./controllers/turmaController")
+const pagamentosController = require("./controllers/pagamentosController")
 
 const router = express.Router()
 
@@ -17,8 +18,8 @@ router.post("/usuarios", usuariosController.create)
 router.get("/turmas", turmaController.index)
 router.post("/turmas", turmaController.create)
 
-// rotas relacionadas do pagamento
-router.get("/dashbordPagamentos", pagamentosController.index ) // mostra todos os pagamentos do bd table pagamentos
-router.post('/dashbordPagamentos', pagamentosController.create)
+// rotas relacionadas a pagamentos
+router.get("/pagamentos", pagamentosController.index ) 
+router.post('/pagamentos', pagamentosController.create)
 
 module.exports = router

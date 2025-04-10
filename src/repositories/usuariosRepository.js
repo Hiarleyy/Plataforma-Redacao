@@ -1,5 +1,5 @@
-const prisma = require("../database/db");
-const Usuario = require("../entities/Usuario");
+const prisma = require("../database/db")
+const Usuario = require("../entities/Usuario")
 
 const usuariosRepository = {
   // Retorna todos os usuários do bando de dados
