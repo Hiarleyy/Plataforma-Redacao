@@ -5,8 +5,8 @@ class Modulos {
     this.id = uuid();
     this.nome = modulos.nome;
     this.descricao = modulos.descricao;
-    this.playlist_url = modulos.playlist_url;
-    this.data_criacao = modulos.data_criacao;
+    this.playlistUrl = modulos.playlistUrl;
+    this.dataCriacao = modulos.dataCriacao;
   }
 }
 

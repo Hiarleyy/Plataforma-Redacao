@@ -7,7 +7,7 @@ class Redacao {
     this.caminho = redacao.caminho;
     this.data = redacao.data;
     this.status = redacao.status;
-    this.usuarioId = redacao.usuario_id; 
+    this.usuarioId = redacao.usuarioId; 
   }
 }
 

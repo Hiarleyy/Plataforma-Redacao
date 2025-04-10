@@ -6,8 +6,8 @@ class Correcao {
     this.nota = correcao.nota;
     this.caminho = correcao.caminho;
     this.data = correcao.data;
-    this.competencias_id = correcao.competencias_id;
-    this.redacao_id = correcao.redacao_id;
+    this.competenciaId = correcao.competenciaId;
+    this.redacaoId = correcao.redacaoId;
 }
 }
 
