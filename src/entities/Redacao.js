@@ -5,7 +5,6 @@ class Redacao {
     this.id = uuid();
     this.titulo = redacao.titulo;
     this.caminho = redacao.caminho;
-    this.data = new Date();
     this.status = redacao.status?.toUpperCase() ?? "PENDENTE";
     this.usuarioId = redacao.usuarioId; 
   }

@@ -4,7 +4,6 @@ class Turma {
   constructor(turma) {
     this.id = uuid();
     this.nome = turma.nome;
-    this.dataCriacao = new Date();
   }
 }
 

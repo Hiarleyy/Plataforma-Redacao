@@ -7,7 +7,6 @@ class Frequencia {
     this.turmaId = frequencia.turmaId;
     this.status = frequencia.status;
     this.justificativa = frequencia.justificativa;
-    this.data = new Date(); 
   }
 }
 

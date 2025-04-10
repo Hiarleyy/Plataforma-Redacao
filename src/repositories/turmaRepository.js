@@ -1,21 +1,22 @@
 const prisma = require("../database/db");
-const Turma = require("../entities/turma");
+const Turma = require("../entities/Turma")
 
-const usuariosRepository = {
-  // Retorna todos os usuários do bando de dados
+const turmaRepository = {
+  // Retorna todas as turmas do bando de dados
   retorneTodasAsTurmas: async () => {
     const turmas = await prisma.turma.findMany({
       select: {
         id: true,
         nome: true,
         dataCriacao: true,
+        usuarios: true
       },
     })
 
     return turmas
   },
 
-  // Retorna um usuário específico pelo id
+  // Retorna uma turma específica pelo id
   retorneUmaTurmaPorId: async (id) => {
     const turma = await prisma.turma.findUnique({
       where: { id },
@@ -29,7 +30,7 @@ const usuariosRepository = {
     return turma
   },
 
-   // Retorna um usuário específico pelo email
+   // Retorna uma turma específica pelo nome
    retorneUmaTurmaPeloNome: async (nome) => {
     const turma = await prisma.turma.findUnique({
       where: { nome },
@@ -43,7 +44,7 @@ const usuariosRepository = {
     return turma
   },
 
-  // Rota de criar um novo usuário
+  // Rota de criar uma nova turma
   crieNovaTurma: async (data) => {
     const turma = new Turma(data)
 

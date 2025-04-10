@@ -17,8 +17,8 @@ model Usuario {
   nome            String     @db.VarChar(200)
   email           String     @unique @db.VarChar(200)
   tipoUsuario     Cargo      @default(STANDARD)
-  dataCriacao     DateTime?  @db.Date
-  dataAtualizacao DateTime?  @db.Date
+  dataCriacao     DateTime   @default(now())
+  dataAtualizacao DateTime   @updatedAt
   turmaId         String?    @db.VarChar(36)
 
   // Relação muitos para um: Muitos usuários podem pertencer a uma turma
@@ -32,8 +32,8 @@ model Usuario {
 
 model Turma {
   id          String       @db.Char(36) @id
-  nome        String       @db.VarChar(100)
-  dataCriacao DateTime?    @db.Date
+  nome        String       @unique @db.VarChar(100)
+  dataCriacao DateTime    @default(now())
 
   // Relação um para muitos: Uma turma pode ter muitos usuários
   usuarios    Usuario[]    
@@ -54,7 +54,7 @@ model Frequencia {
   turmaId      String    @db.VarChar(36)
   status       StatusFrequencia 
   justificativa String?  @db.Text
-  data         DateTime  @db.Date
+  data         DateTime  @default(now())
 
   // Relações muitos para um
   usuario Usuario @relation(fields: [usuarioId], references: [id])
@@ -65,7 +65,7 @@ model Pagamento {
   id             String    @db.Char(36) @id
   usuarioId      String    @db.VarChar(36)
   dataVencimento DateTime  @db.Date
-  dataPagamento  DateTime? @db.Date
+  dataPagamento  DateTime  @default(now())
   valor          Float
 
   // Relação muitos para um: Muitos pagamentos podem pertencer a um usuário
@@ -81,7 +81,7 @@ model Redacao {
   id         String         @db.Char(36) @id
   titulo     String         @db.VarChar(200)
   caminho    String?        @db.VarChar(100)
-  data       DateTime       @db.Date
+  data       DateTime       @default(now())
   status     StatusRedacao  @default(PENDENTE)
   usuarioId  String         @db.VarChar(36)
 
@@ -96,7 +96,7 @@ model Correcao {
   id          String       @db.Char(36) @id
   nota        Float
   caminho     String?      @db.VarChar(100)
-  data        DateTime     @db.Date
+  data        DateTime     @default(now())
   feedback    String?      @db.Text
   redacaoId   String       @unique @db.VarChar(36)
 
@@ -126,7 +126,7 @@ model Modulo {
   nome         String   @db.VarChar(100)
   descricao    String?  @db.Text
   playlistUrl  String   @db.VarChar(255)
-  dataCriacao  DateTime @db.Date
+  dataCriacao  DateTime @default(now())
 
   // Relação um para muitos: Um módulo possui vários vídeos
   videos       Video[]

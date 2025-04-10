@@ -7,8 +7,6 @@ class Usuario {
     this.email = usuario.email;
     this.tipoUsuario = usuario.tipoUsuario?.toUpperCase() ?? "STANDARD";
     this.turmaId = usuario.turmaId ?? null;
-    this.dataCriacao = new Date();
-    this.dataAtualizacao = new Date();
   }
 }
 

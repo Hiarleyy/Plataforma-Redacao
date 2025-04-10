@@ -6,7 +6,6 @@ class Modulo {
     this.nome = modulo.nome;
     this.descricao = modulo.descricao;
     this.playlistUrl = modulo.playlistUrl;
-    this.dataCriacao = new Date();
   }
 }
 

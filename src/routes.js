@@ -1,5 +1,6 @@
 const express = require("express")
 const usuariosController = require("./controllers/usuariosController")
+const turmaController = require("./controllers/turmaController")
 
 const router = express.Router()
 
@@ -10,5 +11,10 @@ router.get("/teste", (req, res) => {
 
 // Rotas relacionadas a usuários
 router.get("/usuarios", usuariosController.index)
+router.post("/usuarios", usuariosController.create)
+
+// Rotas relacionadas a turmas
+router.get("/turmas", turmaController.index)
+router.post("/turmas", turmaController.create)
 
 module.exports = router

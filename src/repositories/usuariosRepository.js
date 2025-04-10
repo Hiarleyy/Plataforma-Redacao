@@ -56,7 +56,7 @@ const usuariosRepository = {
         id: true,
         nome: true,
         email: true,
-        cargo: true,
+        tipoUsuario: true,
       },
     })
 
