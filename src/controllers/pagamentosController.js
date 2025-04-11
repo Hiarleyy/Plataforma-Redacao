@@ -1,11 +1,11 @@
-const pagamentosModel = require("../models/pagamentosModel");
+const pagamentosModel = require("../models/pagamentosModel")
 
 const pagamentosController = {
   // GET /pagamentos 
   index: async (req, res, next) => {
     try {
-      const resposta = await pagamentosModel.retornarPagamentos();
-      res.status(200).json({ data: resposta });
+      const resposta = await pagamentosModel.retornarPagamentos()
+      res.status(200).json({ data: resposta })
     } catch (erro) {
       next(erro);
     }

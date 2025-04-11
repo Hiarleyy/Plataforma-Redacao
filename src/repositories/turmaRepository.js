@@ -44,7 +44,7 @@ const turmaRepository = {
     return turma
   },
 
-  // Rota de criar uma nova turma
+  // Crie uma nova turma
   crieNovaTurma: async (data) => {
     const turma = new Turma(data)
 

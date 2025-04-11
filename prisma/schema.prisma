@@ -137,6 +137,7 @@ model Video {
   titulo    String   @db.VarChar(200)
   url       String   @db.VarChar(255)
   ordem     Int
+  thumbnail String   @db.VarChar(255)
   moduloId  String   @db.VarChar(36)
 
   // Relação muitos para um: Muitos vídeos pertencem a um módulo

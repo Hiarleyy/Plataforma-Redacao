@@ -18,48 +18,20 @@ const usuariosRepository = {
 
   // Retorna um usuário específico pelo id
   retorneUmUsuarioPeloId: async (id) => {
-    const usuario = await prisma.usuario.findUnique({
-      where: { id },
-      select: {
-        id: true,
-        nome: true,
-        email: true,
-        tipoUsuario: true
-      }
-    })
-
+    const usuario = await prisma.usuario.findUnique({ where: { id } })
     return usuario
   },
 
    // Retorna um usuário específico pelo email
    retorneUmUsuarioPeloEmail: async (email) => {
-    const usuario = await prisma.usuario.findUnique({
-      where: { email },
-      select: {
-        id: true,
-        nome: true,
-        email: true,
-        tipoUsuario: true
-      }
-    })
-
+    const usuario = await prisma.usuario.findUnique({ where: { email } })
     return usuario
   },
 
-  // Rota de criar um novo usuário
+  // Crie um novo usuário
   crieNovoUsuario: async (data) => {
     const usuario = new Usuario(data)
-
-    const novoUsuario = await prisma.usuario.create({
-      data: usuario,
-      select: {
-        id: true,
-        nome: true,
-        email: true,
-        tipoUsuario: true,
-      },
-    })
-
+    const novoUsuario = await prisma.usuario.create({ data: usuario })
     return novoUsuario
   },
 }

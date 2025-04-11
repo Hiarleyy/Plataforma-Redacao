@@ -8,7 +8,7 @@ const pagamentosRepository = {
     return pagamentos
   },
 
-  // Rota de criar um novo pagamento
+  // Crie um novo pagamento
   crieNovoPagamento: async (data) => {
     const pagamento = new Pagamento(data)
     
