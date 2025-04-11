@@ -13,7 +13,9 @@ router.get("/teste", (req, res) => {
 
 // Rotas relacionadas a usuários
 router.get("/usuarios", usuariosController.index)
+router.get("/usuarios/:id", usuariosController.show)
 router.post("/usuarios", usuariosController.create)
+router.put("/usuarios/:id", usuariosController.update)
 
 // Rotas relacionadas a turmas
 router.get("/turmas", turmaController.index)
