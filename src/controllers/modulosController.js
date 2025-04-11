@@ -4,7 +4,7 @@ const modulosController = {
   // GET /modulos
   index: async (req, res, next) => {
     try {
-      const resposta = await modulosController.index()
+      const resposta = await modulosModel.retornarModulos()
       res.status(200).json({ data: resposta });
     } catch (erro) {
       next(erro);
@@ -15,12 +15,23 @@ const modulosController = {
   show: async (req, res, next) => {
     try {
       const { id } = req.params
-      const modulo = await modulosModel.retornarUmModulo(id)
-      res.status(200).json({ data: modulo })
+      const resposta = await modulosModel.retornarUmModulo(id)
+      res.status(200).json({ data: resposta })
     } catch (error) {
       next(error)
     }
   },
 
   // POST /modulos
+  create: async (req, res, next) => {
+    try {
+      const corpoDaRequisicao = req.body
+      const resposta = await modulosModel.criarModulo(corpoDaRequisicao)
+      res.status(200).json({ message: "modulo criado com sucesso.", data: resposta })
+    } catch (error) {
+      next(error)
+    }
+  }
 }
+
+module.exports = modulosController

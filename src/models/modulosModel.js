@@ -4,6 +4,17 @@ const getPlaylistVideos = require("../utils/getPlaylistVideos")
 const HttpError = require("../error/HttpError")
 
 const modulosModel = {
+  retornarModulos: async () => {
+    const modulos = await modulosRepository.retorneTodosOsModulos()
+    return modulos
+  },
+
+  retornarUmModulo: async (id) => {
+    const modulo = await modulosRepository.retorneUmModuloPeloId(id)
+    if (!modulo) throw new HttpError(404, "esse modulo não existe.")
+    return modulo
+  },
+
   criarModulo: async (data) => {
     const modulo = await modulosRepository.crieNovoModulo(data)
 
@@ -17,6 +28,8 @@ const modulosModel = {
         moduloId: modulo.id
       })
     }
+
+    return modulo
   }
 }
 
