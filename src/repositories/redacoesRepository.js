@@ -1,24 +1,24 @@
-const { PrismaClient } = require("@prisma/client");
+const prisma = require("../database/db");
 const { v4: uuidv4 } = require("uuid");
+const Redacao = require("../entities/Redacao");
 
-const prisma = new PrismaClient();
 
-async function criarRedacao({ titulo, caminho, usuarioId }) {
-  return await prisma.redacao.create({
-    data: {
-      id: uuidv4(),
-      titulo,
-      caminho,
-      usuarioId,
+const redacoesRepository = {
+    // Retorna todas as redações do banco de dados
+    listarRedacoes: async () => {
+        const redacoes = await prisma.redacao.findMany();
+        return redacoes;
     },
-  });
+    
+    // Cria uma nova redação
+    criarRedacao: async (data) => {
+        const redacao = new Redacao(data);
+        const novaRedacao = await prisma.redacao.create({data: redacao});
+        return novaRedacao;
+    },
+
+
+
 }
 
-async function listarRedacoes() {
-  return await prisma.redacao.findMany();
-}
-
-module.exports = {
-  criarRedacao,
-  listarRedacoes,
-};
+module.exports = redacoesRepository
