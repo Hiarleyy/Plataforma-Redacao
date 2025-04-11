@@ -2,6 +2,7 @@ const express = require("express")
 const usuariosController = require("./controllers/usuariosController")
 const turmaController = require("./controllers/turmaController")
 const pagamentosController = require("./controllers/pagamentosController")
+const modulosController = require("./controllers/modulosController")
 
 const router = express.Router()
 
@@ -18,8 +19,13 @@ router.post("/usuarios", usuariosController.create)
 router.get("/turmas", turmaController.index)
 router.post("/turmas", turmaController.create)
 
-// rotas relacionadas a pagamentos
+// Rotas relacionadas a pagamentos
 router.get("/pagamentos", pagamentosController.index ) 
 router.post('/pagamentos', pagamentosController.create)
+
+// Rotas relacionadas a modulos
+router.get("/modulos", modulosController.index)
+router.get("/modulos/:id", modulosController.show)
+router.post("/modulos", modulosController.create)
 
 module.exports = router

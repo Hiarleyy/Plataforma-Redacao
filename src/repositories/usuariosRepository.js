@@ -34,6 +34,25 @@ const usuariosRepository = {
     const novoUsuario = await prisma.usuario.create({ data: usuario })
     return novoUsuario
   },
+
+  // Atualize um usuário
+  atualizeUmUsuario: async (id, data) => {
+    const usuarioAtualizado = await prisma.usuario.update({
+      data,
+      where: { id }
+    })
+
+    return usuarioAtualizado
+  },
+
+  // Delete um usuário
+  deleteUmUsuario: async (id) => {
+    const usuarioDeletado = await prisma.modulo.delete(
+      { where: { id }, select: { id: true, nome: true } }
+    )
+
+    return usuarioDeletado
+  }
 }
 
 module.exports = usuariosRepository

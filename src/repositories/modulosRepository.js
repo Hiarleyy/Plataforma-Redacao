@@ -18,7 +18,17 @@ const modulosRepository = {
 
   // Retorna um modulo específico pelo id
   retorneUmModuloPeloId: async (id) => {
-    const modulo = await prisma.modulo.findUnique({ where: { id } })
+    const modulo = await prisma.modulo.findUnique({ 
+        where: { id }, 
+        select: { 
+          id: true,
+          nome: true, 
+          descricao: true,
+          playlistUrl: true,
+          videos: true 
+        } 
+    })
+
     return modulo
   },
 
@@ -34,7 +44,7 @@ const modulosRepository = {
     const moduloDeletado = await prisma.modulo.delete(
       { where: { id }, select: { id: true, nome: true } }
     )
-    
+
     return moduloDeletado
   }
 }
