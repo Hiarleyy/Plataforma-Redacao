@@ -24,13 +24,25 @@ const pagamentosController = {
   },
   update: async(req, res, next) => {
     try {
+      const { id } = req.params
       const corpoDaRequisicao = req.body
-      const resposta = await pagamentosModel.updatePagamento(corpoDaRequisicao)
-      console.log(corpoDaRequisicao)
-      res.status(200).json({ message: "usuário atualizado com sucesso.", data: resposta })
-    } catch(erro){
+      const resposta = await pagamentosModel.atualizarPagamento(id, corpoDaRequisicao)
 
+      res.status(200).json({ message: "usuário atualizado com sucesso.", data: resposta })
+    } catch(error){
+      next(error)
     }
+  },
+  delete: async(req, res, next) => {
+    try{
+      const {id} = req.params
+      const corpoDaRequisicao = req.body
+
+      const resposta = await pagamentosModel.deletarPagamentos(id, corpoDaRequisicao)
+      res.status(200).json({message: "usuário deletado com sucesso.", data: resposta})
+    }catch(error){
+      next(error)
+  }
   }
 }
 

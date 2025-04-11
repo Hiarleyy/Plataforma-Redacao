@@ -26,6 +26,7 @@ router.post("/turmas", turmaController.create)
 router.get("/pagamentos", pagamentosController.index ) 
 router.post('/pagamentos', pagamentosController.create)
 router.put('/pagamentos/:id',pagamentosController.update )
+router.delete('/pagamentos/:id', pagamentosController.delete)
 
 // Rotas relacionadas a modulos
 router.get("/modulos", modulosController.index)
