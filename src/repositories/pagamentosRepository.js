@@ -11,19 +11,22 @@ const pagamentosRepository = {
   // Crie um novo pagamento
   crieNovoPagamento: async (data) => {
     const pagamento = new Pagamento(data)
-    
-    const novoPagamento = await prisma.pagamento.create({
-      data: pagamento,
-      select: {
-        id: true,
-        usuarioId: true,
-        dataVencimento: true,
-        valor: true,
-      },
-    });
-
+    const novoPagamento = await prisma.pagamento.create({data: pagamento});
     return novoPagamento
   },
+  updatePagamento: async (id,bodyUpdated ) => {
+    const updatePagamento = await prisma.pagamento.update({
+      data: {
+        usuarioId: bodyUpdated.usuarioId,
+        valor: bodyUpdated.valor,
+        dataVencimento:bodyUpdated.dataVencimento,
+      },
+      where: {
+        id
+      }
+    })
+    return updatePagamento
+  }
 };
 
 module.exports = pagamentosRepository

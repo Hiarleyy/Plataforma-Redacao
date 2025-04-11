@@ -64,7 +64,7 @@ model Frequencia {
 model Pagamento {
   id             String    @db.Char(36) @id
   usuarioId      String    @db.VarChar(36)
-  dataVencimento DateTime  @db.Date
+  dataVencimento DateTime?  @db.Date
   dataPagamento  DateTime  @default(now())
   valor          Float
 
