@@ -19,14 +19,14 @@ const modulosRepository = {
   // Retorna um modulo específico pelo id
   retorneUmModuloPeloId: async (id) => {
     const modulo = await prisma.modulo.findUnique({ 
-        where: { id }, 
-        select: { 
-          id: true,
-          nome: true, 
-          descricao: true,
-          playlistUrl: true,
-          videos: true 
-        } 
+      where: { id }, 
+      select: { 
+        id: true,
+        nome: true, 
+        descricao: true,
+        playlistUrl: true,
+        videos: true 
+      } 
     })
 
     return modulo

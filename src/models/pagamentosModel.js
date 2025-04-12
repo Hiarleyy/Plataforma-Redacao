@@ -23,6 +23,7 @@ const pagamentosModel = {
     return Novopagamento
 
   },
+  
   updatePagamento: async(data) => {
     const corpo = criarPagamentoSchema.safeParse(data)
     if (!corpo.success) {

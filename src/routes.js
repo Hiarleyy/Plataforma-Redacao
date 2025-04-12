@@ -3,8 +3,9 @@ const usuariosController = require("./controllers/usuariosController")
 const turmaController = require("./controllers/turmaController")
 const pagamentosController = require("./controllers/pagamentosController")
 const modulosController = require("./controllers/modulosController")
-const redacoesController = require("./controllers/redacoesController");
-const upload = require("./middlewares/upload"); // correto aqui!
+const redacoesController = require("./controllers/redacoesController")
+const uploadMiddleware = require("./middlewares/uploadMiddleware")
+
 const router = express.Router()
 
 // Rota de teste
@@ -32,8 +33,8 @@ router.get("/modulos", modulosController.index)
 router.get("/modulos/:id", modulosController.show)
 router.post("/modulos", modulosController.create)
 
-// Rotas relacionadas a redacoes
+// Rotas relacionadas a redações
+router.get("/redacoes", redacoesController.index)
+router.post("/redacoes", uploadMiddleware.single("file"), redacoesController.create)
 
-router.post("/redacoes", upload.single("file"), redacoesController.uploadRedacao);
-router.get("/redacoes", redacoesController.listarRedacoes); // opcional
 module.exports = router

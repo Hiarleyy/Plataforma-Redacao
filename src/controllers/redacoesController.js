@@ -1,40 +1,45 @@
-const redacaoRepository = require("../repositories/redacoesRepository");
+const redacoesModel = require("../models/redacoesModel")
 
-async function uploadRedacao(req, res) {
-  try {
-    const { titulo, usuarioId } = req.body;
+const redacoesController = {
+  // GET /redacoes
+  index: async (req, res, next) => {
+    try {
+      const { usuarioId } = req.query;
 
-    if (!req.file) {
-      return res.status(400).json({ error: "Arquivo não enviado." });
+      let resposta
+
+      if (!usuarioId) {
+        resposta = await redacoesModel.retornarRedacoes()
+        res.status(200).json({ data: resposta.redacoes });
+      }
+
+      resposta = await redacoesModel.retornarRedacoes(usuarioId)
+      res.status(200).json({ data: resposta.redacoes });
+    } catch (error) {
+      next(error)
     }
+  },
 
-    if (!titulo || !usuarioId) {
-      return res.status(400).json({ error: "Título e usuárioId são obrigatórios." });
+  // POST /redacoes
+  create: async (req, res, next) => {
+    try {
+      const { titulo, usuarioId } = req.body;
+
+      if (!req.file) {
+        return res.status(400).json({ error: "Arquivo não enviado." });
+      }
+
+      const resposta = await redacoesModel.criarRedacao({
+        titulo,
+        caminho: req.file.filename,
+        usuarioId,
+      });
+
+      res.status(201).json({ message: "Redação salva com sucesso!", data: resposta });
+    } catch (error) {
+      next(error)
     }
-
-    const novaRedacao = await redacaoRepository.criarRedacao({
-      titulo,
-      caminho: req.file.filename,
-      usuarioId,
-    });
-
-    res.status(201).json({ message: "Redação salva com sucesso!", redacao: novaRedacao });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Erro ao salvar a redação." });
   }
 }
 
-async function listarRedacoes(req, res) {
-  try {
-    const redacoes = await redacaoRepository.listarRedacoes();
-    res.status(200).json(redacoes);
-  } catch (error) {
-    res.status(500).json({ error: "Erro ao listar redações." });
-  }
-}
-
-module.exports = {
-  uploadRedacao,
-  listarRedacoes,
-};
+module.exports = redacoesController
