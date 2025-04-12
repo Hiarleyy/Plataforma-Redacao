@@ -27,9 +27,7 @@ const redacoesModel = {
     // Se o usuário tiver 20 redações no total, deletamos a sua redação mais antiga
     const redacoes = await redacoesRepository.retorneTodasAsRedacoes(corpo.data.usuarioId)
 
-    console.log("aaaaaaaaaaaa")
     if (redacoes.quantidadeRedacoes === 20) {
-      console.log("entrou no quant")
       const redacaoMaisAntiga = await redacoesRepository.retorneRedacaoMaisAntiga(corpo.data.usuarioId)
       deletarArquivoRedacao(redacaoMaisAntiga.caminho)
       await redacoesRepository.deletarUmaRedacao(redacaoMaisAntiga.id)
