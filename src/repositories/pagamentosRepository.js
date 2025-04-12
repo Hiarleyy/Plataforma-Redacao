@@ -8,25 +8,33 @@ const pagamentosRepository = {
     return pagamentos
   },
 
+  // Retorna um pagamento pelo id
+  retorneUmPagamentoPeloId: async (id) => {
+    const pagamento = await prisma.pagamento.findUnique({where:{id}})
+    return pagamento
+  },
+
   // Crie um novo pagamento
   crieNovoPagamento: async (data) => {
     const pagamento = new Pagamento(data)
     const novoPagamento = await prisma.pagamento.create({data: pagamento});
     return novoPagamento
   },
-  updatePagamento: async (id,bodyUpdated ) => {
+
+  updateUmPagamento: async (id, data ) => {
     const updatePagamento = await prisma.pagamento.update({
-      data: {
-        usuarioId: bodyUpdated.usuarioId,
-        valor: bodyUpdated.valor,
-        dataVencimento:bodyUpdated.dataVencimento,
-      },
-      where: {
-        id
-      }
+      data,
+      where:{ id }
     })
-    return updatePagamento
-  }
-};
+  },
+
+  deleteUmPagamento: async (id) => {
+    const deletePagamento = await prisma.pagamento.delete({
+      where: { id }
+    }) 
+
+    return deletePagamento
+  }  
+}
 
 module.exports = pagamentosRepository
