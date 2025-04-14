@@ -3,8 +3,8 @@ const usuariosController = require("./controllers/usuariosController")
 const turmaController = require("./controllers/turmaController")
 const pagamentosController = require("./controllers/pagamentosController")
 const modulosController = require("./controllers/modulosController")
-const redacoesController = require("./controllers/redacoesController");
-const competenciasController = require("./controllers/competenciasController")
+const redacoesController = require("./controllers/redacoesController")
+const propostasController = require("./controllers/propostasController")
 const uploadMiddleware = require("./middlewares/uploadMiddleware")
 
 const router = express.Router()
@@ -35,15 +35,17 @@ router.get("/modulos", modulosController.index)
 router.get("/modulos/:id", modulosController.show)
 router.post("/modulos", modulosController.create)
 
-
-//Rotas relacionadas a competencias
-router.get("/competencias",competenciasController.index)
-router.get("/competencias/:id",competenciasController.show)
-router.post("/competencias",competenciasController.create)
-
 // Rotas relacionadas a redações
 router.get("/redacoes", redacoesController.index)
 router.post("/redacoes", uploadMiddleware.single("file"), redacoesController.create)
 router.get("/redacoes/download/:id", redacoesController.download)
+
+//Rotas relacionadas a propostas
+router.get("/propostas", propostasController.listarPropostas);
+router.get("/propostas/:id", propostasController.buscarProposta);
+router.post("/propostas", uploadMiddleware.single("file"), propostasController.criarProposta);
+router.delete("/propostas/:id", propostasController.deletarProposta);
+
+
 
 module.exports = router
