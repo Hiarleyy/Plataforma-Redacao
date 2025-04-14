@@ -1,40 +1,69 @@
-const redacaoRepository = require("../repositories/redacoesRepository");
+const redacoesModel = require("../models/redacoesModel")
+const path = require("path")
+const fs = require("fs")
 
-async function uploadRedacao(req, res) {
-  try {
-    const { titulo, usuarioId } = req.body;
+const redacoesController = {
+  // GET /redacoes
+  index: async (req, res, next) => {
+    try {
+      const { usuarioId } = req.query;
 
-    if (!req.file) {
-      return res.status(400).json({ error: "Arquivo não enviado." });
+      let resposta
+
+      if (!usuarioId) {
+        resposta = await redacoesModel.retornarRedacoes()
+        res.status(200).json({ data: resposta.redacoes });
+      }
+
+      resposta = await redacoesModel.retornarRedacoes(usuarioId)
+      res.status(200).json({ data: resposta.redacoes });
+    } catch (error) {
+      next(error)
     }
+  },
 
-    if (!titulo || !usuarioId) {
-      return res.status(400).json({ error: "Título e usuárioId são obrigatórios." });
+  // POST /redacoes
+  create: async (req, res, next) => {
+    try {
+      const { titulo, usuarioId } = req.body;
+
+      if (!req.file) {
+        return res.status(400).json({ error: "Arquivo não enviado." });
+      }
+
+      const resposta = await redacoesModel.criarRedacao({
+        titulo,
+        caminho: req.file.filename,
+        usuarioId,
+      });
+
+      res.status(201).json({ message: "Redação salva com sucesso!", data: resposta });
+    } catch (error) {
+      next(error)
     }
+  },
 
-    const novaRedacao = await redacaoRepository.criarRedacao({
-      titulo,
-      caminho: req.file.filename,
-      usuarioId,
-    });
+  // GET /redacoes/download/:id
+  download: async (req, res, next) => {
+    try {
+      const { id } = req.params
+      const redacao = await redacoesModel.retornarRedacao(id)
 
-    res.status(201).json({ message: "Redação salva com sucesso!", redacao: novaRedacao });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Erro ao salvar a redação." });
+      const filePath = path.join(__dirname, "..", "uploads", "redacoes", redacao.caminho)
+
+      if (!fs.existsSync(filePath)) {
+        return res.status(404).json({ message: "Arquivo não encontrado." })
+      }
+
+      res.download(filePath, `${redacao.titulo}.pdf`, (err) => {
+        if (err) {
+          res.status(500).json({ message: "Erro ao fazer download do arquivo." })
+        }
+      })
+    } catch (error) {
+      next(error)
+    }
   }
 }
 
-async function listarRedacoes(req, res) {
-  try {
-    const redacoes = await redacaoRepository.listarRedacoes();
-    res.status(200).json(redacoes);
-  } catch (error) {
-    res.status(500).json({ error: "Erro ao listar redações." });
-  }
-}
-
-module.exports = {
-  uploadRedacao,
-  listarRedacoes,
-};
+module.exports = redacoesController

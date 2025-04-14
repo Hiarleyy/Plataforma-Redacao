@@ -19,7 +19,7 @@ const usuariosModel = {
     const corpo = criarUsuarioSchema.safeParse(data)
     
     if (!corpo.success) {
-      throw new HttpError(400, "Erro de validação: Verifique se os dados enviados estão corretos.");
+      throw new HttpError(400, "Erro de validação: Verifique se os dados enviados estão corretos.")
     } 
 
     // Verificando se o email já foi cadastrado
@@ -35,7 +35,7 @@ const usuariosModel = {
     const corpo = atualizarUsuarioSchema.safeParse(data)
     
     if (!corpo.success) {
-      throw new HttpError(400, "Erro de validação: Verifique se os dados enviados estão corretos.");
+      throw new HttpError(400, "Erro de validação: Verifique se os dados enviados estão corretos.")
     } 
 
     // Verificando se o usuário existe
