@@ -12,6 +12,14 @@ const redacoesModel = {
     return await redacoesRepository.retorneTodasAsRedacoes(usuarioId)
   },
 
+  // Buscando uma redação
+  retornarRedacao: async (id) => {
+    const redacao = await redacoesRepository.retornaUmaRedacao(id)
+    if (!redacao) throw new HttpError(404, "Essa redação não existe.")
+    return redacao
+  },
+
+  // Criando uma redação
   criarRedacao: async (data) => {
     // Vericando se o corpo da requisição respeita o formato de validação do zod
     const corpo = criarRedacaoSchema.safeParse(data)
@@ -22,7 +30,7 @@ const redacoesModel = {
 
     // Verificando se o usuário existe
     const usuarioExiste = await usuariosModel.retornarUmUsuario(corpo.data.usuarioId)
-    if (!usuarioExiste) throw new HttpError(404, "esse usuário não existe.")
+    if (!usuarioExiste) throw new HttpError(404, "Esse usuário não existe.")
 
     // Se o usuário tiver 20 redações no total, deletamos a sua redação mais antiga
     const redacoes = await redacoesRepository.retorneTodasAsRedacoes(corpo.data.usuarioId)

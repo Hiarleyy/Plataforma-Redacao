@@ -24,6 +24,12 @@ const redacoesRepository = {
     return { redacoes, quantidadeRedacoes };
   },
 
+  // Retorna uma redação específica
+  retornaUmaRedacao: async (id) => {
+    const redacao = await prisma.redacao.findUnique({ where: { id } })
+    return redacao
+  },
+
   // Retorna a redação mais antiga de um usário
   retorneRedacaoMaisAntiga: async (usuarioId) => {
     const redacao = await prisma.redacao.findFirst({ where: { usuarioId }, orderBy: { data: "asc" } })

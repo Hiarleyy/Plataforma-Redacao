@@ -1,4 +1,6 @@
 const redacoesModel = require("../models/redacoesModel")
+const path = require("path")
+const fs = require("fs")
 
 const redacoesController = {
   // GET /redacoes
@@ -36,6 +38,28 @@ const redacoesController = {
       });
 
       res.status(201).json({ message: "Redação salva com sucesso!", data: resposta });
+    } catch (error) {
+      next(error)
+    }
+  },
+
+  // GET /redacoes/download/:id
+  download: async (req, res, next) => {
+    try {
+      const { id } = req.params
+      const redacao = await redacoesModel.retornarRedacao(id)
+
+      const filePath = path.join(__dirname, "..", "uploads", "redacoes", redacao.caminho)
+
+      if (!fs.existsSync(filePath)) {
+        return res.status(404).json({ message: "Arquivo não encontrado." })
+      }
+
+      res.download(filePath, `${redacao.titulo}.pdf`, (err) => {
+        if (err) {
+          res.status(500).json({ message: "Erro ao fazer download do arquivo." })
+        }
+      })
     } catch (error) {
       next(error)
     }
