@@ -35,7 +35,7 @@ const competenciasRepository = {
   },
 
   // Crie nova competencia
-  crieNovasCompetencias: async (data) => {
+  criarNovasCompetencias: async (data) => {
     const competencia = new Competencia(data)
     const novaCompetencia = await prisma.Competencia.create({ data: competencia })
     return novaCompetencia

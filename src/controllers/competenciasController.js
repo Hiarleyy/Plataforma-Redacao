@@ -15,7 +15,7 @@ const competenciasController = {
   show: async (req, res, next) => {
     try {
       const { id } = req.params
-      const resposta = await competenciasModel.retornarUmaCompetencia(id)
+      const resposta = await competenciasModel.retornarCompetenciasPorId(id)
       res.status(200).json({ data: resposta })
     } catch (error) {
       next(error)
@@ -32,6 +32,17 @@ const competenciasController = {
       next(error)
     }
   },
+  // DELETE /usuarios/:id
+  delete: async (req, res, next) => {
+    try {
+      const { id } = req.params
+      const resposta = await competenciasModel.deleteUmaCompetencia(id)
+      res.status(200).json({ message: "competencia deletada com sucesso", data: resposta })
+    } catch (error) {
+      next(error)
+    }
+  }
 }
+
 
 module.exports = competenciasController

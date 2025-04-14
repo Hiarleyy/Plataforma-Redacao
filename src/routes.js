@@ -3,15 +3,10 @@ const usuariosController = require("./controllers/usuariosController")
 const turmaController = require("./controllers/turmaController")
 const pagamentosController = require("./controllers/pagamentosController")
 const modulosController = require("./controllers/modulosController")
-<<<<<<< HEAD
 const redacoesController = require("./controllers/redacoesController");
 const competenciasController = require("./controllers/competenciasController")
-const upload = require("./middlewares/upload"); // correto aqui!
-=======
-const redacoesController = require("./controllers/redacoesController")
 const uploadMiddleware = require("./middlewares/uploadMiddleware")
 
->>>>>>> 836ffd12049605042262f393327dc0e6de16da97
 const router = express.Router()
 
 // Rota de teste
@@ -40,18 +35,15 @@ router.get("/modulos", modulosController.index)
 router.get("/modulos/:id", modulosController.show)
 router.post("/modulos", modulosController.create)
 
-<<<<<<< HEAD
 
 //Rotas relacionadas a competencias
 router.get("/competencias",competenciasController.index)
 router.get("/competencias/:id",competenciasController.show)
 router.post("/competencias",competenciasController.create)
-// Rotas relacionadas a redacoes
-=======
+
 // Rotas relacionadas a redações
 router.get("/redacoes", redacoesController.index)
 router.post("/redacoes", uploadMiddleware.single("file"), redacoesController.create)
 router.get("/redacoes/download/:id", redacoesController.download)
->>>>>>> 836ffd12049605042262f393327dc0e6de16da97
 
 module.exports = router

@@ -4,7 +4,7 @@ const { criarCompetenciaSchema } = require("../schemas/competenciaSchema")
 
 const competenciasModel = {
   retornarCompetencias: async () => {
-    const competencias = await competenciasRepository.retorneCompetencias()
+    const competencias = await competenciasRepository.retornarCompetencias()
     return competencias
   },
 
@@ -15,10 +15,13 @@ const competenciasModel = {
   },
 
   criarNovasCompetencias: async (data) => {
-    // Vericando se o corpo da requisição respeita o formato de validação do zod
     const corpo = criarCompetenciaSchema.safeParse(data)
+    if (!corpo.success) {
+      throw new HttpError(400, "Formato inválido das competências", corpo.error)
+    }
     const competencia = await competenciasRepository.criarNovasCompetencias(corpo.data)
     return competencia
+    
   },
   deletarCompetencias: async (id) => {
      // Verificando se o usuário existe
