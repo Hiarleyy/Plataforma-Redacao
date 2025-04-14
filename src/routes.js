@@ -3,7 +3,8 @@ const usuariosController = require("./controllers/usuariosController")
 const turmaController = require("./controllers/turmaController")
 const pagamentosController = require("./controllers/pagamentosController")
 const modulosController = require("./controllers/modulosController")
-const redacoesController = require("./controllers/redacoesController")
+const redacoesController = require("./controllers/redacoesController");
+const competenciasController = require("./controllers/competenciasController")
 const uploadMiddleware = require("./middlewares/uploadMiddleware")
 
 const router = express.Router()
@@ -33,6 +34,12 @@ router.delete('/pagamentos/:id', pagamentosController.delete)
 router.get("/modulos", modulosController.index)
 router.get("/modulos/:id", modulosController.show)
 router.post("/modulos", modulosController.create)
+
+
+//Rotas relacionadas a competencias
+router.get("/competencias",competenciasController.index)
+router.get("/competencias/:id",competenciasController.show)
+router.post("/competencias",competenciasController.create)
 
 // Rotas relacionadas a redações
 router.get("/redacoes", redacoesController.index)
