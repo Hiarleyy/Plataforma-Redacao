@@ -7,6 +7,11 @@ const turmaModel = {
     return turmas
   },
 
+  retornarTurma: async (id) => {
+    const turma = await turmaRepository.retorneUmaTurmaPorId(id)
+    
+  },
+
   criarTurma: async (data) => {
     // Verificando se já existe alguma turma com esse nome
     const nomeExiste = await turmaRepository.retorneUmaTurmaPeloNome(data.nome)

@@ -93,32 +93,26 @@ model Redacao {
 }
 
 model Correcao {
-  id          String       @db.Char(36) @id
-  nota        Float
-  caminho     String?      @db.VarChar(100)
-  data        DateTime     @default(now())
-  feedback    String?      @db.Text
-  redacaoId   String       @unique @db.VarChar(36)
-
-  // Relação um para um: Uma correção pertence a uma única redação
-  redacao     Redacao      @relation(fields: [redacaoId], references: [id])
-
-  // Relação um para um (explícita): Uma correção possui uma competência
-  competencias Competencia? @relation("CorrecaoToCompetencia")
-}
-
-model Competencia {
-  id            String    @db.Char(36) @id
+  id            String     @db.Char(36) @id
   competencia01 Int?
   competencia02 Int?
   competencia03 Int?
   competencia04 Int?
   competencia05 Int?
+  caminho       String?    @db.VarChar(100)
+  data          DateTime   @default(now())
+  feedback      String?    @db.Text
+  redacaoId     String     @unique @db.VarChar(36)
 
-  correcaoId    String    @unique @db.VarChar(36)
+  // Relação com Redacao
+  redacao       Redacao    @relation(fields: [redacaoId], references: [id])
+}
 
-  // Relação um para um (explícita): Uma competência pertence a uma correção
-  correcao      Correcao  @relation("CorrecaoToCompetencia", fields: [correcaoId], references: [id])
+model Proposta {
+  id      String   @id @db.VarChar(36)
+  tema    String   @db.VarChar(200)
+  caminho String   @db.VarChar(100)
+  data    DateTime @default(now())
 }
 
 model Modulo {

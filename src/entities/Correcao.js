@@ -6,7 +6,6 @@ class Correcao {
     this.nota = correcao.nota;
     this.caminho = correcao.caminho;
     this.feedback = correcao.feedback
-    this.competenciaId = correcao.competenciaId;
     this.redacaoId = correcao.redacaoId;
   }
 }

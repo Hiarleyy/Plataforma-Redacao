@@ -26,6 +26,9 @@ const usuariosModel = {
     const emailExiste = await usuariosRepository.retorneUmUsuarioPeloEmail(corpo.data.email)
     if (emailExiste) throw new HttpError(409, "Esse email já foi cadastrado no sistema.")
 
+    // Verificando se a turma do usuário existe
+    
+
     const usuario = await usuariosRepository.crieNovoUsuario(corpo.data)
     return usuario
   },

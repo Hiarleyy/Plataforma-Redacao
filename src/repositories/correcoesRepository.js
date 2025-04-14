@@ -1,9 +1,9 @@
 const prisma = require("../database/db")
-const Redacao = require("../entities/Redacao")
+const Correcao = require("../entities/Correcao")
 
-const redacoesRepository = {
-  // Retorna todas as redações do banco de dados
-  retorneTodasAsRedacoes: async (usuarioId = false) => {
+const correcoesRepository = {
+  // Retorna todas as correções do banco de dados
+  retorneTodasAsCorrecoes: async (usuarioId = false) => {
     let redacoes
     let quantidadeRedacoes
 
@@ -24,32 +24,26 @@ const redacoesRepository = {
     return { redacoes, quantidadeRedacoes };
   },
 
-  // Retorna uma redação específica
+  // Retorna uma correção específica
   retornaUmaRedacao: async (id) => {
     const redacao = await prisma.redacao.findUnique({ where: { id } })
     return redacao
   },
-
-  // Retorna a redação mais antiga de um usário
-  retorneRedacaoMaisAntiga: async (usuarioId) => {
-    const redacao = await prisma.redacao.findFirst({ where: { usuarioId }, orderBy: { data: "asc" } })
-    return redacao
-  },
     
-  // Cria uma nova redação
-  crieNovaRedacao: async (data) => {
-    const redacao = new Redacao(data);
-    const novaRedacao = await prisma.redacao.create({data: redacao})
+  // Cria uma nova correção
+  crieNovaCorreção: async (data) => {
+    const correcao = new Redacao(data);
+    const novaRedacao = await prisma.redacao.create({data: redacao});
     return novaRedacao;
   },
 
-  // Deleatr uma redação
-  deletarUmaRedacao: async (id) => {
-    const redacaoDeletada = await prisma.redacao.delete({ 
+  // Deleatar uma correção
+  deletarUmaCorrecao: async (id) => {
+    const correcaoDeletada = await prisma.correcao.delete({ 
       where: { id }, select: { id: true, titulo: true } 
     })
 
-    return redacaoDeletada
+    return correcaoDeletada
   }
 }
 
