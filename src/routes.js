@@ -29,7 +29,7 @@ router.post("/turmas", turmaController.create)
 // Rotas relacionadas a pagamentos
 router.get("/pagamentos", pagamentosController.index ) 
 router.post('/pagamentos', pagamentosController.create)
-router.put('/pagamentos/:id',pagamentosController.update )
+router.put('/pagamentos/:id',pagamentosController.update)
 router.delete('/pagamentos/:id', pagamentosController.delete)
 
 // Rotas relacionadas a modulos
