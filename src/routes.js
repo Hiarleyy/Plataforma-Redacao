@@ -7,6 +7,7 @@ const redacoesController = require("./controllers/redacoesController")
 const propostasController = require("./controllers/propostasController")
 const uploadMiddleware = require("./middlewares/uploadMiddleware")
 const uploadMiddlewarePropostas = require("./middlewares/uploadMiddlewarePropostas")
+const frequenciasController =require("./controllers/frequenciasController")
 
 const router = express.Router()
 
@@ -45,5 +46,12 @@ router.get("/redacoes/download/:id", redacoesController.download)
 router.get("/propostas", propostasController.index);
 router.post("/propostas",uploadMiddlewarePropostas.single("file"),propostasController.create);
 
+
+// Rotas relacionadas a frequencia
+router.get("/frequencias", frequenciasController.index)
+router.post("/frequencias", frequenciasController.create)
+router.get("/frequencias/:id", frequenciasController.show)
+router.put ("/frequencias/:id", frequenciasController.update)
+router.delete("/frequencias/:id", frequenciasController.delete)
 
 module.exports = router
