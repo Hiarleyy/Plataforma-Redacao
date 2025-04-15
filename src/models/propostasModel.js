@@ -7,8 +7,8 @@ const propostasModel = {
     return await propostasRepository.retorneTodasAsPropostas()
   },
   // Buscando uma Proposta
-  retornarPropostaMaisAntiga: async (id) => {
-    const proposta = await propostasRepository.retornePropostaMaisAntiga(id)
+  retornarPropostaMaisAntiga: async () => {
+    const proposta = await propostasRepository.retornePropostaMaisAntiga()
     if (!proposta) throw new HttpError(404, "Essa Proposta Não Existe.")
     return proposta
   },
@@ -19,13 +19,10 @@ const propostasModel = {
     if (!corpo.success) {
       throw new HttpError(400, "Erro de validação: Verifique se os dados enviados estão corretos.");
     }
-  
-    // Verifica a quantidade total de propostas
-    const quantidadeTotal = await propostasRepository.contarPropostas();
-  
-    // Se houver 20 propostas, deleta a mais antiga
-    if (quantidadeTotal === 20) {
-      const propostaMaisAntiga = await propostasRepository.retornePropostaMaisAntiga();
+    const propostas = await propostasRepository.retorneTodasAsPropostas()
+    
+    if (propostas.quantidadedePropostas === 4) {
+      const propostaMaisAntiga = await propostasRepository.retornePropostaMaisAntiga()
       
       // Exclui o arquivo da proposta, se existir
       deletarPropostaRedacao(propostaMaisAntiga.caminho);
@@ -35,7 +32,7 @@ const propostasModel = {
     }
   
     // Cria a nova proposta
-    const novaProposta = await propostasRepository.crieNovaRedacao(corpo.data);
+    const novaProposta = await propostasRepository.crieNovaProposta(corpo.data);
     return novaProposta;
   }
   ,

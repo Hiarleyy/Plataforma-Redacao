@@ -2,54 +2,42 @@ const propostasRepository = require("../repositories/propostasRepository");
 const { criarPropostaSchema } = require("../schemas/propostaSchema");
 const HttpError = require("../error/HttpError");
 const deletarPropostaRedacao = require("../utils/deletarPropostaRedacao");
-
+const propostasModel = require("../models/propostasModel");
 const propostasController = {
-  listarPropostas: async (req, res, next) => {
+  
+  index: async (req, res, next) => {
     try {
-      const propostas = await propostasRepository.retorneTodasAsPropostas();
-      res.json(propostas);
+      resposta = await propostasModel.retornarPropostas()
+      res.status(200).json({ data: resposta.propostas });
     } catch (error) {
-      next(error);
+      next(error)
     }
   },
 
-  buscarProposta: async (req, res, next) => {
+  create: async (req, res, next) => {
     try {
-      const { id } = req.params;
-      const proposta = await propostasRepository.retorneUmaProposta(id);
-      if (!proposta) throw new HttpError(404, "Proposta não encontrada");
-      res.json(proposta);
-    } catch (error) {
-      next(error);
-    }
-  },
+      console.log("try")
+      const { tema } = req.body;
 
-  criarProposta: async (req, res, next) => {
-    try {
-      const corpo = criarPropostaSchema.safeParse({
-        usuarioId: req.body.usuarioId,
-        tema: req.body.tema,
-        caminho: req.file?.path
+      if (!req.file) {
+        return res.status(400).json({ error: "Arquivo não enviado." });
+      }
+      console.log("req.file")
+      const resposta = await propostasModel.criarProposta({
+        tema,
+        caminho: req.file.filename,
       });
-
-      if (!corpo.success) {
-        throw new HttpError(400, "Erro de validação: Verifique se os dados enviados estão corretos.");
-      }
-
-      const todasPropostas = await propostasRepository.retorneTodasAsPropostas();
-      if (todasPropostas.length >= 20) {
-        const maisAntiga = await propostasRepository.retornePropostaMaisAntiga();
-        deletarPropostaRedacao(maisAntiga.caminho);
-        await propostasRepository.deletarUmaProposta(maisAntiga.id);
-      }
-
-      const novaProposta = await propostasRepository.crieNovaProposta(corpo.data);
-      res.status(201).json(novaProposta);
+      console.log("resposta")
+      res.status(201).json({ message: "proposta salva com sucesso!", data: resposta });
     } catch (error) {
-      next(error);
+      next(error)
     }
   },
 
+
+
+
+  // continuar a partir daqui
   deletarProposta: async (req, res, next) => {
     try {
       const { id } = req.params;
