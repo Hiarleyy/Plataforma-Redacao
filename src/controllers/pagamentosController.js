@@ -38,9 +38,8 @@ const pagamentosController = {
   delete: async(req, res, next) => {
     try{
       const {id} = req.params
-      const corpoDaRequisicao = req.body
 
-      const resposta = await pagamentosModel.deletarPagamentos(id, corpoDaRequisicao)
+      const resposta = await pagamentosModel.deletarPagamentos(id)
       res.status(200).json({message: "usuário deletado com sucesso.", data: resposta})
     }catch(error){
       next(error)

@@ -27,6 +27,8 @@ router.put("/usuarios/:id", usuariosController.update)
 // Rotas relacionadas a turmas
 router.get("/turmas", turmaController.index)
 router.post("/turmas", turmaController.create)
+router.put("/turmas/:id", turmaController.update)
+router.delete("/turmas/:id", turmaController.delete)
 
 // Rotas relacionadas a pagamentos
 router.get("/pagamentos", pagamentosController.index ) 

@@ -1,5 +1,7 @@
 const turmaRepository = require("../repositories/turmaRepository")
 const HttpError = require("../error/HttpError")
+const {atualizarTurmaSchema} = require("../schemas/turmaSchema")
+
 
 const turmaModel = {
   retornarTurmas: async () => {
@@ -8,7 +10,7 @@ const turmaModel = {
   },
 
   retornarTurma: async (id) => {
-    const turma = await turmaRepository.retorneUmaTurmaPorId(id)
+    const turma = await turmaRepository.retorneUmaTurmaPeloId(id)
     
   },
 
@@ -19,6 +21,25 @@ const turmaModel = {
 
     const turma = await turmaRepository.crieNovaTurma(data)
     return turma
+  },
+  atualizarTurma: async(id, data) =>{
+    const corpo = atualizarTurmaSchema.safeParse(data)
+    if(!corpo){
+      throw new HttpError(404, "Erro de validação: Verifique se os dados enviados estão corretos.")
+    }
+    // Verificar se a turma existe
+    const TurmaExistente = await turmaRepository.retorneUmaTurmaPeloId(id)
+    if (!TurmaExistente){
+      throw new HttpError (404, "Erro de validação: Verifique se os dados enviados estão corretos.")
+    }
+    const updateTurma = turmaRepository.updateUmaTurma(id, corpo.data)
+    return updateTurma
+
+  },
+  deletarTurma: async (id) =>{
+    const deletarTurma = await turmaRepository.deletarUmaTurma(id)
+    return deletarTurma
+    
   }
 }
 

@@ -59,6 +59,19 @@ const turmaRepository = {
 
     return novaTurma
   },
+  updateUmaTurma: async (id, data) =>{
+    const atualizarTurma = await prisma.turma.update({
+      data,
+      where: {id}
+    })
+    return atualizarTurma
+  },
+  deletarUmaTurma: async(id) =>{
+    const deleteTurma = await prisma.turma.delete({
+      where: {id}
+    })
+    return deleteTurma
+  }
 }
 
 module.exports = turmaRepository

@@ -37,17 +37,8 @@ const pagamentosModel = {
     return updatePagamento
   },
   
-  deletarPagamentos: async(id, data) => {
-    const corpo = deletarPagamentoSchema.safeParse(data)
-    
-    if (!corpo.success) {
-      throw new HttpError(400, "Erro de validação: Verifique se os dados enviados estão corretos.");
-    }
-
-    const pagamentoExistente = await pagamentosRepository.retorneUmPagamentoPeloId(id)
-    if(!pagamentoExistente) throw new HttpError(404, "Esse pagamento não exite")
-    
-    const deletePagamento = await pagamentosRepository.deleteUmPagamento(id, corpo.data)
+  deletarPagamentos: async(id) => {
+    const deletePagamento = await pagamentosRepository.deleteUmPagamento(id)
     return deletePagamento
   }
 }
