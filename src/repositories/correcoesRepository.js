@@ -3,48 +3,32 @@ const Correcao = require("../entities/Correcao")
 
 const correcoesRepository = {
   // Retorna todas as correções do banco de dados
-  retorneTodasAsCorrecoes: async (usuarioId = false) => {
-    let redacoes
-    let quantidadeRedacoes
-
-    // Retorna todas as redações
-    if (!usuarioId) {
-      redacoes = await prisma.redacao.findMany()
-      quantidadeRedacoes = await prisma.redacao.count()
-      return { redacoes, quantidadeRedacoes }
-    }
-
-    // Retorna todas as redações de um usuário específico
-    redacoes = await prisma.redacao.findMany({
-      where: { usuarioId }
-    });
-
-    quantidadeRedacoes = await prisma.redacao.count({ where: { usuarioId } })
-  
-    return { redacoes, quantidadeRedacoes };
+  retorneTodasAsCorrecoes: async () => {
+    const correcoes = await prisma.correcao.findMany()
+    return correcoes
   },
 
   // Retorna uma correção específica
-  retornaUmaRedacao: async (id) => {
-    const redacao = await prisma.redacao.findUnique({ where: { id } })
-    return redacao
+  retornaUmaCorrecao: async (id) => {
+    const correcao = await prisma.correcao.findUnique({ where: { id } })
+    return correcao
   },
     
   // Cria uma nova correção
   crieNovaCorreção: async (data) => {
-    const correcao = new Redacao(data);
-    const novaRedacao = await prisma.redacao.create({data: redacao});
-    return novaRedacao;
+    const correcao = new Correcao(data);
+    const novaCorrecao = await prisma.correcao.create({data: correcao});
+    return novaCorrecao;
   },
 
   // Deleatar uma correção
   deletarUmaCorrecao: async (id) => {
     const correcaoDeletada = await prisma.correcao.delete({ 
-      where: { id }, select: { id: true, titulo: true } 
+      where: { id }, select: { id: true } 
     })
 
     return correcaoDeletada
   }
 }
 
-module.exports = redacoesRepository
+module.exports = correcoesRepository

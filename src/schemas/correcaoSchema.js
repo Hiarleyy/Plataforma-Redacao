@@ -8,7 +8,7 @@ const criarCorrecaoSchema = z.object({
   competencia05: z.number().int().min(0).max(200),
   caminho: z.string(),
   feedback: z.string(),
-  redacaoId: string().uuid(),
+  redacaoId: z.string().uuid(),
 }).strict()
 
 module.exports = {

@@ -5,9 +5,11 @@ const pagamentosController = require("./controllers/pagamentosController")
 const modulosController = require("./controllers/modulosController")
 const redacoesController = require("./controllers/redacoesController")
 const propostasController = require("./controllers/propostasController")
-const uploadMiddleware = require("./middlewares/uploadMiddleware")
-const uploadMiddlewarePropostas = require("./middlewares/uploadMiddlewarePropostas")
-const frequenciasController =require("./controllers/frequenciasController")
+const uploadRedacoes = require("./middlewares/uploadRedacoes")
+const uploadPropostas = require("./middlewares/uploadPropostas")
+const uploadCorrecoes = require("./middlewares/uploadCorrecoes")
+const frequenciasController = require("./controllers/frequenciasController")
+const correcoesController = require("./controllers/correcoesController")
 
 const router = express.Router()
 
@@ -39,13 +41,17 @@ router.post("/modulos", modulosController.create)
 
 // Rotas relacionadas a redações
 router.get("/redacoes", redacoesController.index)
-router.post("/redacoes", uploadMiddleware.single("file"), redacoesController.create)
+router.post("/redacoes", uploadRedacoes.single("file"), redacoesController.create)
 router.get("/redacoes/download/:id", redacoesController.download)
 
 //Rotas relacionadas a propostas
 router.get("/propostas", propostasController.index);
-router.post("/propostas",uploadMiddlewarePropostas.single("file"),propostasController.create);
+router.post("/propostas",uploadPropostas.single("file"),propostasController.create)
 
+// Rotas relacionadas a correções
+router.get("/correcoes", correcoesController.index)
+router.post("/correcoes", uploadCorrecoes.single("file"), correcoesController.create)
+router.get("/correcoes/download/:id", correcoesController.download)
 
 // Rotas relacionadas a frequencia
 router.get("/frequencias", frequenciasController.index)
