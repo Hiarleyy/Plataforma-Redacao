@@ -23,6 +23,7 @@ router.get("/usuarios", usuariosController.index)
 router.get("/usuarios/:id", usuariosController.show)
 router.post("/usuarios", usuariosController.create)
 router.put("/usuarios/:id", usuariosController.update)
+router.delete("/usuarios/:id", usuariosController.delete)
 
 // Rotas relacionadas a turmas
 router.get("/turmas", turmaController.index)

@@ -47,8 +47,8 @@ const usuariosRepository = {
 
   // Delete um usuário
   deleteUmUsuario: async (id) => {
-    const usuarioDeletado = await prisma.modulo.delete(
-      { where: { id }, select: { id: true, nome: true } }
+    const usuarioDeletado = await prisma.usuario.delete(
+      { where: { id }}
     )
 
     return usuarioDeletado
