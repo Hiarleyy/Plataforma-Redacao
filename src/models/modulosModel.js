@@ -28,8 +28,18 @@ const modulosModel = {
         moduloId: modulo.id
       })
     }
-
     return modulo
+  }, 
+  deletarModulo: async (id) => {
+    const moduloDeletado = await modulosRepository.deleteUmModulo(id)
+    return moduloDeletado
+  },
+  atualizarModulo: async (id, data) => {
+    const modulo = await modulosRepository.retorneUmModuloPeloId(id)
+    if (!modulo) throw new HttpError(404, "esse modulo não existe.")
+      
+    const moduloAtualizado = await modulosRepository.atualizeUmModulo(id, data)
+    return moduloAtualizado
   }
 }
 

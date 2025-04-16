@@ -42,10 +42,15 @@ const modulosRepository = {
   // Delete um modulo
   deleteUmModulo: async (id) => {
     const moduloDeletado = await prisma.modulo.delete(
-      { where: { id }, select: { id: true, nome: true } }
+      { where: { id }}
     )
-
     return moduloDeletado
+  },
+  atualizeUmModulo: async (id, data) => {
+    const moduloAtualizado = await prisma.modulo.update(
+      { where: { id }, data }
+    )
+    return moduloAtualizado
   }
 }
 

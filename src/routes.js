@@ -23,7 +23,7 @@ router.get("/usuarios", usuariosController.index)
 router.get("/usuarios/:id", usuariosController.show)
 router.post("/usuarios", usuariosController.create)
 router.put("/usuarios/:id", usuariosController.update)
-router.delete("/usuarios/:id", usuariosController.delete)
+router.delete("/usuarios/:id", usuariosController.delete) // falta ajeitar
 
 // Rotas relacionadas a turmas
 router.get("/turmas", turmaController.index)
@@ -41,6 +41,8 @@ router.delete('/pagamentos/:id', pagamentosController.delete)
 router.get("/modulos", modulosController.index)
 router.get("/modulos/:id", modulosController.show)
 router.post("/modulos", modulosController.create)
+router.delete("/modulos/:id", modulosController.delete)// falta ajeitar
+router.put("/modulos/:id", modulosController.update)// falta ajeitar
 
 // Rotas relacionadas a redações
 router.get("/redacoes", redacoesController.index)
