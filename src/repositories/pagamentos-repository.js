@@ -26,6 +26,7 @@ const pagamentosRepository = {
       data,
       where:{ id }
     })
+    return updatePagamento
   },
 
   deleteUmPagamento: async (id) => {

@@ -36,7 +36,7 @@ router.delete("/turmas/:id", turmaController.delete)
 // Rotas relacionadas a pagamentos
 router.get("/pagamentos", pagamentosController.index ) 
 router.post('/pagamentos', pagamentosController.create)
-router.put('/pagamentos/:id',pagamentosController.update )
+router.put('/pagamentos/:id',pagamentosController.update)
 router.delete('/pagamentos/:id', pagamentosController.delete)
 router.get("/pagamentos/:id", pagamentosController.show) // retornar todos os pagamentos de um aluno
 
