@@ -38,6 +38,7 @@ router.get("/pagamentos", pagamentosController.index )
 router.post('/pagamentos', pagamentosController.create)
 router.put('/pagamentos/:id',pagamentosController.update )
 router.delete('/pagamentos/:id', pagamentosController.delete)
+router.get("/pagamentos/:id", pagamentosController.show) // retornar todos os pagamentos de um aluno
 
 // Rotas relacionadas a modulos
 router.get("/modulos", modulosController.index)
@@ -63,11 +64,11 @@ router.get("/correcoes/download/:id", correcoesController.download)
 // - falta uma rota que retorna somente as correções de um aluno
 
 // Rotas relacionadas a frequencia
-router.get("/frequencias", frequenciasController.index)
+router.get("/frequencias", frequenciasController.index) // todas as frequencias
 router.post("/frequencias", frequenciasController.create)
-router.get("/frequencias/:id", frequenciasController.show)
+router.get("/frequencias/:id", frequenciasController.show)// buscar uma frequencia especifica - idFrequencia
 router.put ("/frequencias/:id", frequenciasController.update)
 router.delete("/frequencias/:id", frequenciasController.delete)
-// - falta uma rota que retorne as frequências de um aluno
+router.get("/frequencias/aluno/:id", frequenciasController.showByAluno) // buscar todas as frequencias de um aluno
 
 module.exports = router

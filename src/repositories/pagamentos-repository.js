@@ -34,7 +34,13 @@ const pagamentosRepository = {
     }) 
 
     return deletePagamento
-  }  
+  },
+  retorneTodosOsPagamentosUsuario: async (id) => {
+    const pagamentos = await prisma.pagamento.findMany({
+      where: {usuarioId: id}
+    })
+    return pagamentos
+  }
 }
 
 module.exports = pagamentosRepository

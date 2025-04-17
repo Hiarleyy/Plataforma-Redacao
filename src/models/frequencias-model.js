@@ -31,10 +31,7 @@ const frequenciasModel = {
         return frequencia
     },
     retornarFrequencias: async (usuarioId = false) => {
-
-        if(!usuarioId) return await frequenciasRepository.retorneTodasAsFrequencias()
-
-        return await frequenciasRepository.retorneTodasAsFrequencias(usuarioId)
+        return await frequenciasRepository.retorneTodasAsFrequencias()
     },
     atualizarFrequencia: async(id, data) =>{
         const corpo = atualizarFrequenciaSchema.safeParse(data)
@@ -56,6 +53,11 @@ const frequenciasModel = {
         
         const frequenciaDeletada = await frequenciasRepository.deletarUmaFrequencia(id)
     return frequenciaDeletada
+    },
+    retornarFrequenciaAluno: async (id) => {
+        const frequenciasAluno = await frequenciasRepository.retornarUmaFrequenciaPeloIdAluno(id)
+        
+        return frequenciasAluno
     }
 }
 

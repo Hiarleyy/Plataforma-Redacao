@@ -26,15 +26,8 @@ const frequenciasController = {
   },
   index: async(req, res, next ) => {
     try{
-      const {usuarioId} = req.body
-      let resposta
-
-      if(!usuarioId){
-        resposta = await frequenciaModel.retornarFrequencias()
-        res.status(200).json({ data: resposta.frequencias })
-      }
-      resposta = await frequenciaModel.retornarFrequencias(usuarioId)
-      res.status(200).json({ data: resposta.frequencias })
+      const respostaFrequencia = await frequenciaModel.retornarFrequencias()
+      res.status(200).json({ data: respostaFrequencia })
     }
   catch(error){
     next (error)
@@ -61,7 +54,16 @@ const frequenciasController = {
     } catch (error) {
       next(error)
     }
-  }
+  },
+  showByAluno: async (req, res, next) => {
+    try {
+      const { id } = req.params
+      const resposta = await frequenciaModel.retornarFrequenciaAluno(id)
+      res.status(200).json({ data: resposta })
+    } catch (error) {
+      next(error)
+    }
+  },
 
 
 

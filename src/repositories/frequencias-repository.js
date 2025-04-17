@@ -14,20 +14,9 @@ const frequenciasRepository= {
         const frequencia = await prisma.frequencia.findUnique({where: {id}})
         return frequencia
     },
-    retorneTodasAsFrequencias: async(usuarioId = false) =>{
-        let frequencias
-        let quantidadeFrequencia
-
-        if(!usuarioId){
-            frequencias = await prisma.frequencia.findMany()
-            quantidadeFrequencia = await prisma.frequencia.count()
-            return {frequencias, quantidadeFrequencia}
-        }
-
-        frequencias = await prisma.frequencia.findMany({where: {usuarioId}})
-        quantidadeFrequencia = await prisma.frequencia.count({where: {usuarioId}})
-        return {frequencias, quantidadeFrequencia}
-
+    retorneTodasAsFrequencias: async() =>{
+        const todasAsFrequencias = await prisma.frequencia.findMany()
+        return todasAsFrequencias
     },
 
     updateFrequencia: async(id, data) =>{
@@ -43,7 +32,14 @@ const frequenciasRepository= {
             where: {id}
         })
     return frequenciaDeletada
+    },
+    retornarUmaFrequenciaPeloIdAluno: async(id) =>{
+        const frquenciaAluno = await prisma.frequencia.findMany({
+            where: {usuarioId: id}
+        })
+        return frquenciaAluno
     }
+
 
 }
 
