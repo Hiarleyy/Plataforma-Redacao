@@ -3,6 +3,7 @@ const redacoesRepository = require("../repositories/redacoes-repository")
 const { criarCorrecaoSchema } = require("../schemas/correcoes-schema")
 const redacoesModel = require("./redacoes-model")
 const HttpError = require("../error/http-error")
+const deletarArquivo = require("../utils/deletar-arquivo")
 
 const correcoesModel = {
   retornarCorrecoes: async () => {
@@ -15,6 +16,12 @@ const correcoesModel = {
     const correcao = await correcoesRepository.retornaUmaCorrecao(id)
     if (!correcao) throw new HttpError(404, "Essa correção não existe.")
     return correcao
+  },
+
+  // Busca o usuário dono da redação corrigida, baseado no id da correção
+  retornarUsuarioDaCorrecao: async (id) => {
+    const usuarioId = await correcoesRepository.retornarUsuarioDaCorrecao(id)
+    return usuarioId
   },
 
   // Criando uma correção
@@ -35,7 +42,7 @@ const correcoesModel = {
 
     if (correcoes.quantidadeRedacoes === 20) {
       const correcaoMaisAntiga = await redacoesRepository.retorneRedacaoMaisAntiga(usuarioId, true)
-      deletarArquivoRedacao(correcaoMaisAntiga.correcao.caminho)
+      deletarArquivo(["uploads", "correcoes", usuarioId, correcaoMaisAntiga.caminho])
       await correcoesRepository.deletarUmaCorrecao(correcaoMaisAntiga.correcao.id)
     }
 

@@ -1,5 +1,6 @@
 const prisma = require("../database/db")
 const Usuario = require("../entities/Usuario")
+const deletarArquivo = require("../utils/deletar-arquivo")
 
 const usuariosRepository = {
   // Retorna todos os usuários do bando de dados
@@ -50,6 +51,10 @@ const usuariosRepository = {
     const usuarioDeletado = await prisma.usuario.delete(
       { where: { id }}
     )
+
+    // Deletando os arquivos do usuário na pasta uploads
+    deletarArquivo(["uploads", "redacoes", id])
+    deletarArquivo(["uploads", "correcoes", id])
 
     return usuarioDeletado
   }

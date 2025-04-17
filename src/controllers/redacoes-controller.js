@@ -22,7 +22,7 @@ const redacoesController = {
     }
   },
 
-  // POST /redacoes
+  // POST /redacoes/:usuarioId/upload
   create: async (req, res, next) => {
     try {
       const { titulo, usuarioId } = req.body;
@@ -49,7 +49,7 @@ const redacoesController = {
       const { id } = req.params
       const redacao = await redacoesModel.retornarRedacao(id)
 
-      const filePath = path.join(__dirname, "..", "uploads", "redacoes", redacao.caminho)
+      const filePath = path.join(__dirname, "..", "uploads", "redacoes", redacao.usuarioId, redacao.caminho)
 
       if (!fs.existsSync(filePath)) {
         return res.status(404).json({ message: "Arquivo não encontrado." })

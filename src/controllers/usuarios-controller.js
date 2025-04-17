@@ -44,6 +44,8 @@ const usuariosController = {
       next(error)
     }
   },
+
+  // DELETE /usuarios/:id
   delete:  async (req, res, next) => {
    try {
     const {id} = req.params

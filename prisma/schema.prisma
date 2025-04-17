@@ -21,24 +21,19 @@ model Usuario {
   dataAtualizacao DateTime   @updatedAt
   turmaId         String?    @db.VarChar(36)
 
-  // Relação muitos para um: Muitos usuários podem pertencer a uma turma
-  turma           Turma?     @relation(fields: [turmaId], references: [id])
+  turma           Turma?     @relation(fields: [turmaId], references: [id], onDelete: SetNull) 
 
-  // Relações um para muitos
-  frequencias     Frequencia[]   // Um usuário pode ter muitas frequências
-  pagamentos      Pagamento[]    // Um usuário pode ter muitos pagamentos
-  redacoes        Redacao[]      // Um usuário pode ter muitas redações
+  frequencias     Frequencia[]
+  pagamentos      Pagamento[]
+  redacoes        Redacao[]
 }
 
 model Turma {
   id          String       @db.Char(36) @id
   nome        String       @unique @db.VarChar(100)
-  dataCriacao DateTime    @default(now())
+  dataCriacao DateTime     @default(now())
 
-  // Relação um para muitos: Uma turma pode ter muitos usuários
-  usuarios    Usuario[]    
-
-  // Relação um para muitos: Uma turma pode ter muitas frequências
+  usuarios    Usuario[]
   frequencias Frequencia[]
 }
 
@@ -56,9 +51,8 @@ model Frequencia {
   justificativa String?  @db.Text
   data         DateTime  @default(now())
 
-  // Relações muitos para um
-  usuario Usuario @relation(fields: [usuarioId], references: [id])
-  turma   Turma   @relation(fields: [turmaId], references: [id])
+  usuario Usuario @relation(fields: [usuarioId], references: [id], onDelete: Cascade) 
+  turma   Turma   @relation(fields: [turmaId], references: [id], onDelete: Cascade)   
 }
 
 model Pagamento {
@@ -68,8 +62,7 @@ model Pagamento {
   dataPagamento  DateTime  @default(now())
   valor          Float
 
-  // Relação muitos para um: Muitos pagamentos podem pertencer a um usuário
-  usuario Usuario @relation(fields: [usuarioId], references: [id])
+  usuario Usuario @relation(fields: [usuarioId], references: [id], onDelete: Cascade) 
 }
 
 enum StatusRedacao {
@@ -85,11 +78,8 @@ model Redacao {
   status     StatusRedacao  @default(PENDENTE)
   usuarioId  String         @db.VarChar(36)
 
-  // Relação muitos para um: Muitas redações pertencem a um usuário
-  usuario    Usuario    @relation(fields: [usuarioId], references: [id])
-
-  // Relação um para um: Uma redação possui uma única correção
-  correcao   Correcao?  
+  usuario    Usuario    @relation(fields: [usuarioId], references: [id], onDelete: Cascade) 
+  correcao   Correcao?
 }
 
 model Correcao {
@@ -104,8 +94,7 @@ model Correcao {
   feedback      String?    @db.Text
   redacaoId     String     @unique @db.VarChar(36)
 
-  // Relação com Redacao
-  redacao       Redacao    @relation(fields: [redacaoId], references: [id])
+  redacao       Redacao    @relation(fields: [redacaoId], references: [id], onDelete: Cascade) 
 }
 
 model Proposta {
@@ -122,7 +111,6 @@ model Modulo {
   playlistUrl  String   @db.VarChar(255)
   dataCriacao  DateTime @default(now())
 
-  // Relação um para muitos: Um módulo possui vários vídeos
   videos       Video[]
 }
 
@@ -134,6 +122,6 @@ model Video {
   thumbnail String   @db.VarChar(255)
   moduloId  String   @db.VarChar(36)
 
-  // Relação muitos para um: Muitos vídeos pertencem a um módulo
-  modulo    Modulo   @relation(fields: [moduloId], references: [id])
+  modulo    Modulo   @relation(fields: [moduloId], references: [id], onDelete: Cascade) 
 }
+

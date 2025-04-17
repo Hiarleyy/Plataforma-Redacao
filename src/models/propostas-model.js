@@ -1,6 +1,6 @@
 const propostasRepository = require("../repositories/propostas-repository")
 const { criarPropostaSchema } = require("../schemas/propostas-schema")
-const deletarArquivoRedacao = require("../utils/deletar-arquivo-redacao")
+const deletarArquivoRedacao = require("../utils/deletar-arquivo")
 
 const propostasModel = {
   // Buscando todas as propostas

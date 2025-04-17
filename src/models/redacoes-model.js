@@ -1,6 +1,6 @@
 const redacoesRepository = require("../repositories/redacoes-repository")
 const { criarRedacaoSchema } = require("../schemas/redacoes-schema")
-const deletarArquivoRedacao = require("../utils/deletar-arquivo-redacao")
+const deletarArquivo = require("../utils/deletar-arquivo")
 const usuariosModel = require("./usuarios-model")
 
 const redacoesModel = {
@@ -42,7 +42,7 @@ const redacoesModel = {
 
     if (redacoes.quantidadeRedacoes === 20) {
       const redacaoMaisAntiga = await redacoesRepository.retorneRedacaoMaisAntiga(corpo.data.usuarioId)
-      deletarArquivoRedacao(redacaoMaisAntiga.caminho)
+      deletarArquivo(["uploads", "redacoes", corpo.data.usuarioId, redacaoMaisAntiga.caminho])
       await redacoesRepository.deletarUmaRedacao(redacaoMaisAntiga.id)
     }
 

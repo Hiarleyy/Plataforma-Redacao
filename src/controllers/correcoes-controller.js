@@ -52,8 +52,9 @@ const correcoesController = {
     try {
       const { id } = req.params
       const correcao = await correcoesModel.retornarCorrecao(id)
+      const usuarioId = await correcoesModel.retornarUsuarioDaCorrecao(id)
 
-      const filePath = path.join(__dirname, "..", "uploads", "correcoes", correcao.caminho)
+      const filePath = path.join(__dirname, "..", "uploads", "correcoes", usuarioId, correcao.caminho)
 
       if (!fs.existsSync(filePath)) {
         return res.status(404).json({ message: "Arquivo não encontrado." })

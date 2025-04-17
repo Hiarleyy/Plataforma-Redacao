@@ -48,7 +48,7 @@ router.put("/modulos/:id", modulosController.update)// falta ajeitar
 
 // Rotas relacionadas a redações
 router.get("/redacoes", redacoesController.index)
-router.post("/redacoes", uploadRedacoes.single("file"), redacoesController.create)
+router.post("/redacoes/:usuarioId/upload", uploadRedacoes.single("file"), redacoesController.create)
 router.get("/redacoes/download/:id", redacoesController.download)
 
 //Rotas relacionadas a propostas
@@ -58,7 +58,7 @@ router.post("/propostas",uploadPropostas.single("file"),propostasController.crea
 
 // Rotas relacionadas a correções
 router.get("/correcoes", correcoesController.index)
-router.post("/correcoes", uploadCorrecoes.single("file"), correcoesController.create)
+router.post("/correcoes/:usuarioId/upload", uploadCorrecoes.single("file"), correcoesController.create)
 router.get("/correcoes/download/:id", correcoesController.download)
 // - falta uma rota que retorna somente as correções de um aluno
 

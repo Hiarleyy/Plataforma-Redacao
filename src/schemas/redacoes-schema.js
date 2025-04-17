@@ -5,7 +5,6 @@ const criarRedacaoSchema = z.object({
   caminho: z.string(),
   status: z.enum(["PENDENTE", "CORRIGIDA"]).default("PENDENTE"),
   usuarioId: z.string().uuid(),
-
 }).strict()
 
 module.exports = {
