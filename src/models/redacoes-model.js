@@ -1,15 +1,21 @@
-const redacoesRepository = require("../repositories/redacoesRepository")
-const { criarRedacaoSchema } = require("../schemas/redacoesSchema")
-const deletarArquivoRedacao = require("../utils/deletarArquivoRedacao")
-const usuariosModel = require("./usuariosModel")
+const redacoesRepository = require("../repositories/redacoes-repository")
+const { criarRedacaoSchema } = require("../schemas/redacoes-schema")
+const deletarArquivoRedacao = require("../utils/deletar-arquivo-redacao")
+const usuariosModel = require("./usuarios-model")
 
 const redacoesModel = {
-  retornarRedacoes: async (usuarioId = false) => {
-    // Buscando todas as redações
-    if (!usuarioId) return await redacoesRepository.retorneTodasAsRedacoes()
+  retornarRedacoes: async (usuarioId = false, corrigidas = false) => {
+    // Verificando se o usuário existe
+    if (usuarioId) await usuariosModel.retornarUmUsuario(usuarioId)
+    
+     // Buscando as redações corrigidas de um usuário específico
+    if (usuarioId && corrigidas) return await redacoesRepository.retornarRedacoesCorrigidas(usuarioId)
 
     // Buscando as redações de um usuário específico
-    return await redacoesRepository.retorneTodasAsRedacoes(usuarioId)
+    if (usuarioId) return await redacoesRepository.retorneTodasAsRedacoes(usuarioId)
+
+    // Buscando todas as redações
+    return await redacoesRepository.retorneTodasAsRedacoes()
   },
 
   // Buscando uma redação
@@ -29,8 +35,7 @@ const redacoesModel = {
     } 
 
     // Verificando se o usuário existe
-    const usuarioExiste = await usuariosModel.retornarUmUsuario(corpo.data.usuarioId)
-    if (!usuarioExiste) throw new HttpError(404, "Esse usuário não existe.")
+    await usuariosModel.retornarUmUsuario(corpo.data.usuarioId)
 
     // Se o usuário tiver 20 redações no total, deletamos a sua redação mais antiga
     const redacoes = await redacoesRepository.retorneTodasAsRedacoes(corpo.data.usuarioId)

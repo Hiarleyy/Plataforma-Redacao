@@ -1,8 +1,7 @@
-const propostasRepository = require("../repositories/propostasRepository");
-const { criarPropostaSchema } = require("../schemas/propostaSchema");
-const HttpError = require("../error/HttpError");
-const deletarPropostaRedacao = require("../utils/deletarPropostaRedacao");
-const propostasModel = require("../models/propostasModel");
+const propostasRepository = require("../repositories/propostas-repository");
+const { criarPropostaSchema } = require("../schemas/propostas-schema");
+const HttpError = require("../error/http-error");
+const propostasModel = require("../models/propostas-model");
 const propostasController = {
   
   index: async (req, res, next) => {
@@ -33,9 +32,6 @@ const propostasController = {
       next(error)
     }
   },
-
-
-
 
   // continuar a partir daqui
   deletarProposta: async (req, res, next) => {

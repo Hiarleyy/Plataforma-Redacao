@@ -1,4 +1,4 @@
-const redacoesModel = require("../models/redacoesModel")
+const redacoesModel = require("../models/redacoes-model")
 const path = require("path")
 const fs = require("fs")
 

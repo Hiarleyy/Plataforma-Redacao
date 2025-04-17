@@ -21,7 +21,20 @@ const redacoesRepository = {
 
     quantidadeRedacoes = await prisma.redacao.count({ where: { usuarioId } })
   
-    return { redacoes, quantidadeRedacoes };
+    return { redacoes, quantidadeRedacoes }
+  },
+
+  // Retorna as redações corrigidas de um usuário
+  retornarRedacoesCorrigidas: async (usuarioId) => {
+    const redacoes = await prisma.redacao.findMany({ 
+      where: { usuarioId, status: "CORRIGIDA" } 
+    })
+
+    const quantidadeRedacoes = await prisma.redacao.count({
+      where: { usuarioId, status: "CORRIGIDA" }
+    })
+
+    return { redacoes, quantidadeRedacoes }
   },
 
   // Retorna uma redação específica
@@ -31,19 +44,37 @@ const redacoesRepository = {
   },
 
   // Retorna a redação mais antiga de um usário
-  retorneRedacaoMaisAntiga: async (usuarioId) => {
-    const redacao = await prisma.redacao.findFirst({ where: { usuarioId }, orderBy: { data: "asc" } })
-    return redacao
+  retorneRedacaoMaisAntiga: async (usuarioId, corrigidas = false) => {
+    if (corrigidas) {
+      const redacao = await prisma.redacao.findFirst({ 
+        where: { usuarioId, status: "CORRIGIDA" }, 
+        orderBy: { data: "asc" }, 
+        include: { correcao: true } 
+      })
+
+      return redacao
+    }
+    
+    return await prisma.redacao.findFirst({ where: { usuarioId }, orderBy: { data: "asc" } })
+  },
+
+  // Mudar status de uma redação para CORRIGIDA
+  marcarRedacaoComoCorrigida: async (id) => {
+    const redacaoCorrigida = await prisma.redacao.update({ 
+      data: { status: "CORRIGIDA" }, where: { id } 
+    })
+    
+    return redacaoCorrigida
   },
     
   // Cria uma nova redação
   crieNovaRedacao: async (data) => {
-    const redacao = new Redacao(data);
+    const redacao = new Redacao(data)
     const novaRedacao = await prisma.redacao.create({data: redacao})
     return novaRedacao;
   },
 
-  // Deleatr uma redação
+  // Deleatar uma redação
   deletarUmaRedacao: async (id) => {
     const redacaoDeletada = await prisma.redacao.delete({ 
       where: { id }, select: { id: true, titulo: true } 

@@ -1,6 +1,6 @@
-const usuariosRepository = require("../repositories/usuariosRepository")
-const HttpError = require("../error/HttpError")
-const { criarUsuarioSchema, atualizarUsuarioSchema } = require("../schemas/usuariosSchema")
+const usuariosRepository = require("../repositories/usuarios-repository")
+const HttpError = require("../error/http-error")
+const { criarUsuarioSchema, atualizarUsuarioSchema } = require("../schemas/usuarios-schema")
 
 const usuariosModel = {
   retornarUsuarios: async () => {

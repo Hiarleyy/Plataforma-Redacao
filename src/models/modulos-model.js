@@ -1,7 +1,7 @@
-const modulosRepository = require("../repositories/modulosRepository")
-const videosRepository = require("../repositories/videosRepository")
-const getPlaylistVideos = require("../utils/getPlaylistVideos")
-const HttpError = require("../error/HttpError")
+const modulosRepository = require("../repositories/modulos-repository")
+const videosRepository = require("../repositories/videos-repository")
+const getPlaylistVideos = require("../utils/get-playlist-videos")
+const HttpError = require("../error/http-error")
 
 const modulosModel = {
   retornarModulos: async () => {
@@ -16,6 +16,7 @@ const modulosModel = {
   },
 
   criarModulo: async (data) => {
+    // Adicionar a validação com o zod
     const modulo = await modulosRepository.crieNovoModulo(data)
 
     const videos = await getPlaylistVideos(data.playlistUrl)
@@ -28,8 +29,20 @@ const modulosModel = {
         moduloId: modulo.id
       })
     }
-
     return modulo
+  }, 
+
+  deletarModulo: async (id) => {
+    const moduloDeletado = await modulosRepository.deleteUmModulo(id)
+    return moduloDeletado
+  },
+
+  atualizarModulo: async (id, data) => {
+    const modulo = await modulosRepository.retorneUmModuloPeloId(id)
+    if (!modulo) throw new HttpError(404, "esse modulo não existe.")
+      
+    const moduloAtualizado = await modulosRepository.atualizeUmModulo(id, data)
+    return moduloAtualizado
   }
 }
 

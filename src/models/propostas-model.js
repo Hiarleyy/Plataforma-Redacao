@@ -1,17 +1,20 @@
-const propostasRepository = require("../repositories/propostasRepository")
-const { criarPropostaSchema } = require("../schemas/propostaSchema")
-const deletarArquivoRedacao = require("../utils/deletarArquivoRedacao")
+const propostasRepository = require("../repositories/propostas-repository")
+const { criarPropostaSchema } = require("../schemas/propostas-schema")
+const deletarArquivoRedacao = require("../utils/deletar-arquivo-redacao")
 
 const propostasModel = {
+  // Buscando todas as propostas
   retornarPropostas: async () => {
     return await propostasRepository.retorneTodasAsPropostas()
   },
+
   // Buscando uma Proposta
   retornarPropostaMaisAntiga: async () => {
     const proposta = await propostasRepository.retornePropostaMaisAntiga()
     if (!proposta) throw new HttpError(404, "Essa Proposta Não Existe.")
     return proposta
   },
+
   //Criando uma Proposta
   criarProposta: async (data) => {
     const corpo = criarPropostaSchema.safeParse(data);
@@ -19,6 +22,7 @@ const propostasModel = {
     if (!corpo.success) {
       throw new HttpError(400, "Erro de validação: Verifique se os dados enviados estão corretos.");
     }
+    
     const propostas = await propostasRepository.retorneTodasAsPropostas()
     
     if (propostas.quantidadedePropostas === 4) {
@@ -34,8 +38,8 @@ const propostasModel = {
     // Cria a nova proposta
     const novaProposta = await propostasRepository.crieNovaProposta(corpo.data);
     return novaProposta;
-  }
-  ,
+  },
+
   // Deletando Uma Proposta
   deletarUmaProposta: async (id) => {
     const propostaDeletada = await prisma.proposta.delete({ 

@@ -1,8 +1,8 @@
-const frequenciasRepository = require("../repositories/frequenciaRepository")
-const {criarFrequenciaSchema, atualizarFrequenciaSchema } = require("../schemas/frequenciaSchema")
-const HttpError = require("../error/HttpError")
-const usuariosRepository = require("../repositories/usuariosRepository")
-const turmaRepository = require("../repositories/turmaRepository")
+const frequenciasRepository = require("../repositories/frequencias-repository")
+const {criarFrequenciaSchema, atualizarFrequenciaSchema } = require("../schemas/frequencias-schema")
+const HttpError = require("../error/http-error")
+const usuariosRepository = require("../repositories/usuarios-repository")
+const turmaRepository = require("../repositories/turmas-repository")
 
 
 const frequenciasModel = {
