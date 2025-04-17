@@ -1,7 +1,7 @@
 const prisma = require("../database/db")
 const Turma = require("../entities/Turma")
 
-const turmasRepository = {
+const turmaRepository = {
   // Retorna todas as turmas do bando de dados
   retorneTodasAsTurmas: async () => {
     const turmas = await prisma.turma.findMany({
@@ -76,4 +76,4 @@ const turmasRepository = {
   }
 }
 
-module.exports = turmasRepository
+module.exports = turmaRepository

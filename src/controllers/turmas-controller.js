@@ -1,10 +1,10 @@
-const turmasModel = require("../models/turmas-model")
+const turmaModel = require("../models/turmas-model")
 
-const turmasController = {
+const turmaController = {
   // GET /turmas
   index: async (req, res, next) => {
     try {
-      const resposta = await turmasModel.retornarTurmas()
+      const resposta = await turmaModel.retornarTurmas()
       res.status(200).json({ data: resposta })
     } catch (error) {
       next(error)
@@ -15,7 +15,7 @@ const turmasController = {
   show: async (id) => {
     try {
       const { id } = req.params
-      const resposta = await turmasModel.retornarTurma(id)
+      const resposta = await turmaModel.retornarTurma(id)
       res.status(200).json({ data: resposta })
     } catch (error) {
       next(error)
@@ -26,7 +26,7 @@ const turmasController = {
   create: async (req, res, next) => {
     try {
       const corpoDaRequisicao = req.body
-      const resposta = await turmasModel.criarTurma(corpoDaRequisicao)
+      const resposta = await turmaModel.criarTurma(corpoDaRequisicao)
       res.status(200).json({ message: "turma criada com sucesso.", data: resposta })
     } catch (error) {
       next(error)
@@ -38,7 +38,7 @@ const turmasController = {
     try{
       const {id} = req.params
       const corpoDaRequisicao = req.body
-      const resposta = await turmasModel.atualizarTurma(id, corpoDaRequisicao)
+      const resposta = await turmaModel.atualizarTurma(id, corpoDaRequisicao)
       res.status(200).json({ message: "turma atualizada com sucesso.", data: resposta })
     } catch(error){
       next (error)
@@ -49,7 +49,7 @@ const turmasController = {
   delete: async (req, res, next) =>{
     try{
       const {id} = req.params
-      const resposta = await turmasModel.deletarTurma(id)
+      const resposta = await turmaModel.deletarTurma(id)
       res.status(200).json({ message: "turma deletada com sucesso.", data: resposta })
     } catch(error){
       next (error)
@@ -57,4 +57,4 @@ const turmasController = {
   }
 }
 
-module.exports = turmasController
+module.exports = turmaController

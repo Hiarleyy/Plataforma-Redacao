@@ -1,15 +1,15 @@
-const turmasRepository = require("../repositories/turmas-repository")
+const turmaRepository = require("../repositories/turmas-repository")
 const HttpError = require("../error/http-error")
 const { criarTurmaSchema, atualizarTurmaSchema } = require("../schemas/turmas-schema")
 
-const turmasModel = {
+const turmaModel = {
   retornarTurmas: async () => {
-    const turmas = await turmasRepository.retorneTodasAsTurmas()
+    const turmas = await turmaRepository.retorneTodasAsTurmas()
     return turmas
   },
 
   retornarTurma: async (id) => {
-    const turma = await turmasRepository.retorneUmaTurmaPeloId(id)
+    const turma = await turmaRepository.retorneUmaTurmaPeloId(id)
     if (!turma) throw new HttpError(404, "essa turma não existe.")
     return turma
   },
@@ -23,10 +23,10 @@ const turmasModel = {
     }
 
     // Verificando se já existe alguma turma com esse nome
-    const nomeExiste = await turmasRepository.retorneUmaTurmaPeloNome(data.nome)
+    const nomeExiste = await turmaRepository.retorneUmaTurmaPeloNome(data.nome)
     if (nomeExiste) throw new HttpError(409, "Já existe uma turma com esse nome.")
 
-    const turma = await turmasRepository.crieNovaTurma(data)
+    const turma = await turmaRepository.crieNovaTurma(data)
     return turma
   },
 
@@ -39,19 +39,19 @@ const turmasModel = {
     }
 
     // Verificar se a turma existe
-    await turmasModel.retornarTurma(id)
+    await turmaModel.retornarTurma(id)
 
-    const turmaAtualizada = turmasRepository.atualizarUmaTurma(id, corpo.data)
+    const turmaAtualizada = turmaRepository.atualizarUmaTurma(id, corpo.data)
     return turmaAtualizada
   },
 
   deletarTurma: async (id) =>{
     // Verificar se a turma existe
-    await turmasModel.retornarTurma(id)
+    await turmaModel.retornarTurma(id)
 
-    const deletarTurma = await turmasRepository.deletarUmaTurma(id)
+    const deletarTurma = await turmaRepository.deletarUmaTurma(id)
     return deletarTurma
   }
 }
 
-module.exports = turmasModel
+module.exports = turmaModel
