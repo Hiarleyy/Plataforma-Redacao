@@ -1,8 +1,8 @@
-const correcoesRepository = require("../repositories/correcoesRepository")
-const redacoesRepository = require("../repositories/redacoesRepository")
-const { criarCorrecaoSchema } = require("../schemas/correcaoSchema")
-const redacoesModel = require("./redacoesModel")
-const HttpError = require("../error/HttpError")
+const correcoesRepository = require("../repositories/correcoes-repository")
+const redacoesRepository = require("../repositories/redacoes-repository")
+const { criarCorrecaoSchema } = require("../schemas/correcoes-schema")
+const redacoesModel = require("./redacoes-model")
+const HttpError = require("../error/http-error")
 
 const correcoesModel = {
   retornarCorrecoes: async () => {

@@ -1,4 +1,4 @@
-const modulosModel = require("../models/modulosModel")
+const modulosModel = require("../models/modulos-model")
 
 const modulosController = {
   // GET /modulos

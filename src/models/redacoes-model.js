@@ -1,7 +1,7 @@
-const redacoesRepository = require("../repositories/redacoesRepository")
-const { criarRedacaoSchema } = require("../schemas/redacoesSchema")
-const deletarArquivoRedacao = require("../utils/deletarArquivoRedacao")
-const usuariosModel = require("./usuariosModel")
+const redacoesRepository = require("../repositories/redacoes-repository")
+const { criarRedacaoSchema } = require("../schemas/redacoes-schema")
+const deletarArquivoRedacao = require("../utils/deletar-arquivo-redacao")
+const usuariosModel = require("./usuarios-model")
 
 const redacoesModel = {
   retornarRedacoes: async (usuarioId = false, corrigidas = false) => {

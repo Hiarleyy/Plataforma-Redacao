@@ -1,4 +1,4 @@
-const usuariosModel = require("../models/usuariosModel")
+const usuariosModel = require("../models/usuarios-model")
 
 const usuariosController = {
   // GET /usuarios

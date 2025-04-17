@@ -1,6 +1,6 @@
-const turmaRepository = require("../repositories/turmaRepository")
-const HttpError = require("../error/HttpError")
-const {atualizarTurmaSchema} = require("../schemas/turmaSchema")
+const turmaRepository = require("../repositories/turmas-repository")
+const HttpError = require("../error/http-error")
+const {atualizarTurmaSchema} = require("../schemas/turmas-schema")
 
 
 const turmaModel = {

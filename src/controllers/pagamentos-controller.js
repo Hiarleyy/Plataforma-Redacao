@@ -1,4 +1,4 @@
-const pagamentosModel = require("../models/pagamentosModel")
+const pagamentosModel = require("../models/pagamentos-model")
 
 const pagamentosController = {
   // GET /pagamentos 

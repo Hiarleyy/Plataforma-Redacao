@@ -1,4 +1,4 @@
-const correcoesModel = require("../models/correcoesModel")
+const correcoesModel = require("../models/correcoes-model")
 const path = require("path")
 const fs = require("fs")
 

@@ -1,4 +1,4 @@
-const HttpError = require("../error/HttpError")
+const HttpError = require("../error/http-error")
 const ytpl = require("ytpl")
 
 const getPlaylistVideos = async (playlistUrl) => {

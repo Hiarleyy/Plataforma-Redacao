@@ -1,7 +1,7 @@
-const pagamentosRepository = require("../repositories/pagamentosRepository")
-const usuariosRepository = require("../repositories/usuariosRepository")
-const {criarPagamentoSchema, atualizarPagamentoSchema, deletarPagamentoSchema}  = require("../schemas/pagamentoSchema")
-const HttpError = require("../error/HttpError")
+const pagamentosRepository = require("../repositories/pagamentos-repository")
+const usuariosRepository = require("../repositories/usuarios-repository")
+const {criarPagamentoSchema, atualizarPagamentoSchema, deletarPagamentoSchema}  = require("../schemas/pagamentos-schema")
+const HttpError = require("../error/http-error")
 
 const pagamentosModel = {
   retornarPagamentos: async() =>{

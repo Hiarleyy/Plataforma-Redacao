@@ -1,4 +1,1 @@
 # Plataforma-Redacao
-
-
-Laiane

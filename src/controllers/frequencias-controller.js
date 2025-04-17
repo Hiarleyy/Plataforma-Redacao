@@ -1,5 +1,4 @@
-const { response } = require("express");
-const frequenciaModel = require("../models/frequenciasModel");
+const frequenciaModel = require("../models/frequencias-model");
 
 const frequenciasController = {
   // retornar todas as frequencias ou uma frequencia espercifica

@@ -1,4 +1,4 @@
-const turmaModel = require("../models/turmaModel")
+const turmaModel = require("../models/turmas-model")
 
 const turmaController = {
   // GET /turmas
