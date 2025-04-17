@@ -40,6 +40,16 @@ const pagamentosModel = {
   deletarPagamentos: async(id) => {
     const deletePagamento = await pagamentosRepository.deleteUmPagamento(id)
     return deletePagamento
+  },
+  retornarPagamentosUsuario: async(id) =>{
+    const pagamentoExistente = pagamentosRepository.retorneUmPagamentoPeloId(id)
+    if (!pagamentoExistente) {
+      throw new HttpError (404, "Esse usuário não tem nenhum pagamento feito!")
+    }
+
+    const pagamento = await pagamentosRepository.retorneTodosOsPagamentosUsuario(id)
+    return pagamento
+
   }
 }
 

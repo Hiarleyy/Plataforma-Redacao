@@ -1,4 +1,5 @@
-const pagamentosModel = require("../models/pagamentos-model")
+const pagamentosModel = require("../models/pagamentos-model");
+const { show } = require("./usuarios-controller");
 
 const pagamentosController = {
   // GET /pagamentos 
@@ -15,10 +16,12 @@ const pagamentosController = {
   create: async (req, res, next) => {
     try {
       const corpoDaRequisicao = req.body
+      console.log(corpoDaRequisicao)
       const novoPagamento = await pagamentosModel.criarPagamento(corpoDaRequisicao)
       return res.status(200).json({ message: "novo pagamento efetuado com sucesso.", data: novoPagamento})
     } 
     catch(error){
+      console.log(error)
       next(error)
     }
   },
@@ -42,6 +45,17 @@ const pagamentosController = {
       const resposta = await pagamentosModel.deletarPagamentos(id)
       res.status(200).json({message: "usuário deletado com sucesso.", data: resposta})
     }catch(error){
+      next(error)
+    }
+  },
+  show: async (req, res, next) =>{
+    try {
+      const {id} = req.params
+
+      const resposta = await pagamentosModel.retornarPagamentosUsuario(id)
+      res.status(200).json({data: resposta})
+    }
+    catch(error){
       next(error)
     }
   }
