@@ -19,15 +19,7 @@ const turmaRepository = {
   // Retorna uma turma específica pelo id
   retorneUmaTurmaPeloId: async (id) => {
     const turma = await prisma.turma.findUnique({
-      where: { id },
-      select: {
-        id: true,
-        nome: true,
-        dataCriacao: true,
-      },
-      include: {
-        usuarios: true
-      }
+      where: { id }
     })
 
     return turma
