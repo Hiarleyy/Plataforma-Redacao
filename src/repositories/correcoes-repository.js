@@ -16,12 +16,13 @@ const correcoesRepository = {
 
   // Retorna o id do usuário que fez a redação 
   retornarUsuarioDaCorrecao: async (id) => {
-    const usuarioId = await prisma.correcao.findUnique({
+    const usuarioId = await prisma.correcao.findMany({
       where: { id },
       select: {
         redacao: {
           select: {
             usuarioId: true,
+
           },
         },
       },
@@ -44,6 +45,15 @@ const correcoesRepository = {
     })
 
     return correcaoDeletada
+  },
+  retornarCorrecoesAluno: async (id) => {
+    // retornar todas as correcoes do aluno e todas as suas informacoes
+    const correcoes = await prisma.correcao.findMany({ 
+      where: { redacao: { usuarioId: id } },
+     })
+    
+      
+    return correcoes
   }
 }
 

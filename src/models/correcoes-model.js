@@ -52,6 +52,14 @@ const correcoesModel = {
     // Salva a nova correção no bando de dados
     const correcao = await correcoesRepository.crieNovaCorreção(corpo.data)
     return correcao
+  },
+  retornarCorrecoesAluno: async (id) => {
+    const correcao = await correcoesRepository.retornaUmaCorrecao(id)
+    if (!correcao) throw new HttpError(404, "Essa correção não existe.")
+      
+
+    const correcoes = await correcoesRepository.retornarCorrecoesAluno(id)
+    return correcoes
   }
 }
 

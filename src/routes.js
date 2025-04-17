@@ -27,11 +27,11 @@ router.delete("/usuarios/:id", usuariosController.delete) // falta ajeitar
 
 // Rotas relacionadas a turmas
 router.get("/turmas", turmaController.index)
-// - falta uma rota de retornar uma turma
-// - falta uma rota de retornar os alunos de uma turma
 router.post("/turmas", turmaController.create)
 router.put("/turmas/:id", turmaController.update)
 router.delete("/turmas/:id", turmaController.delete)
+//  rota de retornar os alunos de uma turma
+router.get("/turmas/:id", turmaController.show)
 
 // Rotas relacionadas a pagamentos
 router.get("/pagamentos", pagamentosController.index ) 
@@ -61,7 +61,8 @@ router.post("/propostas",uploadPropostas.single("file"),propostasController.crea
 router.get("/correcoes", correcoesController.index)
 router.post("/correcoes/:usuarioId/upload", uploadCorrecoes.single("file"), correcoesController.create)
 router.get("/correcoes/download/:id", correcoesController.download)
-// - falta uma rota que retorna somente as correções de um aluno
+// rota que retorna somente as correções de um aluno
+router.get("/correcoes/aluno/:id", correcoesController.showByAluno) // falta terminar a rota
 
 // Rotas relacionadas a frequencia
 router.get("/frequencias", frequenciasController.index) // todas as frequencias

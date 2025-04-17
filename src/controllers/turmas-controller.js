@@ -41,6 +41,15 @@ const turmaController = {
     } catch(error){
       next (error)
     }
+  }, 
+  show: async (req, res, next) => {
+    try {
+      const { id } = req.params
+      const resposta = await turmaModel.retornarTurma(id)
+      res.status(200).json({ data: resposta })
+    } catch (error) {
+      next(error)
+    }
   }
 }
 

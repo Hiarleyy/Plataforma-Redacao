@@ -10,7 +10,12 @@ const turmaModel = {
   },
 
   retornarTurma: async (id) => {
+    const TurmaExistente = await turmaRepository.retorneUmaTurmaPeloId(id)
+    if (!TurmaExistente){
+      throw new HttpError (404, "Essa turma nao existe.")
+    }
     const turma = await turmaRepository.retorneUmaTurmaPeloId(id)
+    return turma
     
   },
 
@@ -30,7 +35,7 @@ const turmaModel = {
     // Verificar se a turma existe
     const TurmaExistente = await turmaRepository.retorneUmaTurmaPeloId(id)
     if (!TurmaExistente){
-      throw new HttpError (404, "Erro de validação: Verifique se os dados enviados estão corretos.")
+      throw new HttpError (404, "Essa turma nao existe.")
     }
     const updateTurma = turmaRepository.updateUmaTurma(id, corpo.data)
     return updateTurma

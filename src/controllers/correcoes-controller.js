@@ -68,6 +68,15 @@ const correcoesController = {
     } catch (error) {
       next(error)
     }
+  }, 
+  showByAluno: async (req, res, next) => {
+    try {
+      const { id } = req.params
+      const resposta = await correcoesModel.retornarCorrecoesAluno(id)
+      res.status(200).json({ data: resposta })
+    } catch (error) {
+      next(error)
+    }
   }
 }
 
