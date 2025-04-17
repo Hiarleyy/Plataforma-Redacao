@@ -18,17 +18,16 @@ router.get("/teste", (req, res) => {
   res.status(200).json({ message: "Se você está lendo essa mensagem, é porque a api está funcionando." })
 })
 
-// Rotas relacionadas a usuários
+// Rotas relacionadas a usuários (OK)
 router.get("/usuarios", usuariosController.index)
 router.get("/usuarios/:id", usuariosController.show)
 router.post("/usuarios", usuariosController.create)
 router.put("/usuarios/:id", usuariosController.update)
-router.delete("/usuarios/:id", usuariosController.delete) // falta ajeitar
+router.delete("/usuarios/:id", usuariosController.delete) 
 
-// Rotas relacionadas a turmas
+// Rotas relacionadas a turmas (OK)
 router.get("/turmas", turmaController.index)
-// - falta uma rota de retornar uma turma
-// - falta uma rota de retornar os alunos de uma turma
+router.get("/turmas/:id", turmaController.show)
 router.post("/turmas", turmaController.create)
 router.put("/turmas/:id", turmaController.update)
 router.delete("/turmas/:id", turmaController.delete)

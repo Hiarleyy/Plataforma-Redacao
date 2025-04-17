@@ -1,7 +1,7 @@
 const prisma = require("../database/db")
 const Turma = require("../entities/Turma")
 
-const turmaRepository = {
+const turmasRepository = {
   // Retorna todas as turmas do bando de dados
   retorneTodasAsTurmas: async () => {
     const turmas = await prisma.turma.findMany({
@@ -9,32 +9,25 @@ const turmaRepository = {
         id: true,
         nome: true,
         dataCriacao: true,
-        usuarios: true
       },
     })
 
     return turmas
   },
 
-  // Retorna uma turma específica pelo id
   retorneUmaTurmaPeloId: async (id) => {
     const turma = await prisma.turma.findUnique({
       where: { id },
-      select: {
-        id: true,
-        nome: true,
-        dataCriacao: true,
-      },
       include: {
         usuarios: true
       }
-    })
-
-    return turma
+    });
+  
+    return turma;
   },
 
-   // Retorna uma turma específica pelo nome
-   retorneUmaTurmaPeloNome: async (nome) => {
+  // Retorna uma turma específica pelo nome
+  retorneUmaTurmaPeloNome: async (nome) => {
     const turma = await prisma.turma.findUnique({
       where: { nome },
       select: {
@@ -63,20 +56,24 @@ const turmaRepository = {
     return novaTurma
   },
 
-  updateUmaTurma: async (id, data) =>{
-    const atualizarTurma = await prisma.turma.update({
+  // Atualiza uma turma
+  atualizarUmaTurma: async (id, data) =>{
+    const turmaAtualizada = await prisma.turma.update({
       data,
-      where: {id}
+      where: { id }
     })
-    return atualizarTurma
+
+    return turmaAtualizada
   },
 
-  deletarUmaTurma: async(id) =>{
-    const deleteTurma = await prisma.turma.delete({
-      where: {id}
+  // Deleta uma turma
+  deletarUmaTurma: async (id) =>{
+    const turmaDeletada = await prisma.turma.delete({
+      where: { id }
     })
-    return deleteTurma
+
+    return turmaDeletada
   }
 }
 
-module.exports = turmaRepository
+module.exports = turmasRepository

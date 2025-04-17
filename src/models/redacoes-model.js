@@ -2,6 +2,7 @@ const redacoesRepository = require("../repositories/redacoes-repository")
 const { criarRedacaoSchema } = require("../schemas/redacoes-schema")
 const deletarArquivo = require("../utils/deletar-arquivo")
 const usuariosModel = require("./usuarios-model")
+const HttpError = require("../error/http-error")
 
 const redacoesModel = {
   retornarRedacoes: async (usuarioId = false, corrigidas = false) => {

@@ -27,7 +27,8 @@ const redacoesRepository = {
   // Retorna as redações corrigidas de um usuário
   retornarRedacoesCorrigidas: async (usuarioId) => {
     const redacoes = await prisma.redacao.findMany({ 
-      where: { usuarioId, status: "CORRIGIDA" } 
+      where: { usuarioId, status: "CORRIGIDA" },
+      include: { correcao: true }
     })
 
     const quantidadeRedacoes = await prisma.redacao.count({

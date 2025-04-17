@@ -47,14 +47,13 @@ const usuariosController = {
 
   // DELETE /usuarios/:id
   delete:  async (req, res, next) => {
-   try {
-    const {id} = req.params
-    const resposta = await usuariosModel.deletarUsuario(id)
-    res.status(200).json({ message: "usuário deletado com sucesso.", data: resposta })
-   }
-   catch(error){
-    next(error)
-   }
+    try {
+      const { id } = req.params
+      const resposta = await usuariosModel.deletarUsuario(id)
+      res.status(200).json({ message: "usuário deletado com sucesso.", data: resposta })
+    } catch(error){
+      next(error)
+    }
   }
 }
 

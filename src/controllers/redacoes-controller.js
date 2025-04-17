@@ -6,16 +6,21 @@ const redacoesController = {
   // GET /redacoes
   index: async (req, res, next) => {
     try {
-      const { usuarioId } = req.query;
-
+      const { usuarioId, corrigidas } = req.query;
+      const corrigidasBool = corrigidas === "true";
       let resposta
 
-      if (!usuarioId) {
-        resposta = await redacoesModel.retornarRedacoes()
-        res.status(200).json({ data: resposta.redacoes });
+      if (usuarioId && corrigidasBool) {
+        resposta = await redacoesModel.retornarRedacoes(usuarioId, corrigidasBool)
+        return res.status(200).json({ data: resposta.redacoes });
       }
 
-      resposta = await redacoesModel.retornarRedacoes(usuarioId)
+      if (usuarioId) {
+        resposta = await redacoesModel.retornarRedacoes(usuarioId)
+        return res.status(200).json({ data: resposta.redacoes });
+      }
+
+      resposta = await redacoesModel.retornarRedacoes()
       res.status(200).json({ data: resposta.redacoes });
     } catch (error) {
       next(error)
