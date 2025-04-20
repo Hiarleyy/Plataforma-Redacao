@@ -52,8 +52,10 @@ router.post("/redacoes/:usuarioId/upload", uploadRedacoes.single("file"), redaco
 router.get("/redacoes/download/:id", redacoesController.download)
 
 //Rotas relacionadas a propostas
-router.get("/propostas", propostasController.index);
+router.get("/propostas",propostasController.index);
+router.get("/propostas/:id",propostasController.show)
 router.post("/propostas",uploadPropostas.single("file"),propostasController.create)
+router.get("/propostas/download/:id",propostasController.download)
 // - falta uma rota de deletar uma proposta
 
 // Rotas relacionadas a correções

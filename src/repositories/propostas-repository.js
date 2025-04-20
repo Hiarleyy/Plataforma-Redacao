@@ -16,7 +16,7 @@ const propostasRepository = {
   },
 
   // Retorna uma proposta específica
-  retorneUmaProposta: async (id) =>{
+  retorneUmaPropostaPeloId: async (id) =>{
     const proposta = await prisma.proposta.findUnique({where: { id }})
     return proposta
   },
