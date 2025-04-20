@@ -46,10 +46,13 @@ const propostasController = {
   delete: async (req, res, next) => {
     try {
       const { id } = req.params;
-      const proposta = await propostasRepository.retorneUmaProposta(id);
+      const proposta = await propostasModel.retornarUmaProposta(id);
       if (!proposta) throw new HttpError(404, "Proposta não encontrada");
 
-      deletarPropostaRedacao(proposta.caminho);
+      const filePath = path.join(__dirname, "..", "uploads", "propostas", proposta.caminho);
+      if (fs.existsSync(filePath)) {
+        fs.unlinkSync(filePath);
+      }
       await propostasRepository.deletarUmaProposta(id);
 
       res.status(204).send();

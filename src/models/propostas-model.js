@@ -31,7 +31,7 @@ const propostasModel = {
     
     const propostas = await propostasRepository.retorneTodasAsPropostas()
     
-    if (propostas.quantidadedePropostas === 20) {
+    if (propostas.quantidadedePropostas === 8 ) {
       const propostaMaisAntiga = await propostasRepository.retornePropostaMaisAntiga()
       deletarArquivo(["uploads", "propostas", propostaMaisAntiga.caminho])
       await propostasRepository.deletarUmaProposta(propostaMaisAntiga.id)

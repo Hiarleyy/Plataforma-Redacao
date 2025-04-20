@@ -56,7 +56,7 @@ router.get("/propostas",propostasController.index);
 router.get("/propostas/:id",propostasController.show)
 router.post("/propostas",uploadPropostas.single("file"),propostasController.create)
 router.get("/propostas/download/:id",propostasController.download)
-// - falta uma rota de deletar uma proposta
+router.delete("/propostas/:id",propostasController.delete) 
 
 // Rotas relacionadas a correções
 router.get("/correcoes", correcoesController.index)
