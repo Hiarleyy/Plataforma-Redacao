@@ -12,7 +12,7 @@ const turmaController = {
   },
 
   // GET /turmas/:id
-  show: async (id) => {
+  show: async (req,res,next) => {
     try {
       const { id } = req.params
       const resposta = await turmaModel.retornarTurma(id)
