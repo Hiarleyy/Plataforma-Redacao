@@ -34,7 +34,7 @@ const propostasController = {
   },
 
   // continuar a partir daqui
-  deletarProposta: async (req, res, next) => {
+  delete: async (req, res, next) => {
     try {
       const { id } = req.params;
       const proposta = await propostasRepository.retorneUmaProposta(id);
