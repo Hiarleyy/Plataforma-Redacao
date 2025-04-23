@@ -89,6 +89,7 @@ model Correcao {
   competencia03 Int?
   competencia04 Int?
   competencia05 Int?
+  nota          Int?
   caminho       String?    @db.VarChar(100)
   data          DateTime   @default(now())
   feedback      String?    @db.Text
