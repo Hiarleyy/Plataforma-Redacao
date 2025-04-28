@@ -4,6 +4,13 @@ const usuariosController = {
   // GET /usuarios
   index: async (req, res, next) => {
     try {
+      const { filter } = req.query
+
+      if (filter) {
+        const resposta = await usuariosModel.retornarUsuarios(filter)
+        return res.status(200).json({ data: resposta })
+      }
+
       const resposta = await usuariosModel.retornarUsuarios()
       res.status(200).json({ data: resposta })
     } catch (error) {

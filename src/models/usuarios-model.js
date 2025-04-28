@@ -4,7 +4,12 @@ const { criarUsuarioSchema, atualizarUsuarioSchema } = require("../schemas/usuar
 const turmaModel = require("./turmas-model")
 
 const usuariosModel = {
-  retornarUsuarios: async () => {
+  retornarUsuarios: async (filter) => {
+    if (filter) {
+      const usuarios = await usuariosRepository.retorneAlunosPorNome(filter)
+      return usuarios
+    }
+    
     const usuarios = await usuariosRepository.retorneTodosOsUsuarios()
     return usuarios
   },

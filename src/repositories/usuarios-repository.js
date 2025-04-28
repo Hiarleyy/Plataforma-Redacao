@@ -23,6 +23,20 @@ const usuariosRepository = {
     return usuario
   },
 
+  // Retorna todos os alunos cujo nome contém o texto fornecido
+  retorneAlunosPorNome: async (nome) => {
+    const alunos = await prisma.usuario.findMany({
+      where: {
+        nome: {
+          contains: nome,
+          mode: "insensitive"
+        }
+      }
+    })
+
+    return alunos
+  },
+
    // Retorna um usuário específico pelo email
    retorneUmUsuarioPeloEmail: async (email) => {
     const usuario = await prisma.usuario.findUnique({ where: { email } })
