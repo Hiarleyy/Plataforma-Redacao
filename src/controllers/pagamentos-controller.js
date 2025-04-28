@@ -31,8 +31,7 @@ const pagamentosController = {
       const { id } = req.params
       const corpoDaRequisicao = req.body
       const resposta = await pagamentosModel.atualizarPagamento(id, corpoDaRequisicao)
-
-      res.status(200).json({ message: "usuário atualizado com sucesso.", data: resposta })
+      res.status(200).json({ message: "Pagamento atualizado com sucesso.", data: resposta })
     } catch(error){
       next(error)
     }
