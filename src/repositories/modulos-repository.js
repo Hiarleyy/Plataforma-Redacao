@@ -9,7 +9,9 @@ const modulosRepository = {
         id: true,
         nome: true,
         descricao: true,
-        playlistUrl: true
+        playlistUrl: true,
+        dataCriacao: true,
+        videos: true 
       }
     })
 
@@ -25,6 +27,7 @@ const modulosRepository = {
         nome: true, 
         descricao: true,
         playlistUrl: true,
+        dataCriacao: true,
         videos: true 
       } 
     })
@@ -44,12 +47,15 @@ const modulosRepository = {
     const moduloDeletado = await prisma.modulo.delete(
       { where: { id }}
     )
+
     return moduloDeletado
   },
+
   atualizeUmModulo: async (id, data) => {
     const moduloAtualizado = await prisma.modulo.update(
       { where: { id }, data }
     )
+
     return moduloAtualizado
   }
 }

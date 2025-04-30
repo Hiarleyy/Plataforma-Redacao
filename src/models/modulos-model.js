@@ -2,6 +2,7 @@ const modulosRepository = require("../repositories/modulos-repository")
 const videosRepository = require("../repositories/videos-repository")
 const getPlaylistVideos = require("../utils/get-playlist-videos")
 const HttpError = require("../error/http-error")
+const { criarModuloSchema } = require("../schemas/modulos-schema")
 
 const modulosModel = {
   retornarModulos: async () => {
@@ -16,7 +17,13 @@ const modulosModel = {
   },
 
   criarModulo: async (data) => {
-    // Adicionar a validação com o zod
+    // Vericando se o corpo da requisição respeita o formato de validação do zod
+    const corpo = criarModuloSchema.safeParse(data)
+    
+    if (!corpo.success) {
+      throw new HttpError(400, "Erro de validação: Verifique se os dados enviados estão corretos.")
+    } 
+
     const modulo = await modulosRepository.crieNovoModulo(data)
 
     const videos = await getPlaylistVideos(data.playlistUrl)
@@ -29,17 +36,21 @@ const modulosModel = {
         moduloId: modulo.id
       })
     }
+
     return modulo
   }, 
 
   deletarModulo: async (id) => {
+    // Verificando se o modulo existe
+    await modulosModel.retornarUmModulo(id)
+
     const moduloDeletado = await modulosRepository.deleteUmModulo(id)
     return moduloDeletado
   },
 
   atualizarModulo: async (id, data) => {
-    const modulo = await modulosRepository.retorneUmModuloPeloId(id)
-    if (!modulo) throw new HttpError(404, "esse modulo não existe.")
+    // Verificando se o modulo existe
+    await modulosModel.retornarUmModulo(id)
       
     const moduloAtualizado = await modulosRepository.atualizeUmModulo(id, data)
     return moduloAtualizado

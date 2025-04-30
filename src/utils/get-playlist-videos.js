@@ -8,7 +8,7 @@ const getPlaylistVideos = async (playlistUrl) => {
     const videos = playlist.items.map(video => ({
       titulo: video.title,
       url: video.shortUrl,
-      thumbnail: video.thumbnails[0].url,
+      thumbnail: video.bestThumbnail.url,
       ordem: video.index
     }))
 
