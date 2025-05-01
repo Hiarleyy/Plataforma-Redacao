@@ -11,6 +11,7 @@ const uploadCorrecoes = require("./middlewares/upload-correcoes")
 const frequenciasController = require("./controllers/frequencias-controller")
 const correcoesController = require("./controllers/correcoes-controller")
 const rankingController = require("./controllers/ranking-controller")
+const videosController = require("./controllers/videos-controller")
 
 const router = express.Router()
 
@@ -74,5 +75,8 @@ router.get("/frequencias/aluno/:id", frequenciasController.showByAluno)
 
 // Rota que retorna o ranking de alunos
 router.get("/ranking", rankingController.index)
+
+// Rota que retorna um vídeo
+router.get("/videos/:id", videosController.show)
 
 module.exports = router
