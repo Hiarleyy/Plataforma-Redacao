@@ -40,6 +40,17 @@ const usuariosController = {
     }
   },
 
+  // POST /usuarios/login
+  login: async (req, res, next) => {
+    try {
+      const corpoDaRequisicao = req.body
+      const resposta = await usuariosModel.logarUsuario(corpoDaRequisicao)
+      res.status(200).json({ message: "Login efetuado com sucesso", data: resposta })
+    } catch (error) {
+      next(error);
+    }
+  },
+
   // PUT /usuarios/:id
   update: async (req, res, next) => {
     try {

@@ -1,7 +1,12 @@
 const usuariosRepository = require("../repositories/usuarios-repository")
 const HttpError = require("../error/http-error")
+const bcrypt = require("bcrypt")
+const jwt = require("jsonwebtoken")
 const { criarUsuarioSchema, atualizarUsuarioSchema } = require("../schemas/usuarios-schema")
+const { loginSchema } = require("../schemas/login-schema")
 const turmaModel = require("./turmas-model")
+
+const tokenSecretKey = "senha-super-secreta"
 
 const usuariosModel = {
   retornarUsuarios: async (filter) => {
@@ -35,8 +40,46 @@ const usuariosModel = {
     const emailExiste = await usuariosRepository.retorneUmUsuarioPeloEmail(corpo.data.email)
     if (emailExiste) throw new HttpError(409, "Esse email já foi cadastrado no sistema.")
 
-    const usuario = await usuariosRepository.crieNovoUsuario(corpo.data)
+    // Criptografando a senha
+    const regex = /^(.*?)@gmail\.com$/
+    const value = corpo.data.email.match(regex)
+    const hashedPassword = await bcrypt.hash(value[1], 10)
+
+    const usuario = await usuariosRepository.crieNovoUsuario({
+      nome: corpo.data.nome,
+      email: corpo.data.email,
+      password: hashedPassword,
+      tipoUsuario: corpo.data.tipoUsuario,
+      turmaId: corpo.data.turmaId
+    })
+
     return usuario
+  },
+
+  logarUsuario: async (data) => {
+    // Vericando se o corpo da requisição respeita o formato de validação do zod
+    const corpo = loginSchema.safeParse(data)
+
+    if (!corpo.success) {
+      throw new HttpError(400, "Erro de validação: Verifique se os dados enviados estão corretos.")
+    } 
+
+    const { email, password } = corpo.data
+
+    const user = await usuariosRepository.retorneUmUsuarioPeloEmail(email)
+  
+    if (!user) throw new HttpError(404, "Usuário não encontrado.")
+  
+    const isSamePassword = await bcrypt.compare(password, user.password)
+    if (!isSamePassword) throw new HttpError(401, "Senha inválida.")
+  
+    const payload = { userId: user.id }
+
+    const token = jwt.sign(payload, tokenSecretKey, {
+      expiresIn: "30m",
+    })
+  
+    return { token, id: user.id, role: user.tipoUsuario }
   },
 
   atualizarUsuario: async (id, data) => {
