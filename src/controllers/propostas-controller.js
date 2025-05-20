@@ -63,8 +63,7 @@ const propostasController = {
 
   download: async (req, res, next) => {
     try{
-      const { id } = req.params
-      const proposta = await propostasModel.retornarUmaProposta(id)
+      const proposta = await propostasModel.retornarPropostaMaisNova()
 
       const filePath = path.join(__dirname, "..", "uploads", "propostas", proposta.caminho)
       

@@ -59,6 +59,14 @@ const usuariosRepository = {
 
     return usuarioAtualizado
   },
+  atualizarFotoUsuario: async (id, caminho) => {
+    const usuarioAtualizado = await prisma.usuario.update({
+      data: { caminho },
+      where: { id }
+    })
+
+    return usuarioAtualizado
+  },
 
   // Delete um usuário
   deleteUmUsuario: async (id) => {
@@ -69,6 +77,7 @@ const usuariosRepository = {
     // Deletando os arquivos do usuário na pasta uploads
     deletarArquivo(["uploads", "redacoes", id])
     deletarArquivo(["uploads", "correcoes", id])
+    deletarArquivo(["uploads", "profile", id])
 
     return usuarioDeletado
   }

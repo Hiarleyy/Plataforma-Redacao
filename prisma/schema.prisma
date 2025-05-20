@@ -17,6 +17,7 @@ model Usuario {
   nome            String     @db.VarChar(200)
   email           String     @unique @db.VarChar(200)
   password        String     @db.VarChar(200)
+  caminho         String?    @db.VarChar(100)
   tipoUsuario     Cargo      @default(STANDARD)
   dataCriacao     DateTime   @default(now())
   dataAtualizacao DateTime   @updatedAt

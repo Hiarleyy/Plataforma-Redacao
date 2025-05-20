@@ -13,7 +13,14 @@ const propostasRepository = {
   retornePropostaMaisAntiga: async () => {
     const proposta = await prisma.proposta.findFirst({orderBy: { data: "asc" }})  
     return proposta
-  },
+    },
+
+    retornePropostaMaisNova: async () => {
+    const proposta = await prisma.proposta.findFirst({
+      orderBy: { data: "desc" }
+    })  
+    return proposta
+    },
 
   // Retorna uma proposta específica
   retorneUmaPropostaPeloId: async (id) =>{

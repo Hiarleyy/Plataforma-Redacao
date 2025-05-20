@@ -19,7 +19,13 @@ const propostasModel = {
     const proposta = await propostasRepository.retornePropostaMaisAntiga()
     if (!proposta) throw new HttpError(404, "Essa Proposta Não Existe.")
     return proposta
+  }, 
+  retornarPropostaMaisNova: async () => {
+    const proposta = await propostasRepository.retornePropostaMaisNova()
+    if (!proposta) throw new HttpError(404, "Essa Proposta Não Existe.")
+    return proposta
   },
+
 
   //Criando uma Proposta
   criarProposta: async (data) => {

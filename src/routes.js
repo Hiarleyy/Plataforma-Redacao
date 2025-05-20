@@ -12,6 +12,7 @@ const frequenciasController = require("./controllers/frequencias-controller")
 const correcoesController = require("./controllers/correcoes-controller")
 const rankingController = require("./controllers/ranking-controller")
 const videosController = require("./controllers/videos-controller")
+const uploadImagens = require('./middlewares/upload-imagens')
 
 const router = express.Router()
 
@@ -27,6 +28,9 @@ router.get("/usuarios/:id", usuariosController.show)
 router.post("/usuarios", usuariosController.create)
 router.put("/usuarios/:id", usuariosController.update)
 router.delete("/usuarios/:id", usuariosController.delete) 
+router.post("/usuarios/:id", uploadImagens.single('file'), usuariosController.profileUpload)
+router.get("/usuarios/:id/profile-image", usuariosController.getProfileImage)
+
 
 // Rotas relacionadas a turmas (OK)
 router.get("/turmas", turmaController.index)

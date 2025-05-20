@@ -96,14 +96,20 @@ const usuariosModel = {
     const usuarioAtualizado = await usuariosRepository.atualizeUmUsuario(id, corpo.data)
     return usuarioAtualizado
   },
-
   deletarUsuario: async (id) => {
     // Verificando se o usuário existe
     await usuariosModel.retornarUmUsuario(id)
 
     const usuarioDeletado = await usuariosRepository.deleteUmUsuario(id)
     return usuarioDeletado
-  }
+  },
+  
+  adicionarFotoDePerfil: async (id, caminho) => {
+    await usuariosModel.retornarUmUsuario(id)
+    
+    const usuarioAtualizado = await usuariosRepository.atualizarFotoUsuario(id, caminho)
+    return usuarioAtualizado
+  },
 }
 
 module.exports = usuariosModel
