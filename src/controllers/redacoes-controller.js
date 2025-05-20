@@ -15,6 +15,11 @@ const redacoesController = {
         return res.status(200).json({ data: resposta.redacoes });
       }
 
+      if (corrigidasBool) {
+        resposta = await redacoesModel.retornarRedacoes(false, corrigidasBool)
+        return res.status(200).json({ data: resposta.redacoes });
+      }
+
       if (usuarioId) {
         resposta = await redacoesModel.retornarRedacoes(usuarioId)
         return res.status(200).json({ data: resposta.redacoes });
@@ -22,6 +27,17 @@ const redacoesController = {
 
       resposta = await redacoesModel.retornarRedacoes()
       res.status(200).json({ data: resposta.redacoes });
+    } catch (error) {
+      next(error)
+    }
+  },
+
+  // GET /redacoes/:id
+  show: async (req, res, next) => {
+    try {
+      const { id } = req.params
+      const resposta = await redacoesModel.retornarRedacao(id)
+      res.status(200).json({ data: resposta })
     } catch (error) {
       next(error)
     }

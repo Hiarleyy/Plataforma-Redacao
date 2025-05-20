@@ -55,6 +55,7 @@ router.put("/modulos/:id", modulosController.update)
 
 // Rotas relacionadas a redações
 router.get("/redacoes", redacoesController.index)
+router.get("/redacoes/:id", redacoesController.show)
 router.post("/redacoes/:usuarioId/upload", uploadRedacoes.single("file"), redacoesController.create)
 router.get("/redacoes/download/:id", redacoesController.download)
 

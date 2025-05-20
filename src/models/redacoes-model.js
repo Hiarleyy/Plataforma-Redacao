@@ -12,6 +12,9 @@ const redacoesModel = {
      // Buscando as redações corrigidas de um usuário específico
     if (usuarioId && corrigidas) return await redacoesRepository.retornarRedacoesCorrigidas(usuarioId)
 
+    // Buscando todas as redações corrigidas
+    if (corrigidas) return await redacoesRepository.retornarRedacoesCorrigidas()
+
     // Buscando as redações de um usuário específico
     if (usuarioId) return await redacoesRepository.retorneTodasAsRedacoes(usuarioId)
 
