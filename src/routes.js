@@ -27,11 +27,10 @@ router.get("/usuarios", usuariosController.index)
 router.get("/usuarios/:id", usuariosController.show)
 router.post("/usuarios", usuariosController.create)
 router.put("/usuarios/:id", usuariosController.update)
-router.delete("/usuarios/:id", usuariosController.delete) 
+router.delete("/usuarios/:id", usuariosController.delete)
+router.post("/usuarios/:id/trocar-senha", usuariosController.updatePassword) 
 router.post("/usuarios/:id", uploadImagens.single('file'), usuariosController.profileUpload)
 router.get("/usuarios/:id/profile-image", usuariosController.getProfileImage)
-router.post("/usuarios/:id/trocar-senha", usuariosController.updatePassword)
-
 
 // Rotas relacionadas a turmas (OK)
 router.get("/turmas", turmaController.index)
@@ -61,11 +60,12 @@ router.post("/redacoes/:usuarioId/upload", uploadRedacoes.single("file"), redaco
 router.get("/redacoes/download/:id", redacoesController.download)
 
 //Rotas relacionadas a propostas
-router.get("/propostas",propostasController.index);
-router.get("/propostas/:id",propostasController.show)
-router.post("/propostas",uploadPropostas.single("file"),propostasController.create)
-router.get("/propostas/download/:id",propostasController.download)
-router.delete("/propostas/:id",propostasController.delete) 
+
+router.post("/propostas", uploadPropostas.single("file"), propostasController.create)
+router.get("/propostas", propostasController.index);
+router.get("/propostas/download", propostasController.download)
+router.get("/propostas/:id", propostasController.show)
+router.delete("/propostas/:id", propostasController.delete)
 
 // Rotas relacionadas a correções
 router.get("/correcoes", correcoesController.index)
