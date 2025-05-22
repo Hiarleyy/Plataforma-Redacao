@@ -68,6 +68,16 @@ const usuariosRepository = {
     return usuarioAtualizado
   },
 
+  // Atualizar a senha do usuário
+  atualizarSenhaUsuario: async (id, hashedPassword) => {
+    const usuarioAtualizado = await prisma.usuario.update({
+      data: { password: hashedPassword },
+      where: { id }
+    })
+
+    return usuarioAtualizado
+  },
+
   // Delete um usuário
   deleteUmUsuario: async (id) => {
     const usuarioDeletado = await prisma.usuario.delete(

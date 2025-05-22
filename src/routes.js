@@ -30,6 +30,7 @@ router.put("/usuarios/:id", usuariosController.update)
 router.delete("/usuarios/:id", usuariosController.delete) 
 router.post("/usuarios/:id", uploadImagens.single('file'), usuariosController.profileUpload)
 router.get("/usuarios/:id/profile-image", usuariosController.getProfileImage)
+router.post("/usuarios/:id/trocar-senha", usuariosController.updatePassword)
 
 
 // Rotas relacionadas a turmas (OK)

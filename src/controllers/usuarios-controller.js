@@ -144,6 +144,30 @@ const usuariosController = {
       next(error)
     }
   },
+  updatePassword: async (req, res, next) => {
+    try {
+      const { id } = req.params
+    
+      // Verificar se req.body existe e contém os dados necessários
+      if (!req.body || !req.body.senhaAtual || !req.body.novaSenha) {
+        return res.status(400).json({ 
+          message: "Dados incompletos. 'senhaAtual' e 'novaSenha' são obrigatórios" 
+        })
+      }
+      
+      const data = {
+        senhaAtual: req.body.senhaAtual,
+        novaSenha: req.body.novaSenha
+      }
+      
+      const usuarioAtualizado = await usuariosModel.atualizarSenha(id, data)
+      res.status(200).json(usuarioAtualizado)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+
 }
 
 module.exports = usuariosController
