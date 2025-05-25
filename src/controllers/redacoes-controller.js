@@ -6,25 +6,42 @@ const redacoesController = {
   // GET /redacoes
   index: async (req, res, next) => {
     try {
-      const { usuarioId, corrigidas } = req.query;
-      const corrigidasBool = corrigidas === "true";
+      const { usuarioId, corrigidas, pendentes } = req.query
+      const corrigidasBool = corrigidas === "true"
+      const pendentesBool = pendentes === "true"
       let resposta
 
+      // Buscando as redações corrigidas de um usuário específico
       if (usuarioId && corrigidasBool) {
         resposta = await redacoesModel.retornarRedacoes(usuarioId, corrigidasBool)
         return res.status(200).json({ data: resposta.redacoes });
       }
 
+      // Buscando as redações pendentes de um usuário específico
+      if (usuarioId && pendentesBool) {
+        resposta = await redacoesModel.retornarRedacoes(usuarioId, false, pendentesBool)
+        return res.status(200).json({ data: resposta.redacoes });
+      }
+
+      // Buscando todas as redações corrigidas
       if (corrigidasBool) {
         resposta = await redacoesModel.retornarRedacoes(false, corrigidasBool)
         return res.status(200).json({ data: resposta.redacoes });
       }
 
+      // Buscando todas as redações pendentes
+      if (pendentes) {
+        resposta = await redacoesModel.retornarRedacoes(false, false, pendentesBool)
+        return res.status(200).json({ data: resposta.redacoes });
+      }
+
+      // Buscando as redações de um usuário específico
       if (usuarioId) {
         resposta = await redacoesModel.retornarRedacoes(usuarioId)
         return res.status(200).json({ data: resposta.redacoes });
       }
 
+      // Buscando todas as redações
       resposta = await redacoesModel.retornarRedacoes()
       res.status(200).json({ data: resposta.redacoes });
     } catch (error) {

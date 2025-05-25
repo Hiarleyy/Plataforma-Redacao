@@ -28,7 +28,7 @@ const redacoesRepository = {
     return { redacoes, quantidadeRedacoes }
   },
 
-  // Retorna as redações corrigidas de um usuário
+  // Retorna as redações corrigidas
   retornarRedacoesCorrigidas: async (usuarioId = false) => {
     let redacoes
     let quantidadeRedacoes
@@ -54,6 +54,37 @@ const redacoesRepository = {
 
     quantidadeRedacoes = await prisma.redacao.count({
       where: { usuarioId, status: "CORRIGIDA" }
+    })
+
+    return { redacoes, quantidadeRedacoes }
+  },
+
+  // Retornar redações não corrigidas
+   retornarRedacoesPendentes: async (usuarioId = false) => {
+    let redacoes
+    let quantidadeRedacoes
+    const includeBody = { usuario: true }
+
+    if (!usuarioId) {
+      redacoes = await prisma.redacao.findMany({ 
+        where: { status: "PENDENTE" },
+        include: includeBody
+      })
+
+      quantidadeRedacoes = await prisma.redacao.count({
+        where: { status: "PENDENTE" }
+      })
+
+      return { redacoes, quantidadeRedacoes }
+    }
+
+    redacoes = await prisma.redacao.findMany({ 
+      where: { usuarioId, status: "PENDENTE" },
+      include: includeBody
+    })
+
+    quantidadeRedacoes = await prisma.redacao.count({
+      where: { usuarioId, status: "PENDENTE" }
     })
 
     return { redacoes, quantidadeRedacoes }
