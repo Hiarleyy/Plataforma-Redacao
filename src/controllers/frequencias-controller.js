@@ -5,7 +5,7 @@ const frequenciasController = {
 
   create: async (req, res, next) => {
     try{
-      corpoDaRequisicao = req.body
+      const corpoDaRequisicao = req.body
       const resposta = await frequenciaModel.criarFrequencia(corpoDaRequisicao)
       res.status(200).json({ message: "Frequencia criada com sucesso.", data: resposta })
     }

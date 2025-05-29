@@ -12,6 +12,8 @@ const frequenciasController = require("./controllers/frequencias-controller")
 const correcoesController = require("./controllers/correcoes-controller")
 const rankingController = require("./controllers/ranking-controller")
 const videosController = require("./controllers/videos-controller")
+const simuladoController = require("./controllers/simulado-controller")
+const notasSimuladoController = require("./controllers/notasSimulado-Controller")
 
 const router = express.Router()
 
@@ -79,5 +81,22 @@ router.get("/ranking", rankingController.index)
 
 // Rota que retorna um vídeo
 router.get("/videos/:id", videosController.show)
+
+// rotas do simulado 
+router.post("/simulados", simuladoController.create)
+router.get("/simulados", simuladoController.index)
+router.get("/simulados/:id", simuladoController.show)
+// criar uma rota que recebe o id da turma e retorna todos os simulados dessa turma
+router.get("/simulados/turmaId/:id", simuladoController.showByTurma)
+
+router.delete("/simulados/:id", simuladoController.delete)
+
+// rotas das notas de simulado
+router.post ("/notaSimulado", notasSimuladoController.create)
+router.get("/notaSimulado", notasSimuladoController.index)
+router.get("/notaSimulado/:id", notasSimuladoController.show)
+router.delete("/notaSimulado/:id", notasSimuladoController.delete)
+// buscar notas de um simulado especifico
+router.get("/notaSimulado/simuladoId/:id", notasSimuladoController.showBySimulado)
 
 module.exports = router

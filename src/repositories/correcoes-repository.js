@@ -4,7 +4,20 @@ const Correcao = require("../entities/Correcao")
 const correcoesRepository = {
   // Retorna todas as correções do banco de dados
   retorneTodasAsCorrecoes: async () => {
-    const correcoes = await prisma.correcao.findMany()
+    const correcoes = await prisma.correcao.findMany({
+      include:{
+        redacao: {
+          include:{
+            usuario:{
+              include:{
+                turma: true
+              }
+            }
+          }
+        }
+      }
+
+    })
     return correcoes
   },
 

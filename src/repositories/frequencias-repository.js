@@ -11,7 +11,7 @@ const frequenciasRepository= {
         return novaFrequencia
     },
     retornarUmaFrequenciaPeloId: async (id) => {
-        const frequencia = await prisma.frequencia.findUnique({where: {id}})
+        const frequencia = await prisma.frequencia.findUnique({where: { id}})
         return frequencia
     },
     retorneTodasAsFrequencias: async() =>{

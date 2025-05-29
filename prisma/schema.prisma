@@ -27,6 +27,7 @@ model Usuario {
   frequencias     Frequencia[]
   pagamentos      Pagamento[]
   redacoes        Redacao[]
+  notasSimulado  NotasSimulado[]
 }
 
 model Turma {
@@ -36,6 +37,7 @@ model Turma {
 
   usuarios    Usuario[]
   frequencias Frequencia[]
+  simulado    Simulado[]
 }
 
 enum StatusFrequencia {
@@ -125,5 +127,34 @@ model Video {
   moduloId  String   @db.VarChar(36)
 
   modulo    Modulo   @relation(fields: [moduloId], references: [id], onDelete: Cascade) 
+}
+
+model Simulado {
+  id          String   @db.Char(36) @id
+  titulo      String   @db.VarChar(200)
+  data        DateTime @default(now())
+  turmaId     String   @db.VarChar(36)
+
+  turma   Turma   @relation(fields: [turmaId], references: [id], onDelete: Cascade) 
+  
+  notasSimulado  NotasSimulado[]
+
+}
+
+model NotasSimulado {
+  id                 String   @id @default(uuid()) @db.Char(36)
+  simuladoId         String   @db.Char(36)
+  usuarioId          String   @db.Char(36)
+  competencia01       Int?
+  competencia02       Int?
+  competencia03       Int?
+  competencia04       Int?
+  competencia05       Int?
+  notaGeral           Int?
+
+  simulado Simulado @relation(fields: [simuladoId], references: [id], onDelete: Cascade)
+  usuario Usuario @relation(fields: [usuarioId], references: [id], onDelete: Cascade) 
+
+  @@unique([simuladoId, usuarioId])
 }
 
