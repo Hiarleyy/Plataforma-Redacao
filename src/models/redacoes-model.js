@@ -5,12 +5,21 @@ const usuariosModel = require("./usuarios-model")
 const HttpError = require("../error/http-error")
 
 const redacoesModel = {
-  retornarRedacoes: async (usuarioId = false, corrigidas = false) => {
+  retornarRedacoes: async (usuarioId = false, corrigidas = false, pendentes = false) => {
     // Verificando se o usuário existe
     if (usuarioId) await usuariosModel.retornarUmUsuario(usuarioId)
     
-     // Buscando as redações corrigidas de um usuário específico
+    // Buscando as redações corrigidas de um usuário específico
     if (usuarioId && corrigidas) return await redacoesRepository.retornarRedacoesCorrigidas(usuarioId)
+
+    // Buscando as redações pendentes de um usuário específico
+    if (usuarioId && pendentes) return await redacoesRepository.retornarRedacoesPendentes(usuarioId)
+
+    // Buscando todas as redações corrigidas
+    if (corrigidas) return await redacoesRepository.retornarRedacoesCorrigidas()
+
+    // Buscando todas as redações pendentes
+    if (pendentes) return await redacoesRepository.retornarRedacoesPendentes()
 
     // Buscando as redações de um usuário específico
     if (usuarioId) return await redacoesRepository.retorneTodasAsRedacoes(usuarioId)

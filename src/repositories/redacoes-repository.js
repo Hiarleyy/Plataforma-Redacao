@@ -6,33 +6,85 @@ const redacoesRepository = {
   retorneTodasAsRedacoes: async (usuarioId = false) => {
     let redacoes
     let quantidadeRedacoes
+    const includeBody = { usuario: true }
 
     // Retorna todas as redações
     if (!usuarioId) {
-      redacoes = await prisma.redacao.findMany()
+      redacoes = await prisma.redacao.findMany({ include: includeBody })
       quantidadeRedacoes = await prisma.redacao.count()
       return { redacoes, quantidadeRedacoes }
     }
 
     // Retorna todas as redações de um usuário específico
     redacoes = await prisma.redacao.findMany({
-      where: { usuarioId }
+      where: { usuarioId },
+      include: includeBody 
     });
 
-    quantidadeRedacoes = await prisma.redacao.count({ where: { usuarioId } })
+    quantidadeRedacoes = await prisma.redacao.count({ 
+      where: { usuarioId }
+    })
   
     return { redacoes, quantidadeRedacoes }
   },
 
-  // Retorna as redações corrigidas de um usuário
-  retornarRedacoesCorrigidas: async (usuarioId) => {
-    const redacoes = await prisma.redacao.findMany({ 
+  // Retorna as redações corrigidas
+  retornarRedacoesCorrigidas: async (usuarioId = false) => {
+    let redacoes
+    let quantidadeRedacoes
+    const includeBody = { correcao: true, usuario: true }
+
+    if (!usuarioId) {
+      redacoes = await prisma.redacao.findMany({ 
+        where: { status: "CORRIGIDA" },
+        include: includeBody
+      })
+
+      quantidadeRedacoes = await prisma.redacao.count({
+        where: { status: "CORRIGIDA" }
+      })
+
+      return { redacoes, quantidadeRedacoes }
+    }
+
+    redacoes = await prisma.redacao.findMany({ 
       where: { usuarioId, status: "CORRIGIDA" },
-      include: { correcao: true }
+      include: includeBody
     })
 
-    const quantidadeRedacoes = await prisma.redacao.count({
+    quantidadeRedacoes = await prisma.redacao.count({
       where: { usuarioId, status: "CORRIGIDA" }
+    })
+
+    return { redacoes, quantidadeRedacoes }
+  },
+
+  // Retornar redações não corrigidas
+   retornarRedacoesPendentes: async (usuarioId = false) => {
+    let redacoes
+    let quantidadeRedacoes
+    const includeBody = { usuario: true }
+
+    if (!usuarioId) {
+      redacoes = await prisma.redacao.findMany({ 
+        where: { status: "PENDENTE" },
+        include: includeBody
+      })
+
+      quantidadeRedacoes = await prisma.redacao.count({
+        where: { status: "PENDENTE" }
+      })
+
+      return { redacoes, quantidadeRedacoes }
+    }
+
+    redacoes = await prisma.redacao.findMany({ 
+      where: { usuarioId, status: "PENDENTE" },
+      include: includeBody
+    })
+
+    quantidadeRedacoes = await prisma.redacao.count({
+      where: { usuarioId, status: "PENDENTE" }
     })
 
     return { redacoes, quantidadeRedacoes }
@@ -40,7 +92,7 @@ const redacoesRepository = {
 
   // Retorna uma redação específica
   retornaUmaRedacao: async (id) => {
-    const redacao = await prisma.redacao.findUnique({ where: { id } })
+    const redacao = await prisma.redacao.findUnique({ where: { id }, include: { usuario: true } })
     return redacao
   },
 

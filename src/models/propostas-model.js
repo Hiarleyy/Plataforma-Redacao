@@ -11,16 +11,20 @@ const propostasModel = {
 
   retornarUmaProposta: async (id) => {
     const proposta = await propostasRepository.retorneUmaPropostaPeloId(id)
-    if (!proposta) throw new HttpError(404, "Essa Proposta Não Existe.")
+    if (!proposta) throw new HttpError(404, "RETORNARUMAPROPOSTA.")
       return proposta
   },
-  // Buscando uma Proposta
+  
   retornarPropostaMaisAntiga: async () => {
     const proposta = await propostasRepository.retornePropostaMaisAntiga()
-    if (!proposta) throw new HttpError(404, "Essa Proposta Não Existe.")
+    if (!proposta) throw new HttpError(404, "RETORNARPROPOSTAANTIGA.")
+    return proposta
+  }, 
+  
+  retornarPropostaMaisNova: async () => {
+    const proposta = await propostasRepository.retornePropostaMaisNova()
     return proposta
   },
-
   //Criando uma Proposta
   criarProposta: async (data) => {
     const corpo = criarPropostaSchema.safeParse(data);
@@ -40,14 +44,10 @@ const propostasModel = {
     const novaProposta = await propostasRepository.crieNovaProposta(corpo.data);
     return novaProposta;
   },
-
   // Deletando Uma Proposta
   deletarUmaProposta: async (id) => {
-    const propostaDeletada = await prisma.proposta.delete({ 
-      where: { id }, select: { id: true, tema: true } 
-    })
-
-    return propostaDeletada
+    const propostaDeletada = await propostasRepository.deletarUmaProposta(id);
+    return propostaDeletada;
   }
 }
 

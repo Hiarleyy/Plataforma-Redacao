@@ -96,14 +96,40 @@ const usuariosModel = {
     const usuarioAtualizado = await usuariosRepository.atualizeUmUsuario(id, corpo.data)
     return usuarioAtualizado
   },
-
   deletarUsuario: async (id) => {
     // Verificando se o usuário existe
     await usuariosModel.retornarUmUsuario(id)
 
     const usuarioDeletado = await usuariosRepository.deleteUmUsuario(id)
     return usuarioDeletado
+  },
+  
+  adicionarFotoDePerfil: async (id, caminho) => {
+    await usuariosModel.retornarUmUsuario(id)
+    
+    const usuarioAtualizado = await usuariosRepository.atualizarFotoUsuario(id, caminho)
+    return usuarioAtualizado
+  },
+
+  atualizarSenha: async (id, data) => {
+  const usuario = await usuariosModel.retornarUmUsuario(id)
+
+  if (!data.senhaAtual || !data.novaSenha) {
+    throw new HttpError(400, "Senha atual e nova senha são obrigatórios")
   }
+
+  const senhaCorreta = await bcrypt.compare(data.senhaAtual, usuario.password)
+  if (!senhaCorreta) {
+    throw new HttpError(401, "Senha atual incorreta")
+  }
+
+  const hashedPassword = await bcrypt.hash(data.novaSenha, 10)
+  const usuarioAtualizado = await usuariosRepository.atualizarSenhaUsuario(id, hashedPassword)
+  
+  return usuarioAtualizado
 }
+}
+
+  
 
 module.exports = usuariosModel

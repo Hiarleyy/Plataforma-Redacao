@@ -14,6 +14,7 @@ const rankingController = require("./controllers/ranking-controller")
 const videosController = require("./controllers/videos-controller")
 const simuladoController = require("./controllers/simulado-controller")
 const notasSimuladoController = require("./controllers/notasSimulado-Controller")
+const uploadImagens = require('./middlewares/upload-imagens')
 
 const router = express.Router()
 
@@ -28,7 +29,10 @@ router.get("/usuarios", usuariosController.index)
 router.get("/usuarios/:id", usuariosController.show)
 router.post("/usuarios", usuariosController.create)
 router.put("/usuarios/:id", usuariosController.update)
-router.delete("/usuarios/:id", usuariosController.delete) 
+router.delete("/usuarios/:id", usuariosController.delete)
+router.post("/usuarios/:id/trocar-senha", usuariosController.updatePassword) 
+router.post("/usuarios/:id", uploadImagens.single('file'), usuariosController.profileUpload)
+router.get("/usuarios/:id/profile-image", usuariosController.getProfileImage)
 
 // Rotas relacionadas a turmas (OK)
 router.get("/turmas", turmaController.index)
@@ -53,15 +57,17 @@ router.put("/modulos/:id", modulosController.update)
 
 // Rotas relacionadas a redações
 router.get("/redacoes", redacoesController.index)
+router.get("/redacoes/:id", redacoesController.show)
 router.post("/redacoes/:usuarioId/upload", uploadRedacoes.single("file"), redacoesController.create)
 router.get("/redacoes/download/:id", redacoesController.download)
 
 //Rotas relacionadas a propostas
-router.get("/propostas",propostasController.index);
-router.get("/propostas/:id",propostasController.show)
-router.post("/propostas",uploadPropostas.single("file"),propostasController.create)
-router.get("/propostas/download/:id",propostasController.download)
-router.delete("/propostas/:id",propostasController.delete) 
+
+router.post("/propostas", uploadPropostas.single("file"), propostasController.create)
+router.get("/propostas", propostasController.index);
+router.get("/propostas/download", propostasController.download)
+router.get("/propostas/:id", propostasController.show)
+router.delete("/propostas/:id", propostasController.delete)
 
 // Rotas relacionadas a correções
 router.get("/correcoes", correcoesController.index)

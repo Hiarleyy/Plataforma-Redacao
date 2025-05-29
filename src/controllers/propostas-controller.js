@@ -63,11 +63,10 @@ const propostasController = {
 
   download: async (req, res, next) => {
     try{
-      const { id } = req.params
-      const proposta = await propostasModel.retornarUmaProposta(id)
-
+      const proposta = await propostasModel.retornarPropostaMaisAntiga()
+      if(!proposta) throw new HttpError(404, "Proposta não encontrada")
       const filePath = path.join(__dirname, "..", "uploads", "propostas", proposta.caminho)
-      
+          
       if(!fs.existsSync(filePath)){
         return res.status(404).json({ message: "Arquivo não encontrado." })
       }
