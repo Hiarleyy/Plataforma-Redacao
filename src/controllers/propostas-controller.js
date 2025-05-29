@@ -63,7 +63,7 @@ const propostasController = {
 
   download: async (req, res, next) => {
     try{
-      const proposta = await propostasModel.retornarPropostaMaisAntiga()
+      const proposta = await propostasModel.retornarPropostaMaisNova()
       if(!proposta) throw new HttpError(404, "Proposta não encontrada")
       const filePath = path.join(__dirname, "..", "uploads", "propostas", proposta.caminho)
           
