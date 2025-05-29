@@ -15,6 +15,8 @@ const videosController = require("./controllers/videos-controller")
 const simuladoController = require("./controllers/simulado-controller")
 const notasSimuladoController = require("./controllers/notasSimulado-Controller")
 const uploadImagens = require('./middlewares/upload-imagens')
+const adminMiddleware = require("./middlewares/admin-middleware")
+const authMiddleware = require("./middlewares/auth-middleware")
 
 const router = express.Router()
 
@@ -35,11 +37,11 @@ router.post("/usuarios/:id", uploadImagens.single('file'), usuariosController.pr
 router.get("/usuarios/:id/profile-image", usuariosController.getProfileImage)
 
 // Rotas relacionadas a turmas (OK)
-router.get("/turmas", turmaController.index)
-router.get("/turmas/:id", turmaController.show)
-router.post("/turmas", turmaController.create)
-router.put("/turmas/:id", turmaController.update)
-router.delete("/turmas/:id", turmaController.delete)
+router.get("/turmas", authMiddleware, adminMiddleware, turmaController.index)
+router.get("/turmas/:id", authMiddleware, adminMiddleware, turmaController.show)
+router.post("/turmas", authMiddleware, adminMiddleware, turmaController.create)
+router.put("/turmas/:id", authMiddleware, adminMiddleware, turmaController.update)
+router.delete("/turmas/:id", authMiddleware, adminMiddleware, turmaController.delete)
 
 // Rotas relacionadas a pagamentos
 router.get("/pagamentos", pagamentosController.index ) 

@@ -92,7 +92,7 @@ const redacoesRepository = {
 
   // Retorna uma redação específica
   retornaUmaRedacao: async (id) => {
-    const redacao = await prisma.redacao.findUnique({ where: { id }, include: { usuario: true } })
+    const redacao = await prisma.redacao.findUnique({ where: { id }, include: { usuario: true, correcao: true } })
     return redacao
   },
 
