@@ -60,7 +60,7 @@ const redacoesRepository = {
   },
 
   // Retornar redações não corrigidas
-   retornarRedacoesPendentes: async (usuarioId = false) => {
+  retornarRedacoesPendentes: async (usuarioId = false) => {
     let redacoes
     let quantidadeRedacoes
     const includeBody = { usuario: true }

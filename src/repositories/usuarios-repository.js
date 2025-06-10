@@ -10,6 +10,7 @@ const usuariosRepository = {
         id: true,
         nome: true,
         email: true,
+        caminho: true,
         tipoUsuario: true
       },
     })
