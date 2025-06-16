@@ -20,7 +20,8 @@ const correcoesModel = {
 
   // Busca o usuário dono da redação corrigida, baseado no id da correção
   retornarUsuarioDaCorrecao: async (id) => {
-    const usuarioId = await correcoesRepository.retornarUsuarioDaCorrecao(id)
+    const { redacao } = await correcoesRepository.retornarUsuarioDaCorrecao(id)
+    const usuarioId = redacao.usuarioId
     return usuarioId
   },
 

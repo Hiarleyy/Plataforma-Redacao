@@ -20,7 +20,16 @@ const usuariosRepository = {
 
   // Retorna um usuário específico pelo id
   retorneUmUsuarioPeloId: async (id) => {
-    const usuario = await prisma.usuario.findUnique({ where: { id } })
+    const usuario = await prisma.usuario.findUnique({ where: { id }, select: {
+      id: true,
+      nome: true,
+      email: true,
+      caminho: true,
+      tipoUsuario: true,
+      dataCriacao: true,
+      dataAtualizacao: true,
+      turmaId: true
+    }})
     return usuario
   },
 
@@ -47,7 +56,10 @@ const usuariosRepository = {
   // Crie um novo usuário
   crieNovoUsuario: async (data) => {
     const usuario = new Usuario(data)
-    const novoUsuario = await prisma.usuario.create({ data: usuario })
+    const novoUsuario = await prisma.usuario.create({ data: usuario, select: { 
+      nome: true, email: true, tipoUsuario: true } 
+    })
+
     return novoUsuario
   },
 
@@ -55,7 +67,17 @@ const usuariosRepository = {
   atualizeUmUsuario: async (id, data) => {
     const usuarioAtualizado = await prisma.usuario.update({
       data,
-      where: { id }
+      where: { id },
+      select: {
+        id: true,
+        nome: true,
+        email: true,
+        caminho: true,
+        tipoUsuario: true,
+        dataCriacao: true,
+        dataAtualizacao: true,
+        turmaId: true
+      }
     })
 
     return usuarioAtualizado
@@ -82,7 +104,9 @@ const usuariosRepository = {
   // Delete um usuário
   deleteUmUsuario: async (id) => {
     const usuarioDeletado = await prisma.usuario.delete(
-      { where: { id }}
+      { where: { id }, select: {
+        nome: true, email: true, tipoUsuario: true
+      }}
     )
 
     // Deletando os arquivos do usuário na pasta uploads

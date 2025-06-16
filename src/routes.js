@@ -64,7 +64,6 @@ router.post("/redacoes/:usuarioId/upload", authMiddleware, uploadRedacoes.single
 router.get("/redacoes/download/:id", redacoesController.download)
 
 //Rotas relacionadas a propostas
-
 router.post("/propostas", authMiddleware, adminMiddleware, uploadPropostas.single("file"), propostasController.create)
 router.get("/propostas", authMiddleware, propostasController.index);
 router.get("/propostas/download", propostasController.download)

@@ -52,15 +52,14 @@ const correcoesController = {
     try {
       const { id } = req.params
       const correcao = await correcoesModel.retornarCorrecao(id)
-      const usuarioId = await correcoesModel.retornarUsuarioDaCorrecao(id)
 
-      const filePath = path.join(__dirname, "..", "uploads", "correcoes", usuarioId, correcao.caminho)
+      const filePath = path.join(__dirname, "..", "uploads", "correcoes", correcao.redacao.usuarioId, correcao.caminho)
 
       if (!fs.existsSync(filePath)) {
         return res.status(404).json({ message: "Arquivo não encontrado." })
       }
 
-      res.download(filePath, `${redacao.titulo}.pdf`, (err) => {
+      res.download(filePath, `${correcao.redacao.titulo}_correção.pdf`, (err) => {
         if (err) {
           res.status(500).json({ message: "Erro ao fazer download do arquivo." })
         }

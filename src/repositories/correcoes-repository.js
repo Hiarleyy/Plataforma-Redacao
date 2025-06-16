@@ -23,7 +23,14 @@ const correcoesRepository = {
 
   // Retorna uma correção específica
   retornaUmaCorrecao: async (id) => {
-    const correcao = await prisma.correcao.findUnique({ where: { id } })
+    const correcao = await prisma.correcao.findUnique(
+      { where: { id }, 
+      include: { 
+        redacao: { 
+          select: { titulo: true, usuarioId: true }
+        }
+      } 
+    })
     return correcao
   },
 
