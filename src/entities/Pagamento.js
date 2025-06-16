@@ -4,10 +4,10 @@ const { v4: uuid } = require("uuid");
 class Pagamento {
   constructor(pagamento) {
     this.id = uuid();
-    this.usuarioId = pagamento.usuarioId,
-    this.dataVencimento = pagamento.dataVencimento,
+    this.tipoDespensa = pagamento.tipoDespensa,
     this.dataPagamento = pagamento.dataPagamento,
-    this.valor = pagamento.valor
+    this.valor = pagamento.valor,
+    this.status = pagamento.status
   }
 }
 

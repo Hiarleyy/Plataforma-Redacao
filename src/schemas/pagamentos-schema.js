@@ -1,9 +1,9 @@
 const { z } = require("zod")
 
 const criarPagamentoSchema = z.object({
-    usuarioId: z.string().uuid(),
+    tipoDespensa: z.string(),
     valor: z.number().positive(),
-    dataVencimento: z.string().optional(),
+    status: z.enum(["ENTRADA", "SAÍDA"]),
 }).strict()
 
 const atualizarPagamentoSchema = z.object({

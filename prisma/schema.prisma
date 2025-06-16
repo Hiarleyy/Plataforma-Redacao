@@ -26,7 +26,6 @@ model Usuario {
   turma           Turma?     @relation(fields: [turmaId], references: [id], onDelete: SetNull) 
 
   frequencias     Frequencia[]
-  pagamentos      Pagamento[]
   redacoes        Redacao[]
   notasSimulado  NotasSimulado[]
 }
@@ -61,12 +60,16 @@ model Frequencia {
 
 model Pagamento {
   id             String    @db.Char(36) @id
-  usuarioId      String    @db.VarChar(36)
-  dataVencimento DateTime?  @db.Date
   dataPagamento  DateTime  @default(now())
+  status         StatusPagamento 
   valor          Float
+  tipoDespensa   String    @db.VarChar(100)
 
-  usuario Usuario @relation(fields: [usuarioId], references: [id], onDelete: Cascade) 
+}
+
+enum StatusPagamento {
+  ENTRADA
+  SAÍDA
 }
 
 enum StatusRedacao {
