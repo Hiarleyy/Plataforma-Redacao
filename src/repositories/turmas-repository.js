@@ -1,5 +1,5 @@
 const prisma = require("../database/db")
-const Turma = require("../entities/Turma")
+const Turma = require("../entities/turma")
 
 const turmaRepository = {
   // Retorna todas as turmas do bando de dados
