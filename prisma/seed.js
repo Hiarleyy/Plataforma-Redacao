@@ -1,3 +1,6 @@
+// Carregar variáveis de ambiente
+require('dotenv').config()
+
 const { PrismaClient } = require('@prisma/client')
 const bcrypt = require('bcrypt')
 const { v4: uuidv4 } = require('uuid')

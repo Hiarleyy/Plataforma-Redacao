@@ -1,5 +1,7 @@
 const express = require("express")
 const cors = require("cors")
+const https = require("https")
+const fs = require("fs")
 const routes = require("./routes")
 const path = require("path");
 const errorMiddleware = require("./middlewares/error-middleware")
@@ -16,11 +18,18 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/", routes);
 app.use(errorMiddleware);
 
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT
+const HOST = process.env.HOST 
+
+// Configuração SSL
+const sslOptions = {
+  key: fs.readFileSync(path.join(__dirname, 'ssl', 'private.key')),
+  cert: fs.readFileSync(path.join(__dirname, 'ssl', 'certificate.crt'))
+};
 
 const start = () => {
-  const server = app.listen(PORT, () => {
-    console.log(`Servidor rodando em: http://localhost:${PORT}`)
+  const server = https.createServer(sslOptions, app).listen(PORT, () => {
+    console.log(`Servidor rodando em: https://${HOST}:${PORT}`)
   })
 
   server.on("error", (error) => console.error(`Erro ao iniciar o servidor: ${error.message}`))
