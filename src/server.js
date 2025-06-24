@@ -11,9 +11,8 @@ const app = express()
 
 app.use(cors({
   origin: [
-    "https://redacaoelite.sitionossolugar.com.br",
     "http://localhost:3000",
-    "https://localhost:3000"
+    "https://localhost:3001"
   ],
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
@@ -24,33 +23,26 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/", routes);
 app.use(errorMiddleware);
 
-const PORT = process.env.PORT || 443
-const HTTP_PORT = process.env.HTTP_PORT || 80
-const HOST = process.env.HOST
+const HTTPS_PORT = process.env.HTTPS_PORT || 3001
+const HTTP_PORT = process.env.HTTP_PORT || 3000
+const HOST = process.env.HOST || 'localhost'
 
 // Configuração SSL
 const sslOptions = {
-  key: fs.readFileSync(path.join(__dirname, 'ssl', 'private.key')),
-  cert: fs.readFileSync(path.join(__dirname, 'ssl', 'certificate.crt'))
+  cert: fs.readFileSync(path.join(__dirname, 'ssl', 'code.crt')),
+  key: fs.readFileSync(path.join(__dirname, 'ssl', 'code.key'))
 };
 
 const start = () => {
-  // Servidor HTTP que redireciona para HTTPS
-  const httpApp = express();
-  httpApp.use((req, res) => {
-    const httpsUrl = `https://${req.headers.host}${req.url}`;
-    res.redirect(301, httpsUrl);
-  });
+  // Servidor HTTP principal (sem redirecionamento)
+  const httpServer = http.createServer(app).listen(HTTP_PORT, () => {
+    console.log(`Servidor HTTP rodando em: http://${HOST}:${HTTP_PORT}`)
+  })
 
   // Servidor HTTPS principal
-  const httpsServer = https.createServer(sslOptions, app).listen(PORT, () => {
-    console.log(`Servidor HTTPS rodando em: https://${HOST}:${PORT}`)
+  const httpsServer = https.createServer(sslOptions, app).listen(HTTPS_PORT, () => {
+    console.log(`Servidor HTTPS rodando em: https://${HOST}:${HTTPS_PORT}`)
   })
-
-  const httpServer = http.createServer(httpApp).listen(HTTP_PORT, () => {
-    console.log(`Servidor HTTP rodando em: http://${HOST}:${HTTP_PORT} (redirecionando para HTTPS)`)
-  })
-
   httpsServer.on("error", (error) => console.error(`Erro ao iniciar o servidor HTTPS: ${error.message}`))
   httpServer.on("error", (error) => console.error(`Erro ao iniciar o servidor HTTP: ${error.message}`))
 }
