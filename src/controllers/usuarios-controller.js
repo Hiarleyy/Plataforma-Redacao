@@ -154,6 +154,13 @@ const usuariosController = {
           message: "Dados incompletos. 'senhaAtual' e 'novaSenha' são obrigatórios" 
         })
       }
+
+      // Verificar se a nova senha tem pelo menos 6 caracteres
+      if (req.body.novaSenha.length < 6) {
+        return res.status(400).json({ 
+          message: "A nova senha deve ter pelo menos 6 caracteres" 
+        })
+      }
       
       const data = {
         senhaAtual: req.body.senhaAtual,
@@ -161,7 +168,10 @@ const usuariosController = {
       }
       
       const usuarioAtualizado = await usuariosModel.atualizarSenha(id, data)
-      res.status(200).json(usuarioAtualizado)
+      res.status(200).json({ 
+        message: "Senha alterada com sucesso",
+        data: usuarioAtualizado 
+      })
     } catch (error) {
       next(error)
     }

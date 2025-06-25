@@ -112,22 +112,27 @@ const usuariosModel = {
   },
 
   atualizarSenha: async (id, data) => {
-  const usuario = await usuariosModel.retornarUmUsuario(id)
+    const usuario = await usuariosModel.retornarUmUsuario(id)
 
-  if (!data.senhaAtual || !data.novaSenha) {
-    throw new HttpError(400, "Senha atual e nova senha são obrigatórios")
+    if (!data.senhaAtual || !data.novaSenha) {
+      throw new HttpError(400, "Senha atual e nova senha são obrigatórios")
+    }
+
+    // Verificar se o usuário e a senha existem
+    if (!usuario || !usuario.password) {
+      throw new HttpError(404, "Usuário não encontrado ou senha não definida")
+    }
+
+    const senhaCorreta = await bcrypt.compare(data.senhaAtual, usuario.password)
+    if (!senhaCorreta) {
+      throw new HttpError(401, "Senha atual incorreta")
+    }
+
+    const hashedPassword = await bcrypt.hash(data.novaSenha, 10)
+    const usuarioAtualizado = await usuariosRepository.atualizarSenhaUsuario(id, hashedPassword)
+    
+    return usuarioAtualizado
   }
-
-  const senhaCorreta = await bcrypt.compare(data.senhaAtual, usuario.password)
-  if (!senhaCorreta) {
-    throw new HttpError(401, "Senha atual incorreta")
-  }
-
-  const hashedPassword = await bcrypt.hash(data.novaSenha, 10)
-  const usuarioAtualizado = await usuariosRepository.atualizarSenhaUsuario(id, hashedPassword)
-  
-  return usuarioAtualizado
-}
 }
 
   
