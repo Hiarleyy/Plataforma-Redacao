@@ -112,15 +112,15 @@ const usuariosModel = {
   },
 
   atualizarSenha: async (id, data) => {
-    const usuario = await usuariosModel.retornarUmUsuario(id)
+    const usuario = await usuariosRepository.retorneUsuarioComSenhaPeloId(id)
 
     if (!data.senhaAtual || !data.novaSenha) {
       throw new HttpError(400, "Senha atual e nova senha são obrigatórios")
     }
 
-    // Verificar se o usuário e a senha existem
-    if (!usuario || !usuario.password) {
-      throw new HttpError(404, "Usuário não encontrado ou senha não definida")
+    // Verificar se o usuário existe
+    if (!usuario) {
+      throw new HttpError(404, "Usuário não encontrado")
     }
 
     const senhaCorreta = await bcrypt.compare(data.senhaAtual, usuario.password)

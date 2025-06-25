@@ -33,6 +33,25 @@ const usuariosRepository = {
     return usuario
   },
 
+  // Retorna um usuário específico pelo id incluindo a senha (para verificação de autenticação)
+  retorneUsuarioComSenhaPeloId: async (id) => {
+    const usuario = await prisma.usuario.findUnique({ 
+      where: { id },
+      select: {
+        id: true,
+        nome: true,
+        email: true,
+        password: true,
+        caminho: true,
+        tipoUsuario: true,
+        dataCriacao: true,
+        dataAtualizacao: true,
+        turmaId: true
+      }
+    })
+    return usuario
+  },
+
   // Retorna todos os alunos cujo nome contém o texto fornecido
   retorneAlunosPorNome: async (nome) => {
     const alunos = await prisma.usuario.findMany({
