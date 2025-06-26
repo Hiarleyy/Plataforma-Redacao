@@ -13,6 +13,7 @@ const usuariosRepository = {
         caminho: true,
         tipoUsuario: true
       },
+      orderBy: { nome: 'asc' }
     })
 
     return usuarios
