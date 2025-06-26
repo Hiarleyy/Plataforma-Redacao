@@ -12,7 +12,8 @@ const modulosRepository = {
         playlistUrl: true,
         dataCriacao: true,
         videos: true 
-      }
+      },
+      orderBy: { nome: 'asc' }
     })
 
     return modulos

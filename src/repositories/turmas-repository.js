@@ -10,6 +10,7 @@ const turmaRepository = {
         nome: true,
         dataCriacao: true,
       },
+      orderBy: { nome: 'asc' }
     })
 
     return turmas

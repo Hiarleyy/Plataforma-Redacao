@@ -1,7 +1,7 @@
 const prisma = require("../database/db")
 const jwt = require("jsonwebtoken")
 
-const tokenSecretKey = "senha-super-secreta"
+const tokenSecretKey = process.env.JWT_KEY
 
 const authMiddleware = async (req, res, next) => {
   const authHeader = req.headers.authorization

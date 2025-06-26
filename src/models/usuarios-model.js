@@ -6,7 +6,7 @@ const { criarUsuarioSchema, atualizarUsuarioSchema } = require("../schemas/usuar
 const { loginSchema } = require("../schemas/login-schema")
 const turmaModel = require("./turmas-model")
 
-const tokenSecretKey = "senha-super-secreta"
+const tokenSecretKey = process.env.JWT_KEY
 
 const usuariosModel = {
   retornarUsuarios: async (filter) => {
