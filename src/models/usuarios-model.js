@@ -41,7 +41,7 @@ const usuariosModel = {
     if (emailExiste) throw new HttpError(409, "Esse email já foi cadastrado no sistema.")
 
     // Criptografando a senha
-    const regex = /^(.*?)@gmail\.com$/
+    const regex = /^([^@]+)@([^@]+\.[^@]+)$/
     const value = corpo.data.email.match(regex)
     const hashedPassword = await bcrypt.hash(value[1], 10)
 
