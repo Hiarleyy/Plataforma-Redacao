@@ -10,7 +10,7 @@ const criarUsuarioSchema = z.object({
 
 const atualizarUsuarioSchema = z.object({
   nome: z.string().optional(),
-  email: z.string().email().optional(),
+  email: z.string().optional(),
   password: z.string().optional(),
   caminho: z.string().optional(),
   tipoUsuario: z.enum(["ADMIN", "STANDARD"]).optional(),
