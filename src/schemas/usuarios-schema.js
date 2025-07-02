@@ -2,7 +2,7 @@ const { z } = require("zod")
 
 const criarUsuarioSchema = z.object({
   nome: z.string(),
-  email:z.string().email().refine(email => /\.(com|org|edu|gov|br)$/.test(email), {message: "Domínio de email não permitido"}),
+  email:z.string(),
   password: z.string().optional(),
   tipoUsuario: z.enum(["ADMIN", "STANDARD"]).default("STANDARD"),
   turmaId: z.string().uuid()
