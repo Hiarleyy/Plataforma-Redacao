@@ -59,6 +59,19 @@ const redacoesModel = {
     // Salva a nova redação no bando de dados
     const redacao = await redacoesRepository.crieNovaRedacao(corpo.data)
     return redacao
+  },
+
+  // Deletando uma redação
+  deletarRedacao: async (id) => {
+    // Verificando se a redação existe
+    const redacao = await redacoesModel.retornarRedacao(id)
+
+    // Deletando o arquivo físico da redação
+    deletarArquivo(["uploads", "redacoes", redacao.usuarioId, redacao.caminho])
+
+    // Deletando a redação do banco de dados
+    const redacaoDeletada = await redacoesRepository.deletarUmaRedacao(id)
+    return redacaoDeletada
   }
 }
 

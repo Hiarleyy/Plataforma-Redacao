@@ -101,6 +101,17 @@ const redacoesController = {
     } catch (error) {
       next(error)
     }
+  },
+  
+  // DELETE /redacoes/:id
+  delete: async (req, res, next) => {
+    try {
+      const { id } = req.params
+      const resposta = await redacoesModel.deletarRedacao(id)
+      res.status(200).json({ message: "Redação deletada com sucesso.", data: resposta })
+    } catch (error) {
+      next(error)
+    }
   }
 }
 

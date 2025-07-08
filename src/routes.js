@@ -58,10 +58,11 @@ router.delete("/modulos/:id", authMiddleware, adminMiddleware, modulosController
 router.put("/modulos/:id", authMiddleware, adminMiddleware, modulosController.update)
 
 // Rotas relacionadas a redações
-router.get("/redacoes", authMiddleware, redacoesController.index)
-router.get("/redacoes/:id", authMiddleware, redacoesController.show)
-router.post("/redacoes/:usuarioId/upload", authMiddleware, uploadRedacoes.single("file"), redacoesController.create)
-router.get("/redacoes/download/:id", redacoesController.download)
+router.get("/redacoes", authMiddleware,redacoesController.index)
+router.get("/redacoes/:id", authMiddleware,redacoesController.show)
+router.post("/redacoes/:usuarioId/upload", uploadRedacoes.single("file"), redacoesController.create)
+router.get("/redacoes/download/:id",redacoesController.download)
+router.delete("/redacoes/:id", authMiddleware,redacoesController.delete)
 
 //Rotas relacionadas a propostas
 router.post("/propostas", authMiddleware, adminMiddleware, uploadPropostas.single("file"), propostasController.create)
