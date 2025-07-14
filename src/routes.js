@@ -74,7 +74,7 @@ router.delete("/propostas/:id", authMiddleware, adminMiddleware, propostasContro
 // Rotas relacionadas a correções
 router.get("/correcoes", authMiddleware, correcoesController.index)
 router.post("/correcoes/:usuarioId/upload", uploadCorrecoes.single("file"), correcoesController.create)
-router.get("/correcoes/download/:id", authMiddleware, correcoesController.download)
+router.get("/correcoes/download/:id", correcoesController.download)
 
 // Rotas relacionadas a frequencia
 router.get("/frequencias", authMiddleware, adminMiddleware, frequenciasController.index) 
