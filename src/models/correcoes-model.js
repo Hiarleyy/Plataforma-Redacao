@@ -13,7 +13,9 @@ const correcoesModel = {
 
   // Buscando uma correção
   retornarCorrecao: async (id) => {
+    console.log("Buscando correção com ID:", id)
     const correcao = await correcoesRepository.retornaUmaCorrecao(id)
+    console.log("Correção encontrada:", correcao)
     if (!correcao) throw new HttpError(404, "Essa correção não existe.")
     return correcao
   },

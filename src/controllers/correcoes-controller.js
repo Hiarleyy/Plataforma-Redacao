@@ -51,20 +51,46 @@ const correcoesController = {
   download: async (req, res, next) => {
     try {
       const { id } = req.params
-      const correcao = await correcoesModel.retornarCorrecao(id)
+      
+      // Convertendo para número se necessário
+      const correcaoId = parseInt(id, 10)
+      if (isNaN(correcaoId)) {
+        return res.status(400).json({ message: "ID da correção inválido." })
+      }
+
+      const correcao = await correcoesModel.retornarCorrecao(correcaoId)
+
+      if (!correcao) {
+        return res.status(404).json({ message: "Correção não encontrada." })
+      }
 
       const filePath = path.join(__dirname, "..", "uploads", "correcoes", correcao.redacao.usuarioId, correcao.caminho)
 
+      console.log("Tentando acessar arquivo em:", filePath)
+      console.log("Dados da correção:", JSON.stringify(correcao, null, 2))
+
       if (!fs.existsSync(filePath)) {
-        return res.status(404).json({ message: "Arquivo não encontrado." })
+        return res.status(404).json({ 
+          message: "Arquivo não encontrado.",
+          path: filePath,
+          correcao: correcao
+        })
       }
 
-      res.download(filePath, `${correcao.redacao.titulo}_correção.pdf`, (err) => {
+      // Definir headers apropriados para PDF
+      res.setHeader('Content-Type', 'application/pdf')
+      res.setHeader('Content-Disposition', `attachment; filename="${correcao.redacao.titulo}_correcao.pdf"`)
+
+      res.download(filePath, `${correcao.redacao.titulo}_correcao.pdf`, (err) => {
         if (err) {
-          res.status(500).json({ message: "Erro ao fazer download do arquivo." })
+          console.error("Erro no download:", err)
+          if (!res.headersSent) {
+            res.status(500).json({ message: "Erro ao fazer download do arquivo." })
+          }
         }
       })
     } catch (error) {
+      console.error("Erro no download de correção:", error)
       next(error)
     }
   }
