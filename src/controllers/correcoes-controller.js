@@ -52,13 +52,12 @@ const correcoesController = {
     try {
       const { id } = req.params
       
-      // Convertendo para número se necessário
-      const correcaoId = parseInt(id, 10)
-      if (isNaN(correcaoId)) {
+      // Validação básica do UUID
+      if (!id || typeof id !== 'string') {
         return res.status(400).json({ message: "ID da correção inválido." })
       }
 
-      const correcao = await correcoesModel.retornarCorrecao(correcaoId)
+      const correcao = await correcoesModel.retornarCorrecao(id)
 
       if (!correcao) {
         return res.status(404).json({ message: "Correção não encontrada." })
