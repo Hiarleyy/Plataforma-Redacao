@@ -76,7 +76,7 @@ const usuariosModel = {
     const payload = { userId: user.id }
 
     const token = jwt.sign(payload, tokenSecretKey, {
-      expiresIn: "30m",
+      expiresIn: "60m",
     })
   
     return { token, id: user.id, role: user.tipoUsuario }
