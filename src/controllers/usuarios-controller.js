@@ -144,6 +144,17 @@ const usuariosController = {
       next(error)
     }
   },
+
+  resetPassword: async (req, res, next) => {
+    try {
+      const { id } = req.params
+      await usuariosModel.resetarSenha(id)
+      res.status(200).json({ message: "senha resetada com sucesso." })
+    } catch(error){
+      next(error)
+    }
+  },
+
   updatePassword: async (req, res, next) => {
     try {
       const { id } = req.params

@@ -111,6 +111,16 @@ const usuariosModel = {
     return usuarioAtualizado
   },
 
+  resetarSenha: async (userId) => {
+    const usuario = await usuariosModel.retornarUmUsuario(userId)
+
+    const regex = /^(.*?)@gmail\.com$/
+    const value = usuario.email.match(regex)
+    const hashedPassword = await bcrypt.hash(value[1], 10)
+
+    await usuariosRepository.atualizarSenhaUsuario(userId, hashedPassword)
+  },
+
   atualizarSenha: async (id, data) => {
   const usuario = await usuariosModel.retornarUmUsuario(id)
 
