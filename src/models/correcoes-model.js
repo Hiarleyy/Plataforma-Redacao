@@ -55,6 +55,12 @@ const correcoesModel = {
     // Salva a nova correção no bando de dados
     const correcao = await correcoesRepository.crieNovaCorreção(corpo.data)
     return correcao
+  }, 
+  atualizarCorrecao: async (id, data) => {
+    //Verificando se correção existe
+    await correcoesModel.retornarCorrecao(id)
+    const updateCorrecao = await correcoesRepository.updateCorrecao(id, data)
+    return updateCorrecao
   }
 }
 
