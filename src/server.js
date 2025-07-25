@@ -28,7 +28,7 @@ app.use(errorMiddleware);
 const HTTPS_PORT = process.env.HTTPS_PORT 
 const HTTP_PORT = process.env.HTTP_PORT 
 const HOST = process.env.HOST 
-const PORT = process.env.PORT || 443; // porta padrão HTTPS
+const PORT = process.env.PORT || 3001; // porta padrão HTTPS
 
 
 //Configuração SSL
