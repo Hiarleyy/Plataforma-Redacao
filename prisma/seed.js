@@ -24,8 +24,8 @@ async function main() {
     }
 
     // Dados do usuário admin
-    const emailAdmin = 'admin@gmail.com'
-    const nomeAdmin = 'Administrador'
+    const emailAdmin = 'Admin@gmail.com'
+    const nomeAdmin = 'Daniel Admin'
     
     // Extrair a parte antes do @gmail.com (seguindo a lógica do sistema)
     const regex = /^(.*?)@gmail\.com$/

@@ -5,7 +5,7 @@
   "main": "index.js",  "scripts": {
     "dev": "node --watch src/server.js",
     "seed": "node prisma/seed.js",
-    "deploy": "pm2 start src/server.js --name redacaoApi"
+    "deploy": "git pull origin prod pm2 start src/server.js --name redacaoApi -f "
   },
   "keywords": [],
   "author": "",
