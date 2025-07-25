@@ -30,9 +30,9 @@ const HTTP_PORT = process.env.HTTP_PORT
 const HOST = process.env.HOST 
 
 //Configuração SSL
-  const sslOptions = {
-  cert: fs.readFileSync(path.join(__dirname, 'ssl', 'fullchain.pem')),
-  key: fs.readFileSync(path.join(__dirname, 'ssl', 'privkey.pem'))
+const sslOptions = {
+  cert: fs.readFileSync('/etc/letsencrypt/live/api.redacaoelite.online/fullchain.pem'),
+  key: fs.readFileSync('/etc/letsencrypt/live/api.redacaoelite.online/privkey.pem')
 };
 
 const start = () => {
