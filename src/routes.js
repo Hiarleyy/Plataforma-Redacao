@@ -33,6 +33,7 @@ router.post("/usuarios", authMiddleware, adminMiddleware, usuariosController.cre
 router.put("/usuarios/:id", authMiddleware, adminMiddleware, usuariosController.update)
 router.delete("/usuarios/:id", authMiddleware, adminMiddleware, usuariosController.delete)
 router.post("/usuarios/:id/trocar-senha", authMiddleware, usuariosController.updatePassword) 
+router.patch("/usuarios/:id/resetar-senha", authMiddleware, usuariosController.resetPassword) 
 router.post("/usuarios/:id", authMiddleware, uploadImagens.single('file'), usuariosController.profileUpload)
 router.get("/usuarios/:id/profile-image", usuariosController.getProfileImage)
 
