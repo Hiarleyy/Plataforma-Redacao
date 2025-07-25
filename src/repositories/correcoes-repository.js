@@ -64,6 +64,10 @@ const correcoesRepository = {
     })
 
     return correcaoDeletada
+  },
+  updateCorrecao: async (id, data) => {
+    const updateCorrecao = await prisma.correcao.update({ where: { id }, data })
+    return updateCorrecao
   }
 }
 

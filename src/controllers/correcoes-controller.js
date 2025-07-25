@@ -1,6 +1,7 @@
 const correcoesModel = require("../models/correcoes-model")
 const path = require("path")
 const fs = require("fs")
+const { update } = require("./usuarios-controller")
 
 const correcoesController = {
   // GET /correcoes
@@ -90,6 +91,16 @@ const correcoesController = {
       })
     } catch (error) {
       console.error("Erro no download de correção:", error)
+      next(error)
+    }
+  },
+  update: async (req, res, next) => {
+    try {
+      const { id } = req.params
+      const corpoDaRequisicao = req.body
+      const resposta = await correcoesModel.atualizarCorrecao(id, corpoDaRequisicao)
+      res.status(200).json({ message: "Correção atualizada com sucesso.", data: resposta })
+    } catch (error) {
       next(error)
     }
   }
