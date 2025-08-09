@@ -7,14 +7,19 @@ const rankingRepository = {
         u.id,
         u.nome,
         t.nome AS turma,
-        ROUND(AVG(c.nota), 2) AS media
+        c.nota AS ultima_nota
       FROM "Usuario" u
       JOIN "Turma" t ON u."turmaId" = t.id
       JOIN "Redacao" r ON u.id = r."usuarioId"
       JOIN "Correcao" c ON r.id = c."redacaoId"
       WHERE r.status = 'CORRIGIDA'
-      GROUP BY u.id, u.nome, t.nome
-      ORDER BY media DESC;
+        AND c."data" = (
+          SELECT MAX(c2."data")
+          FROM "Redacao" r2
+          JOIN "Correcao" c2 ON r2.id = c2."redacaoId"
+          WHERE r2."usuarioId" = u.id AND r2.status = 'CORRIGIDA'
+        )
+      ORDER BY ultima_nota DESC;
     `;
 
     return ranking;
