@@ -59,6 +59,60 @@ const correcoesController = {
     }
   },
 
+  // PUT /correcoes/:id
+  update: async (req, res, next) => {
+    try {
+      const { id } = req.params
+      const correcaoAtual = await correcoesModel.retornarCorrecao(id)
+      const {
+        competencia01,
+        competencia02,
+        competencia03,
+        competencia04,
+        competencia05,
+        feedback,
+        caminho
+      } = req.body
+
+      const dadosAtualizacao = {
+        ...(competencia01 !== undefined && { competencia01: Number(competencia01) }),
+        ...(competencia02 !== undefined && { competencia02: Number(competencia02) }),
+        ...(competencia03 !== undefined && { competencia03: Number(competencia03) }),
+        ...(competencia04 !== undefined && { competencia04: Number(competencia04) }),
+        ...(competencia05 !== undefined && { competencia05: Number(competencia05) }),
+        ...(feedback !== undefined && { feedback }),
+        ...(caminho !== undefined && { caminho })
+      }
+
+      const alterouCompetencias = [
+        competencia01,
+        competencia02,
+        competencia03,
+        competencia04,
+        competencia05
+      ].some((valor) => valor !== undefined)
+
+      if (alterouCompetencias) {
+        dadosAtualizacao.nota = [
+          dadosAtualizacao.competencia01 ?? correcaoAtual.competencia01 ?? 0,
+          dadosAtualizacao.competencia02 ?? correcaoAtual.competencia02 ?? 0,
+          dadosAtualizacao.competencia03 ?? correcaoAtual.competencia03 ?? 0,
+          dadosAtualizacao.competencia04 ?? correcaoAtual.competencia04 ?? 0,
+          dadosAtualizacao.competencia05 ?? correcaoAtual.competencia05 ?? 0
+        ].reduce((soma, valor) => soma + Number(valor || 0), 0)
+      }
+
+      const resposta = await correcoesModel.atualizarCorrecao(id, dadosAtualizacao)
+
+      return res.status(200).json({
+        message: "Correção atualizada com sucesso.",
+        data: resposta
+      })
+    } catch (error) {
+      next(error)
+    }
+  },
+
   // GET /correcoes/download/:id
   download: async (req, res, next) => {
     try {
